@@ -72,7 +72,7 @@ function applyData(tag, template)
 	{
 		$(tag).remove();
 	}
-	if ($('main') > 0)
+	if ($('main').length > 0)
 	{
 		if (tag == 'header')
 		{
