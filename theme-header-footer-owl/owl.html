@@ -13,7 +13,7 @@
 	<link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic,300italic' rel='stylesheet' type='text/css'>
 
 	<!-- Link Demo *** CSS -->
-	<link rel="stylesheet" href="header-footer.css">
+	<link rel="stylesheet" href="owl.css">
 
 	<!--Jquery.js, HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
@@ -59,7 +59,7 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<h5>
-				<img class="avatar" src="{{rootLink}}images/avatar.jpg">
+				<img class="avatar" src="{{rootLink}}images/owl/avatar.jpg">
 				<a href="{{authorLink}}">{{author}}</a>
 			</h5>
 		</div>
@@ -73,10 +73,8 @@
 <script src="header-footer.js"></script>
 
 <script id="demoJS" type="text/javascript">
-	$(document).ready(function ()
-	{
-		applyTheme();
-	});
+	$.applyHeaderFooter('owl');
 </script>
+
 </body>
 </html>

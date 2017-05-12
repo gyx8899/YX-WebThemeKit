@@ -41,31 +41,33 @@
 </head>
 <body>
 
-<!-- title -->
-<section class="title">
-	<div class="row">
-		<div class="large-12 columns">
-			<h1>Demo: background image with min-resolution</h1>
-		</div>
-	</div>
-</section>
-
-<!--  Demos -->
-<section id="demos">
-	<div class="row">
-		<div id="demoWrap" class="large-12 columns">
-			<!--Demo's html here-->
-			<div id="demoHTML">
-<div class="bg"></div>
+<main>
+	<!-- title -->
+	<section class="title">
+		<div class="row">
+			<div class="large-12 columns">
+				<h1>Demo: background image with min-resolution</h1>
 			</div>
-			<h3 id="overview">Overview</h3>
-			<!--Introduction here-->
-			<p>
-
-			</p>
 		</div>
-	</div>
-</section>
+	</section>
+
+	<!--  Demos -->
+	<section id="demos">
+		<div class="row">
+			<div id="demoWrap" class="large-12 columns">
+				<!--Demo's html here-->
+				<div id="demoHTML">
+	<div class="bg"></div>
+				</div>
+				<h3 id="overview">Overview</h3>
+				<!--Introduction here-->
+				<p>
+
+				</p>
+			</div>
+		</div>
+	</section>
+</main>
 
 <!-- Script *** JS -->
 <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/vendors/highlight.js"></script>
@@ -73,13 +75,12 @@
 
 <!-- Script Demo *** JS -->
 <script src="previewCode.js"></script>
-<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer-owl/header-footer.js"></script>
-<script id="demoJS" type="text/javascript">
-	var themeTemplateData = {
-		siteName: 'PreViewCode'
-	};
-	applyTheme(themeTemplateData);
 
+<!-- Script Theme *** JS -->
+<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer-owl/header-footer.js"></script>
+<script type="text/javascript">applyTheme();</script>
+
+<script id="demoJS" type="text/javascript">
 	$(document).ready(function(){
 		previewAll($('#demoWrap'), $('#demoHTML'), $('#demoCSS'), $('#demoJS'))
 	});
