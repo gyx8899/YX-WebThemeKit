@@ -9154,6 +9154,13 @@ th.hide-for-touch
 {
 	background: #1ccacd
 }
+@media (max-width: 767px)
+{
+	.header .brand.left
+	{
+		width: calc(100% - 34px);
+	}
+}
 .header .brand h3
 {
 	font-weight: 300;
