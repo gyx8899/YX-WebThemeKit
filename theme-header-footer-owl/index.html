@@ -29,38 +29,38 @@
 		<div class="large-12 columns">
 			<div class="brand left">
 				<h3>
-					<a href="/">{{header-site-name}}</a>
+					<a href="">{{title}}</a>
 				</h3>
 			</div>
 			<a id="toggle-nav" class="right">
 				<span></span> <span></span> <span></span>
 			</a>
 			<div class="nav-bar">
-				<ul class="clearfix">{{header-menu-items}}</ul>
+				<ul class="clearfix">{{menuItems}}</ul>
 			</div>
 		</div>
 	</div>
 </header>
 
-<!-- title -->
-<section class="title">
-	<div class="row">
-		<div class="large-12 columns">
-			<h1>Basic</h1>
-		</div>
-	</div>
-</section>
-
 <!--  Demos -->
-
+<main>
+	<!-- title -->
+	<section class="title">
+		<div class="row">
+			<div class="large-12 columns">
+				<h1>Basic</h1>
+			</div>
+		</div>
+	</section>
+</main>
 
 <!-- footer -->
 <footer class="footer">
 	<div class="row">
 		<div class="large-12 columns">
 			<h5>
-				<a href="/{{footer-connect-link}}">{{footer-connect-name}}</a>
-				<img class="avatar" src="{{root-link}}/images/avatar.jpg">
+				<img class="avatar" src="{{rootLink}}images/avatar.jpg">
+				<a href="{{authorLink}}">{{author}}</a>
 			</h5>
 		</div>
 	</div>
@@ -75,8 +75,7 @@
 <script id="demoJS" type="text/javascript">
 	$(document).ready(function ()
 	{
-		var themeTemplateData = {};
-		applyTheme(themeTemplateData);
+		applyTheme();
 	});
 </script>
 </body>

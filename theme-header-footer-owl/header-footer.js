@@ -1,29 +1,39 @@
-var defaultThemeData = {
-	siteName: 'Site Name',
-	menuItems: '',
-	author: 'Steper',
-	rootLink: '',
+var defaultData = {
 	html: ['index.html'],
 	css: ["header-footer.css"],
-	js:[]
+	js:[],
+	themeData: {
+		title: '',
+		menuItems: '',
+		author: '',
+		rootLink: '',
+		authorLink: 'mailto:gyx8899@126.com'
+	},
+	replacement: ["title", "menuItems", "authorLink", "author", "rootLink"]
 };
-function applyTheme(themeTemplateData)
+function applyTheme(themeData)
 {
 	initDefaultData();
 
-	var themeData = $.extend({}, defaultThemeData, themeTemplateData);
+	defaultData.themeData = $.extend({}, defaultData.themeData, themeData);
 
-	loadLinkCSS(themeData.css);
-	loadScritJS(themeData.js);
-	loadThemeHTML(themeData.html[0], themeData);
+	loadLinkCSS(defaultData.css);
+	loadScritJS(defaultData.js);
+	loadThemeHTML(defaultData.html[0]);
 }
 function initDefaultData()
 {
+	// Init theme links
 	var rootLink = getParentPath(getCurrentJSURL('header-footer.js'), 'header-footer.js');
-	defaultThemeData.rootLink = rootLink;
-	defaultThemeData.html = processorResource(rootLink, defaultThemeData.html);
-	defaultThemeData.css = processorResource(rootLink, defaultThemeData.css);
-	defaultThemeData.js = processorResource(rootLink, defaultThemeData.js);
+	defaultData.themeData.rootLink = rootLink;
+	defaultData.html = processorResource(rootLink, defaultData.html);
+	defaultData.css = processorResource(rootLink, defaultData.css);
+	defaultData.js = processorResource(rootLink, defaultData.js);
+
+	// Init data from page
+	var element = document.querySelector('meta[name="author"]');
+	defaultData.themeData.author = element && element.getAttribute("content");
+	defaultData.themeData.title = $('title').text();
 }
 function processorResource(rootLink, resourceArray)
 {
@@ -33,56 +43,68 @@ function processorResource(rootLink, resourceArray)
 	}
 	return resourceArray;
 }
-function loadThemeHTML(url, themeData)
+function loadThemeHTML(url)
 {
 	$.ajax({
 		url: url,
 		success: function (data)
 		{
-			getTemplate(data, themeData);
+			getTemplate(data);
 		}
 	});
 }
-function getTemplate(data, themeData)
+function getTemplate(data)
 {
 	var sourceHtml = $('<textarea />').text(data.toString()).val();
-	applyHeader(sourceHtml, themeData);
-	applyFooter(sourceHtml, themeData);
+	replaceTag('header', sourceHtml);
+	replaceTag('footer', sourceHtml);
 }
-function applyHeader(sourceHtml, themeData)
+function replaceTag(tag, sourceHTML)
 {
-	// <header></header>
-	var headerHTMLArray = regExpG("<header.*(?=)(.|\n)*?</header>").exec(sourceHtml),
-			headerTemplate = headerHTMLArray && headerHTMLArray[0];
-	if (headerTemplate)
-	{
-		var comment = "<!-- header -->",
-				headerHTML = headerTemplate.replace(regExpG("{{header-site-name}}"), themeData.siteName)
-						.replace(regExpG("{{header-menu-items}}"), themeData.menuItems)
-						.replace(regExpG("{{root-link}}"), themeData.rootLink);
-		if ($('header').length > 0)
-		{
-			$('header').remove();
-		}
-		$('body').prepend(comment + headerHTML);
-	}
+	var tagHTMLArray = regExpG("<" + tag + ".*(?=)(.|\n)*?</" + tag + ">").exec(sourceHTML),
+			tagTemplate = tagHTMLArray && tagHTMLArray[0];
+	tagTemplate && applyData(tag, tagTemplate);
 }
-function applyFooter(sourceHtml, themeData)
+function applyData(tag, template)
 {
-	// <footer></footer>
-	var footerHTMLArray = regExpG("<footer.*(?=)(.|\n)*?</footer>").exec(sourceHtml),
-			footerTemplate = footerHTMLArray && footerHTMLArray[0];
-	if (footerTemplate)
+	var comment = "<!-- " + tag + " -->", tagHTML = replaceDataArray(template, defaultData.replacement, defaultData.themeData);
+	if ($(tag).length > 0)
 	{
-		var comment = "<!-- footer -->",
-				footerHTML = footerTemplate.replace("{{footer-connect-name}}", themeData.author)
-						.replace(regExpG("{{root-link}}"), themeData.rootLink);
-		if ($('footer').length > 0)
-		{
-			$('footer').remove();
-		}
-		$('body').append(comment + footerHTML);
+		$(tag).remove();
 	}
+	if ($('main') > 0)
+	{
+		if (tag == 'header')
+		{
+			$('main').before(comment + tagHTML);
+		}
+		else
+		{
+			$('main').after(comment + tagHTML);
+		}
+	}
+	else
+	{
+		if (tag == 'header')
+		{
+			$('body').prepend(comment + tagHTML);
+		}
+		else
+		{
+			$('body').append(comment + tagHTML);
+		}
+	}
+
+}
+function replaceDataArray(template, placeholders, themeData)
+{
+	var resultTemplate = template, dataItem;
+	for(var i = 0, length = placeholders.length; i < length; i++)
+	{
+		dataItem = placeholders[i];
+		resultTemplate = resultTemplate.replace(regExpG("{{" + dataItem + "}}"), themeData[dataItem] || '');
+	}
+	return resultTemplate;
 }
 function loadLinkCSS(linkArray)
 {

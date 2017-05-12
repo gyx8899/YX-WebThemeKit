@@ -9627,7 +9627,7 @@ pre
 	background: #f8f8f8;
 	padding: 2rem;
 	line-height: 1.4;
-	overflow-x: scroll
+	overflow-x: auto;
 }
 .hljs-comment, .hljs-template_comment, .diff .hljs-header, .hljs-javadoc
 {
