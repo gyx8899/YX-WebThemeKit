@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="Steper Kuo">
+	<title>Demo: background image with min-resolution</title>
+
+	<!-- Link *** CSS  -->
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,400italic,300italic' rel='stylesheet' type='text/css'>
+
+	<!-- Link Demo *** CSS-->
+	<link rel="stylesheet" href="previewCode.css">
+	<style id="demoCSS" type="text/css">
+.bg
+{
+	width: 200px;
+	height: 200px;
+	background-size: 200px 200px;
+	background: url(images/image.png) no-repeat center center;
+}
+@media (min-resolution: 1.5dppx)
+{
+	.bg
+	{
+		background-size: 200px 200px;
+		background-image: url(images/image@2x.png);
+	}
+}
+	</style>
+
+	<!--Jquery.js, HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<!-- title -->
+<section class="title">
+	<div class="row">
+		<div class="large-12 columns">
+			<h1>Demo: background image with min-resolution</h1>
+		</div>
+	</div>
+</section>
+
+<!--  Demos -->
+<section id="demos">
+	<div class="row">
+		<div id="demoWrap" class="large-12 columns">
+			<!--Demo's html here-->
+			<div id="demoHTML">
+<div class="bg"></div>
+			</div>
+			<h3 id="overview">Overview</h3>
+			<!--Introduction here-->
+			<p>
+
+			</p>
+		</div>
+	</div>
+</section>
+
+<!-- Script *** JS -->
+<script src="https://owlcarousel2.github.io/OwlCarousel2/assets/vendors/highlight.js"></script>
+<script src="https://owlcarousel2.github.io/OwlCarousel2/assets/js/app.js"></script>
+
+<!-- Script Demo *** JS -->
+<script src="previewCode.js"></script>
+<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer-owl/header-footer.js"></script>
+<script id="demoJS" type="text/javascript">
+	var themeTemplateData = {
+		siteName: 'PreViewCode'
+	};
+	applyTheme(themeTemplateData);
+
+	$(document).ready(function(){
+		previewAll($('#demoWrap'), $('#demoHTML'), $('#demoCSS'), $('#demoJS'))
+	});
+</script>
+</body>
+</html>
