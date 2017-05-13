@@ -1,188 +1,165 @@
-var defaultData = {
-	html: ['index.html'],
-	css: ["header-footer.css"],
-	js:[],
-	themeData: {
-		title: '',
-		menuItems: '',
-		author: '',
-		rootLink: '',
-		authorLink: 'mailto:gyx8899@126.com'
-	},
-	replacement: ["title", "menuItems", "authorLink", "author", "rootLink"]
-};
-function applyTheme(themeData)
+// Apply HeaderFooter Template;
+(function ($)
 {
-	initDefaultData();
+	function headerFooter(type, themeData)
+	{
+		this.typeIndex = headerFooter.DEFAULTS.types.indexOf(type);
+		this.typeIndex = this.typeIndex != -1 ? this.typeIndex : 0;
+		this.typeOptions = {
+			html: headerFooter.DEFAULTS.html[this.typeIndex],
+			css: headerFooter.DEFAULTS.css[this.typeIndex],
+			js: headerFooter.DEFAULTS.js[this.typeIndex]
+		};
+		this.themeData = $.extend({}, headerFooter.DEFAULTS.themeData[this.typeIndex], themeData);
 
-	defaultData.themeData = $.extend({}, defaultData.themeData, themeData);
-
-	loadLinkCSS(defaultData.css);
-	loadScritJS(defaultData.js);
-	loadThemeHTML(defaultData.html[0]);
-}
-function initDefaultData()
-{
-	// Init theme links
-	var rootLink = getParentPath(getCurrentJSURL('header-footer.js'), 'header-footer.js');
-	defaultData.themeData.rootLink = rootLink;
-	defaultData.html = processorResource(rootLink, defaultData.html);
-	defaultData.css = processorResource(rootLink, defaultData.css);
-	defaultData.js = processorResource(rootLink, defaultData.js);
-
-	// Init data from page
-	var element = document.querySelector('meta[name="author"]');
-	defaultData.themeData.author = element && element.getAttribute("content");
-	defaultData.themeData.title = $('title').text();
-}
-function processorResource(rootLink, resourceArray)
-{
-	for(var i = 0, length = resourceArray.length; i < length; i++)
-	{
-		resourceArray[i] = rootLink + resourceArray[i];
-	}
-	return resourceArray;
-}
-function loadThemeHTML(url)
-{
-	$.ajax({
-		url: url,
-		success: function (data)
-		{
-			getTemplate(data);
-		}
-	});
-}
-function getTemplate(data)
-{
-	var sourceHtml = $('<textarea />').text(data.toString()).val();
-	replaceTag('header', sourceHtml);
-	replaceTag('footer', sourceHtml);
-}
-function replaceTag(tag, sourceHTML)
-{
-	var tagHTMLArray = regExpG("<" + tag + ".*(?=)(.|\n)*?</" + tag + ">").exec(sourceHTML),
-			tagTemplate = tagHTMLArray && tagHTMLArray[0];
-	tagTemplate && applyData(tag, tagTemplate);
-}
-function applyData(tag, template)
-{
-	var comment = "<!-- " + tag + " -->", tagHTML = replaceDataArray(template, defaultData.replacement, defaultData.themeData);
-	if ($(tag).length > 0)
-	{
-		$(tag).remove();
-	}
-	if ($('main').length > 0)
-	{
-		if (tag == 'header')
-		{
-			$('main').before(comment + tagHTML);
-		}
-		else
-		{
-			$('main').after(comment + tagHTML);
-		}
-	}
-	else
-	{
-		if (tag == 'header')
-		{
-			$('body').prepend(comment + tagHTML);
-		}
-		else
-		{
-			$('body').append(comment + tagHTML);
-		}
+		this._applyTheme();
 	}
 
-}
-function replaceDataArray(template, placeholders, themeData)
-{
-	var resultTemplate = template, dataItem;
-	for(var i = 0, length = placeholders.length; i < length; i++)
-	{
-		dataItem = placeholders[i];
-		resultTemplate = resultTemplate.replace(regExpG("{{" + dataItem + "}}"), themeData[dataItem] || '');
-	}
-	return resultTemplate;
-}
-function loadLinkCSS(linkArray)
-{
-	for (var i = 0, length = linkArray.length; i < length; i++)
-	{
-		loadCSS(linkArray[i]);
-	}
-}
-function loadScritJS(scriptArray)
-{
-	for (var i = 0, length = scriptArray.length; i < length; i++)
-	{
-		loadScript(scriptArray[i]);
-	}
-}
-function regExpG(expStr)
-{
-	return new RegExp(expStr, "g");
-}
-function getParentPath(url, subTrial)
-{
-	return url.replace(subTrial, '');
-}
-function getCurrentJSURL(jsFileName)
-{
-	var scripts = document.getElementsByTagName("script");
-
-	for (var i = 0; i < scripts.length; i++)
-	{
-		var script = scripts.item(i);
-
-		if (script.src && script.src.match(jsFileName))
-		{
-			return script.src;
-		}
-	}
-}
-function loadCSS(url, callback)
-{
-	var link = document.createElement('link');
-	link.rel = 'stylesheet';
-	link.type = 'text/css';
-	link.href = url;
-	link.onload = function ()
-	{
-		callback && callback();
+	headerFooter.DEFAULTS = {
+		pluginFileName: 'header-footer.js',
+		types: ['owl'],
+		html: [['owl.html']],
+		css: [["owl.css"]],
+		js: [[]],
+		themeData: [{
+			title: '',
+			menuItems: '',
+			rootLink: '',
+			author: 'Steper Kuo',
+			authorLink: 'mailto:gyx8899@126.com'
+		}]
 	};
-	link.onerror = function ()
+	headerFooter.prototype._applyTheme = function ()
 	{
-		console.log("Error load css:" + url);
-	};
-	document.getElementsByTagName('head')[0].appendChild(link);
-}
-function loadScript(url, callback)
-{
-	var script = document.createElement("script");
-	script.type = "text/javascript";
+		this._initDefaultData();
 
-	if (script.readyState)
-	{  //IE
-		script.onreadystatechange = function ()
+		loadLinkCSS(this.typeOptions.css);
+		loadScritJS(this.typeOptions.js);
+
+		this._loadThemeHTML(this.typeOptions.html[0]);
+	};
+
+	headerFooter.prototype._initDefaultData = function ()
+	{
+		// Init theme links
+		var currentLink = this._getScriptURLWithFileName(headerFooter.DEFAULTS.pluginFileName);
+		var rootLink = this._getParentPathOffSubTrial(currentLink, headerFooter.DEFAULTS.pluginFileName);
+		this.themeData.rootLink = rootLink;
+		this.typeOptions.html = this._getURLsWithRootLinkAndFileNames(rootLink, this.typeOptions.html);
+		this.typeOptions.css = this._getURLsWithRootLinkAndFileNames(rootLink, this.typeOptions.css);
+		this.typeOptions.js = this._getURLsWithRootLinkAndFileNames(rootLink, this.typeOptions.js);
+
+		// Init data from page
+		var element = document.querySelector('meta[name="author"]');
+		this.themeData.author = (element && element.getAttribute("content")) || '';
+		this.themeData.title = $('title').text();
+	};
+
+	headerFooter.prototype._getURLsWithRootLinkAndFileNames = function (rootLink, fileNames)
+	{
+		var fileURLs = [];
+		for (var i = 0, length = fileNames.length; i < length; i++)
 		{
-			if (script.readyState == "loaded" ||
-					script.readyState == "complete")
+			fileURLs[i] = rootLink + fileNames[i];
+		}
+		return fileURLs;
+	};
+
+	headerFooter.prototype._loadThemeHTML = function (url)
+	{
+		var that = this;
+		$.ajax({
+			url: url,
+			success: function (data)
 			{
-				script.onreadystatechange = null;
-				callback && callback();
+				that._applyTemplate(data);
 			}
-		};
-	}
-	else
-	{  //Others
-		script.onload = function ()
-		{
-			callback && callback();
-		};
-	}
+		});
+	};
 
-	script.src = url;
-	document.body.appendChild(script);
-}
+	headerFooter.prototype._applyTemplate = function (data)
+	{
+		var sourceHtml = $('<textarea />').text(data.toString()).val();
+		this._replaceTag('header', sourceHtml);
+		this._replaceTag('footer', sourceHtml);
+	};
+
+	headerFooter.prototype._replaceTag = function (tag, sourceHTML)
+	{
+		var tagHTMLArray = regExpG("<" + tag + ".*(?=)(.|\n)*?</" + tag + ">").exec(sourceHTML),
+				tagTemplate = tagHTMLArray && tagHTMLArray[0];
+		tagTemplate && this._applyData(tag, tagTemplate);
+	};
+
+	headerFooter.prototype._applyData = function (tag, template)
+	{
+		var comment = "<!-- " + tag + " -->",
+				tagHTML = this._replaceData(template, this.themeData);
+		if ($(tag).length > 0)
+		{
+			$(tag).remove();
+		}
+		var $main = $('main');
+		if ($main.length > 0)
+		{
+			if (tag == 'header')
+			{
+				$main.before(comment + tagHTML);
+			}
+			else
+			{
+				$main.after(comment + tagHTML);
+			}
+		}
+		else
+		{
+			if (tag == 'header')
+			{
+				$('body').prepend(comment + tagHTML);
+			}
+			else
+			{
+				$('body').append(comment + tagHTML);
+			}
+		}
+	};
+
+	headerFooter.prototype._replaceData = function (template, themeData)
+	{
+		var resultTemplate = template, dataKeys = Object.keys(themeData), dataItem = null;
+		for (var i = 0, length = dataKeys.length; i < length; i++)
+		{
+			dataItem = dataKeys[i];
+			resultTemplate = resultTemplate.replace(regExpG("{{" + dataItem + "}}"), themeData[dataItem] || '');
+		}
+		return resultTemplate;
+	};
+
+	headerFooter.prototype._getScriptURLWithFileName = function (jsFileName)
+	{
+		var scripts = document.getElementsByTagName("script");
+
+		for (var i = 0; i < scripts.length; i++)
+		{
+			var script = scripts.item(i);
+
+			if (script.src && script.src.match(jsFileName))
+			{
+				return script.src;
+			}
+		}
+	};
+
+	headerFooter.prototype._getParentPathOffSubTrial = function (url, subTrial)
+	{
+		return url.replace(subTrial, '');
+	};
+
+	$.extend({
+		applyHeaderFooter: function (type, options)
+		{
+			"use strict";
+			new headerFooter(type, options);
+		}
+	})
+})(jQuery);
