@@ -94,7 +94,7 @@
 	headerFooter.prototype._applyData = function (tag, template)
 	{
 		var comment = "<!-- " + tag + " -->",
-				tagHTML = this._replaceData(template, this.themeData);
+				tagHTML = replaceTemplateExpressionWithData(template, this.themeData);
 		if ($(tag).length > 0)
 		{
 			$(tag).remove();
@@ -122,17 +122,6 @@
 				$('body').append(comment + tagHTML);
 			}
 		}
-	};
-
-	headerFooter.prototype._replaceData = function (template, themeData)
-	{
-		var resultTemplate = template, dataKeys = Object.keys(themeData), dataItem = null;
-		for (var i = 0, length = dataKeys.length; i < length; i++)
-		{
-			dataItem = dataKeys[i];
-			resultTemplate = resultTemplate.replace(regExpG("{{" + dataItem + "}}"), themeData[dataItem] || '');
-		}
-		return resultTemplate;
 	};
 
 	headerFooter.prototype._getScriptURLWithFileName = function (jsFileName)
