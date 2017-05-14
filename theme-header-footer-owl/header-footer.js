@@ -20,9 +20,10 @@
 		types: ['owl'],
 		html: [['owl.html']],
 		css: [["owl.css"]],
-		js: [[]],
+		js: [['owl.js']],
 		themeData: [{
 			title: '',
+			subTitle: '',
 			menuItems: '',
 			rootLink: '',
 			author: 'Steper Kuo',
@@ -33,8 +34,8 @@
 	{
 		this._initDefaultData();
 
-		loadLinkCSS(this.typeOptions.css);
-		loadScritJS(this.typeOptions.js);
+		loadCSS(this.typeOptions.css);
+		loadScript(this.typeOptions.js);
 
 		this._loadThemeHTML(this.typeOptions.html[0]);
 	};
@@ -60,7 +61,7 @@
 		var fileURLs = [];
 		for (var i = 0, length = fileNames.length; i < length; i++)
 		{
-			fileURLs[i] = rootLink + fileNames[i];
+			fileURLs[i] = (fileNames[i].indexOf('http') == -1) ? (rootLink + fileNames[i]) : fileNames[i];
 		}
 		return fileURLs;
 	};
@@ -81,6 +82,7 @@
 	{
 		var sourceHtml = $('<textarea />').text(data.toString()).val();
 		this._replaceTag('header', sourceHtml);
+		this._replaceTag('section', sourceHtml);
 		this._replaceTag('footer', sourceHtml);
 	};
 
@@ -94,8 +96,9 @@
 	headerFooter.prototype._applyData = function (tag, template)
 	{
 		var comment = "<!-- " + tag + " -->",
-				tagHTML = replaceTemplateExpressionWithData(template, this.themeData);
-		if ($(tag).length > 0)
+				tagHTML = replaceTemplateExpressionWithData(template, this.themeData),
+				resultHTML = comment + tagHTML;
+		if ((tag == 'header' || tag == 'footer') && $(tag).length > 0)
 		{
 			$(tag).remove();
 		}
@@ -104,22 +107,30 @@
 		{
 			if (tag == 'header')
 			{
-				$main.before(comment + tagHTML);
+				$main.before(resultHTML);
+			}
+			else if(tag == 'footer')
+			{
+				$main.after(resultHTML);
 			}
 			else
 			{
-				$main.after(comment + tagHTML);
+				$main.prepend(resultHTML);
 			}
 		}
 		else
 		{
 			if (tag == 'header')
 			{
-				$('body').prepend(comment + tagHTML);
+				$('body').prepend(resultHTML);
+			}
+			else if (tag == 'footer')
+			{
+				$('body').append(resultHTML);
 			}
 			else
 			{
-				$('body').append(comment + tagHTML);
+				$('header').after(resultHTML);
 			}
 		}
 	};
