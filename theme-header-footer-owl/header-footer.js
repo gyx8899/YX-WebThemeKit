@@ -56,8 +56,10 @@
 		var element = document.querySelector('meta[name="author"]');
 		this.themeData.author = (element && element.getAttribute("content")) || '';
 		this.themeData.title = $('title').text();
+
+		var referrer = document.referrer, referrerLeaf = referrer.length > 0 ? getFileNameFromURL(referrer) : '';
 		this.themeData.referrer = document.referrer;
-		this.themeData.referrerName = document.referrer.length > 0 ? 'Back' : '';
+		this.themeData.referrerName = referrer.length > 0 ? 'Back to ' + referrerLeaf : '';
 	};
 
 	headerFooter.prototype._getURLsWithRootLinkAndFileNames = function (rootLink, fileNames)
@@ -113,7 +115,7 @@
 			{
 				$main.before(resultHTML);
 			}
-			else if(tag == 'footer')
+			else if (tag == 'footer')
 			{
 				$main.after(resultHTML);
 			}
