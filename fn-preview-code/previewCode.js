@@ -1,22 +1,10 @@
-function escapeHtml(text)
-{
-	var map = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'"': '&quot;',
-		"'": '&#039;'
-	};
+loadCSS('https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.css');
+loadScript('https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js');
 
-	return text.replace(/[&<>"']/g, function (m)
-	{
-		return map[m];
-	});
-}
 function previewCode($codeParent, $demoCode, demoTitle)
 {
 	var codeString = $demoCode.html(),
-			cleanCode = $.trim(escapeHtml(codeString)),
+			cleanCode = $.trim(escapeHTML(codeString)),
 	codeTemplate = '<h3 class="h3-title">' + demoTitle + '</h3><pre><code>' + cleanCode + '</code></pre>';
 	$codeParent.append(codeTemplate);
 }
