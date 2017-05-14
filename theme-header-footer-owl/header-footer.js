@@ -25,6 +25,8 @@
 			title: '',
 			subTitle: '',
 			menuItems: '',
+			referrer: '',
+			referrerName: '',
 			rootLink: '',
 			author: 'Steper Kuo',
 			authorLink: 'mailto:gyx8899@126.com'
@@ -54,6 +56,8 @@
 		var element = document.querySelector('meta[name="author"]');
 		this.themeData.author = (element && element.getAttribute("content")) || '';
 		this.themeData.title = $('title').text();
+		this.themeData.referrer = document.referrer;
+		this.themeData.referrerName = document.referrer.length > 0 ? 'Back' : '';
 	};
 
 	headerFooter.prototype._getURLsWithRootLinkAndFileNames = function (rootLink, fileNames)
