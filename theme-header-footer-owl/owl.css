@@ -9484,7 +9484,8 @@ blockquote p
 {
 	background: #1ccacd
 }
-.demo-block:hover h5
+.demo-block:hover h5,
+.demo-block:hover h5.classify
 {
 	color: #FFF
 }
