@@ -57,9 +57,10 @@
 		this.themeData.author = (element && element.getAttribute("content")) || '';
 		this.themeData.title = $('title').text();
 
-		var referrer = document.referrer, referrerLeaf = referrer.length > 0 ? getFileNameFromURL(referrer) : '';
-		this.themeData.referrer = document.referrer;
-		this.themeData.referrerName = referrer.length > 0 ? 'Back to ' + referrerLeaf : '';
+		var pathNameItems = window.location.href.split('/');
+		var referrer = pathNameItems.slice(0, pathNameItems.length - 2).join('/') + '/';
+		this.themeData.referrer = referrer;
+		this.themeData.referrerName = referrer.length > 0 ? '< Back' : '';
 	};
 
 	headerFooter.prototype._getURLsWithRootLinkAndFileNames = function (rootLink, fileNames)
