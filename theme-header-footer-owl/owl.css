@@ -9492,6 +9492,10 @@ blockquote p
 {
 	font-weight: normal
 }
+.demo-block h5.classify
+{
+	color: #1ccacd;
+}
 code
 {
 	font-weight: bold;
