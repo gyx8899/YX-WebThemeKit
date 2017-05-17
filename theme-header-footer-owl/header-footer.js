@@ -1,7 +1,7 @@
 // Apply HeaderFooter Template;
 (function ($)
 {
-	function headerFooter(type, themeData)
+	function headerFooter(type, themeData, config)
 	{
 		this.typeIndex = headerFooter.DEFAULTS.types.indexOf(type);
 		this.typeIndex = this.typeIndex != -1 ? this.typeIndex : 0;
@@ -10,6 +10,7 @@
 			css: headerFooter.DEFAULTS.css[this.typeIndex],
 			js: headerFooter.DEFAULTS.js[this.typeIndex]
 		};
+		this.config = config || headerFooter.DEFAULTS.config;
 		this.themeData = $.extend({}, headerFooter.DEFAULTS.themeData[this.typeIndex], themeData);
 
 		this._applyTheme();
@@ -21,6 +22,7 @@
 		html: [['owl.html']],
 		css: [["owl.css"]],
 		js: [['owl.js']],
+		config: {tag: ['header', 'footer']},
 		themeData: [{
 			title: '',
 			subTitle: '',
@@ -88,9 +90,10 @@
 	headerFooter.prototype._applyTemplate = function (data)
 	{
 		var sourceHtml = $('<textarea />').text(data.toString()).val();
-		this._replaceTag('header', sourceHtml);
-		// this._replaceTag('section', sourceHtml);
-		this._replaceTag('footer', sourceHtml);
+		for(var i = 0; i < this.config.tag.length; i++)
+		{
+			this._replaceTag(this.config.tag[i], sourceHtml);
+		}
 	};
 
 	headerFooter.prototype._replaceTag = function (tag, sourceHTML)
@@ -163,10 +166,10 @@
 	};
 
 	$.extend({
-		applyHeaderFooter: function (type, options)
+		applyHeaderFooter: function (type, options, config)
 		{
 			"use strict";
-			new headerFooter(type, options);
+			new headerFooter(type, options, config);
 		}
 	})
 })(jQuery);
