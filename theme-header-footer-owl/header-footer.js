@@ -89,7 +89,7 @@
 	{
 		var sourceHtml = $('<textarea />').text(data.toString()).val();
 		this._replaceTag('header', sourceHtml);
-		this._replaceTag('section', sourceHtml);
+		// this._replaceTag('section', sourceHtml);
 		this._replaceTag('footer', sourceHtml);
 	};
 
