@@ -77,17 +77,10 @@
 
 	headerFooter.prototype._loadThemeHTML = function (url)
 	{
-		var that = this;
-		$.ajax({
-			url: url,
-			success: function (data)
-			{
-				that._applyTemplate(data);
-			}
-		});
+		getFileContent(url, 'applyTemplate', this);
 	};
 
-	headerFooter.prototype._applyTemplate = function (data)
+	headerFooter.prototype.applyTemplate = function (data)
 	{
 		var sourceHtml = $('<textarea />').text(data.toString()).val();
 		for(var i = 0; i < this.config.tag.length; i++)
