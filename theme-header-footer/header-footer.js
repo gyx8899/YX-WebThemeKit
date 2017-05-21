@@ -3,6 +3,7 @@
 {
 	function headerFooter(type, themeData, config)
 	{
+		this.type = type;
 		this.typeIndex = headerFooter.DEFAULTS.types.indexOf(type);
 		this.typeIndex = this.typeIndex != -1 ? this.typeIndex : 0;
 		this.typeOptions = {
@@ -70,7 +71,7 @@
 		var fileURLs = [];
 		for (var i = 0, length = fileNames.length; i < length; i++)
 		{
-			fileURLs[i] = (fileNames[i].indexOf('http') == -1) ? (rootLink + fileNames[i]) : fileNames[i];
+			fileURLs[i] = (fileNames[i].indexOf('http') == -1) ? (rootLink + this.type + '/' + fileNames[i]) : fileNames[i];
 		}
 		return fileURLs;
 	};
