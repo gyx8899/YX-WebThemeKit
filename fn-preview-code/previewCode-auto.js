@@ -1,9 +1,16 @@
 loadScript('https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.js', previewCodeCallback);
 function previewCodeCallback($codeParent, $demoHTML, $demoCSS, $demoJS, titleHTML, titleCSS, titleJS)
 {
-	$codeParent = $codeParent || $('#demoWrap');
-	$demoHTML = $demoHTML || $('#demoHTML');
-	$demoCSS = $demoCSS || $('#demoCSS');
-	$demoJS = $demoJS || $('#demoJS');
-	previewAll($codeParent, $demoHTML, $demoCSS, $demoJS, titleHTML, titleCSS, titleJS);
+	if (previewCodeCallbackCustom)
+	{
+		previewCodeCallbackCustom();
+	}
+	else
+	{
+		$codeParent = $codeParent || $('#demoWrap');
+		$demoHTML = $demoHTML || $('#demoHTML');
+		$demoCSS = $demoCSS || $('#demoCSS');
+		$demoJS = $demoJS || $('#demoJS');
+		previewAll($codeParent, $demoHTML, $demoCSS, $demoJS, titleHTML, titleCSS, titleJS);
+	}
 }
