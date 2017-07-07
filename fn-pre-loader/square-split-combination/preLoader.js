@@ -1,17 +1,12 @@
 loadCSS('https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css');
-setTimeout(function ()
+var preloader = document.createElement("div");
+preloader.id = 'preloader';
+preloader.innerHTML = '<div class="loader"><span></span><span></span><span></span><span></span></div>';
+setTimeout(function()
 {
-	$('body').prepend('<div id="preloader"><div class="loader"><span></span><span></span><span></span><span></span></div></div>');
-});
-
-$(document).ready(function ()
+	document.body.appendChild(preloader);
+}, 0);
+window.onload = function ()
 {
-	completePreLoader();
-});
-function completePreLoader()
-{
-	setTimeout(function ()
-	{
-		$('#preloader').remove();
-	});
-}
+	document.getElementById('preloader').style.display = "none";
+};
