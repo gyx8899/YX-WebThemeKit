@@ -12,7 +12,7 @@
 		// Define option defaults
 		var defaults = {
 			id: 'preLoader',
-			classname: 'loader-container',
+			className: 'loader-container',
 			content: null,
 			animateClassName: '',
 			resourcesUrls: [],
