@@ -1,5 +1,5 @@
 /**
- * Javascript plugin: PreLoader v1.1
+ * Javascript plugin: PreLoader v1.2
  *
  */
 ;(function ()
@@ -74,8 +74,10 @@
 	PreLoader.prototype.endPreLoader = function ()
 	{
 		var that = this;
+		var oldWindowOnload = window.onload;
 		window.onload = function ()
 		{
+			oldWindowOnload && oldWindowOnload();
 			that.destroy();
 		};
 	};
