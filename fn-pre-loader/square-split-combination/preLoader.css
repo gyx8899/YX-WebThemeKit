@@ -1,4 +1,4 @@
-div#preloader
+.loader-container
 {
 	position: fixed;
 	left: 0;
