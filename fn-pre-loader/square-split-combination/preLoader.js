@@ -1,8 +1,8 @@
 /**
- * Javascript plugin: PreLoader v1.0
+ * Javascript plugin: PreLoader v1.1
  *
  */
-(function ()
+;(function ()
 {
 	this.PreLoader = function (options)
 	{
@@ -12,6 +12,7 @@
 		// Define option defaults
 		var defaults = {
 			id: 'preLoader',
+			classname: 'loader-container',
 			content: null,
 			animateClassName: '',
 			resourcesUrls: [],
@@ -50,14 +51,15 @@
 			{
 				parentNode = that.options.parentNode;
 			}
-			parentNode.appendChild(that.getNewElement(that.options.id, that.options.content));
+			parentNode.appendChild(that.getNewElement(that.options.id, that.options.className, that.options.content));
 		}, 0);
 	};
 
-	PreLoader.prototype.getNewElement = function(id, content)
+	PreLoader.prototype.getNewElement = function(id, className, content)
 	{
 		var preLoader = document.createElement("div");
 		preLoader.id = id;
+		preLoader.className = className;
 		if (typeof content === 'string')
 		{
 			preLoader.innerHTML = content;
