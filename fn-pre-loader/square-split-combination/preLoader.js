@@ -134,9 +134,4 @@
 		document.getElementsByTagName('head')[0].appendChild(link);
 	}
 
-	// auto invoke
-	new PreLoader({
-		content: '<div class="loader"><span></span><span></span><span></span><span></span></div>',
-		resourcesUrls: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css']
-	});
 }());
