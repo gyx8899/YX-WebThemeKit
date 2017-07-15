@@ -1,8 +1,3 @@
-// Instance PreLoader immediately
-new PreLoader({
-	content: '<div class="loader"><span></span><span></span><span></span><span></span></div>',
-	resourcesUrls: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css']
-});
 /**
  * Javascript plugin: PreLoader v1.2
  *
@@ -140,3 +135,8 @@ new PreLoader({
 	}
 
 }());
+// Instance PreLoader immediately
+new PreLoader({
+	content: '<div class="loader"><span></span><span></span><span></span><span></span></div>',
+	resourcesUrls: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css']
+});
