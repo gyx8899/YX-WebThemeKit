@@ -74,10 +74,10 @@
 	PreLoader.prototype.endPreLoader = function ()
 	{
 		var that = this;
-		var oldWindowOnload = window.onload;
+		var oldWindowOnLoad = window.onload;
 		window.onload = function ()
 		{
-			oldWindowOnload && oldWindowOnload();
+			oldWindowOnLoad && oldWindowOnLoad();
 			that.destroy();
 		};
 	};
