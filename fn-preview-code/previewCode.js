@@ -22,10 +22,24 @@ function previewCode($codeParent, $demoCode, demoTitle)
 }
 function addCodeTemplate($codeParent, codeString, demoTitle)
 {
-	var cleanCode = $.trim(escapeHTML(codeString)),
+	var cleanCode = trimPrevSpace(escapeHTML(codeString)),
 			codeTemplate = '<h3 class="h3-title">' + demoTitle + '</h3><pre><code>' + cleanCode + '</code></pre>';
 	$codeParent.append(codeTemplate);
 }
+
+function trimPrevSpace(str)
+{
+	var strArray = str.split('\n'),
+			spaceLength = /(^\s*)/g.exec(strArray[1])[0].length,
+			numberOfLineBreaks = (str.match(/\n/g) || []).length,
+			newStrArray = [];
+	for (var i = 1, l = numberOfLineBreaks; i < l; i++)
+	{
+		newStrArray[i - 1] = strArray[i].slice(spaceLength);
+	}
+	return newStrArray.join('\n');
+}
+
 function previewAll($codeParent, $demoHTML, $demoCSS, $demoJS, titleHTML, titleCSS, titleJS)
 {
 	$codeParent && previewCode($codeParent, $demoHTML, titleHTML || 'HTML');
