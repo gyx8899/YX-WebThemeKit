@@ -9,8 +9,7 @@ function previewCode($codeParent, $demoCode, demoTitle)
 		var fileSrc = $(demoCodeArray[i]).attr('src');
 		if (fileSrc != null)
 		{
-			getFileContent(fileSrc, function (data)
-			{
+			getFileContent(fileSrc, function (data) {
 				addCodeTemplate($codeParent, data, getFileNameFromURL(fileSrc));
 			}, null);
 		}
@@ -20,6 +19,7 @@ function previewCode($codeParent, $demoCode, demoTitle)
 		}
 	}
 }
+
 function addCodeTemplate($codeParent, codeString, demoTitle)
 {
 	var cleanCode = trimPrevSpace(escapeHTML(codeString)),
@@ -30,14 +30,34 @@ function addCodeTemplate($codeParent, codeString, demoTitle)
 function trimPrevSpace(str)
 {
 	var strArray = str.split('\n'),
-			spaceLength = /(^\s*)/g.exec(strArray[1])[0].length,
-			numberOfLineBreaks = (str.match(/\n/g) || []).length,
-			newStrArray = [];
-	for (var i = 1, l = numberOfLineBreaks; i < l; i++)
+			beginIndex = getFirstNoSpaceValueIndex(strArray),
+			resultStr = '';
+	if (beginIndex !== -1)
 	{
-		newStrArray[i - 1] = strArray[i].slice(spaceLength);
+		var newStrArray = [],
+				reverseStrArray = strArray.slice(0).reverse(),
+				endIndex = strArray.length - getFirstNoSpaceValueIndex(reverseStrArray),
+				commonPreSpaceLength = /(^\s*)/g.exec(strArray[beginIndex])[0].length;
+		for (var i = beginIndex, j = 0; i < endIndex; i++)
+		{
+			newStrArray[j++] = strArray[i].slice(commonPreSpaceLength);
+		}
+		resultStr = newStrArray.join('\n');
 	}
-	return newStrArray.join('\n');
+	return resultStr;
+}
+
+function getFirstNoSpaceValueIndex(array)
+{
+	for (var i = 0, l = array.length; i < l; i++)
+	{
+		// Filter space line
+		if (/^[\s|\t]+$/.test(array[i]) === false && array[i] != '')
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 function previewAll($codeParent, $demoHTML, $demoCSS, $demoJS, titleHTML, titleCSS, titleJS)
