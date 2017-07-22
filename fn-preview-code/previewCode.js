@@ -37,10 +37,10 @@ function trimPrevSpace(str)
 		var newStrArray = [],
 				reverseStrArray = strArray.slice(0).reverse(),
 				endIndex = strArray.length - getFirstNoSpaceValueIndex(reverseStrArray),
-				commonPreSpaceLength = /(^\s*)/g.exec(strArray[beginIndex])[0].length;
+				commonPreSpace = /(^\s*)/g.exec(strArray[beginIndex])[0];
 		for (var i = beginIndex, j = 0; i < endIndex; i++)
 		{
-			newStrArray[j++] = strArray[i].slice(commonPreSpaceLength);
+			newStrArray[j++] = strArray[i].replace(commonPreSpace, '');
 		}
 		resultStr = newStrArray.join('\n');
 	}
