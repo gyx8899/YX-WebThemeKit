@@ -1,5 +1,5 @@
 /**
- * Javascript plugin: PreLoader v1.3
+ * Javascript plugin: PreLoader v1.4
  *
  */
 ;(function () {
@@ -160,12 +160,10 @@
 	};
 
 	PreLoader.prototype._endPreLoaderOnLoaded = function () {
-		var that = this,
-				oldWindowOnLoad = window.onload;
-		window.onload = function () {
-			oldWindowOnLoad && oldWindowOnLoad();
+		var that = this;
+		window.addEventListener("load", function () {
 			that.destroy();
-		};
+		}, false);
 	};
 
 	// Private Methods
