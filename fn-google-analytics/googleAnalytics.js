@@ -17,6 +17,6 @@
 	ga('create', currentSiteInfo.trackID, 'auto');
 	if (document.location.pathname.indexOf(currentSiteInfo.pathNameRoot + '/') > -1) {
 	  var page = document.location.pathname.replace('/' + currentSiteInfo.pathNameRoot + '/', '');
-	  ga('send', 'pageview', page);
+	  ga('send', 'pageview', page === '' ? currentSiteInfo.name : page);
 	}
 })();
