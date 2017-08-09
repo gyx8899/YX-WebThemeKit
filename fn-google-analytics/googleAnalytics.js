@@ -3,6 +3,10 @@
 		name: 'YX-JS-ToolKit',
 		pathNameRoot: 'YX-JS-ToolKit',
 		trackID: 'UA-104315567-1'
+	}, {
+		name: 'YX-WebThemeKit',
+		pathNameRoot: 'YX-WebThemeKit',
+		trackID: 'UA-104315567-2'
 	}], currentSiteInfo = siteInfo.filter(function (site) {
 		return site.pathNameRoot === document.location.pathname.split('/')[1];
 	});
