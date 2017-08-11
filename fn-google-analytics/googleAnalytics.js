@@ -15,8 +15,12 @@
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 	ga('create', currentSiteInfo.trackID, 'auto');
-	if (document.location.pathname.indexOf(currentSiteInfo.pathNameRoot + '/') > -1) {
-	  var page = document.location.pathname.replace('/' + currentSiteInfo.pathNameRoot + '/', '');
-	  ga('send', 'pageview', page === '' ? currentSiteInfo.name : page);
+	var pathName = document.location.pathname;
+	if (pathName.indexOf(currentSiteInfo.pathNameRoot + '/') > -1) {
+	  var page = pathName.replace('/' + currentSiteInfo.pathNameRoot + '/', '')
+			  .replace('/index.html', '')
+			  .replace('.html', '');
+	  page = page || currentSiteInfo.name; // set default page name
+	  ga('send', 'pageview', page);
 	}
 })();
