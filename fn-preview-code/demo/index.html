@@ -13,7 +13,7 @@
 	<link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic,300italic' rel='stylesheet' type='text/css'>
 
 	<!-- Style custom *** CSS -->
-	<style id="demoCSS" type="text/css">
+	<style data-toggle="previewCode" data-target="#demoWrap" type="text/css">
 		/* Demo's CSS here */
 		.bg
 		{
@@ -55,7 +55,7 @@
 		<div class="row">
 			<div id="demoWrap" class="large-12 columns">
 				<h3 id="overview">Overview</h3>
-				<div id="demoHTML">
+				<div data-toggle="previewCode" data-target="#demoWrap">
 					<!--Demo's html here-->
 					<div class="bg"></div>
 				</div>
@@ -72,12 +72,20 @@
 <script src="https://gyx8899.github.io/YX-JS-ToolKit/asset/js/common.js"></script>
 
 <!-- Script Theme *** JS -->
-<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/header-footer-auto.js" async defer></script>
+<script data-toggle="previewCode" data-target="#demoWrap" src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/header-footer-auto.js"></script>
 
 <!-- Script Demo *** JS -->
-<script src="../previewCode-auto.js"></script>
-<script id="demoJS" type="text/javascript">
-	// Demo's JS here
+<script src="../previewCode.js"></script>
+<script id="tapId" data-toggle="previewCode" data-target="#demoWrap" type="text/javascript">
+//	 Demo's JS here
+//		1. To special items;
+//			new PreviewCode(document.querySelectorAll('[data-toggle="previewCode"]'));
+//			new PreviewCode(document.querySelector('[data-toggle="previewCode"]'));
+//			new PreviewCode($('[data-toggle="previewCode"]'));
+//			new PreviewCode($('#tapId'));
+
+//		2. To all items on body;
+			new PreviewCode();
 </script>
 </body>
 </html>
