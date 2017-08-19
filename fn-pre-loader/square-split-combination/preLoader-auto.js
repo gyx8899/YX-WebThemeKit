@@ -1,5 +1,5 @@
 /**
- * Javascript plugin: PreLoader v1.4
+ * Javascript plugin: PreLoader v1.5
  *
  */
 ;(function () {
@@ -19,79 +19,51 @@
 			'right': -1
 		};
 
-		// Define option defaults
-		var defaults = {
-			id: 'preLoader',
-			coverLay: false,
-			coverLayInfo: {
-				backgroundColor: '#fff'
-			},
-			imageAnimate: false,
-			imageAnimateInfo: {
-				positionX: 'center', // center, left, right
-				positionY: 'center', // center, top, bottom
-				width: 50,
-				height: 50,
-				src: ''
-			},
-			endLoader: false, // on document.readyState = "complete"
-			loaderHTML: false,
-			loaderHTMLInfo: {
-				parentNode: null, // default value: document.body
-				content: ''  // element or html string
-			},
-			loaderCSS: false,
-			loaderCSSInfo: {
-				cssUrl: ''  // Support url string and array
-			},
-			loaderJS: false,
-			loaderJSInfo: {
-				jsUrl: ''  // Support url string and array
-			}
-		};
-
 		// Create options by extending defaults with the passed in arguments
-		if (options && typeof options === "object")
-		{
-			this.options = deepExtend(defaults, options);
-		}
+		this.options = deepExtend(PreLoader.DEFAULTS, options);
 		this.preLoaderElement = this._getPreLoader();
 
 		this._addPreLoader();
 
-		this.options.loaderCSS && this._loadResources(this.options.loaderCSSInfo.cssUrl, loadCSS);
-		this.options.loaderJS && this._loadResources(this.options.loaderJSInfo.jsUrl, loadJS);
+		loadResources(this.options.resources);
 
 		this.options.endLoader && this._endPreLoaderOnLoaded();
 	};
 
-	// Private Methods
+	PreLoader.DEFAULTS = {
+		id: 'preLoader',
+		// Custom overlay, default true
+		coverLay: true,
+		coverLayInfo: {
+			backgroundColor: '#fff'
+		},
+		// Custom with image, default none
+		imageAnimate: false,
+		imageAnimateInfo: {
+			positionX: 'center', // center, left, right
+			positionY: 'center', // center, top, bottom
+			width: 50,
+			height: 50,
+			src: ''
+		},
+		// Enable endLoader in document readyState = "complete", default true
+		endLoader: true,
+		// Custom parent(preload container) and content (preload display)
+		loaderHTML: false,
+		loaderHTMLInfo: {
+			parentNode: null, // default value: document.body
+			content: ''  // element or html string
+		},
+		// Load resources: css, js
+		resources: []
+	};
+
+	// Public Methods
 	PreLoader.prototype.destroy = function () {
 		this._destroy();
 	};
 
-	// Public Methods
-	PreLoader.prototype._loadResources = function (url, loadFn) {
-		if (url != null && url != '')
-		{
-			if (Array.isArray(url))
-			{
-				for (var i = 0, l = url.length; i < l; i++)
-				{
-					loadFn(url[i]);
-				}
-			}
-			else
-			{
-				loadFn(url);
-			}
-		}
-		else
-		{
-			console && console.log("URL: " + url + " is not a valid url!");
-		}
-	};
-
+	// Private Methods
 	PreLoader.prototype._getPreLoader = function () {
 		var preLoaderElement = null;
 		if (this.options.loaderHTML)
@@ -123,7 +95,7 @@
 
 	PreLoader.prototype._addPreLoader = function () {
 		var parentNode = this.options.loaderHTMLInfo.parentNode || document.body;
-		if (parentNode != null)
+		if (parentNode !== null)
 		{
 			parentNode && parentNode.appendChild(this.preLoaderElement);
 		}
@@ -200,7 +172,7 @@
 	}
 
 	/*
-	 * Functions: Dynamic load files in page;
+	 * Functions: for loading resources
 	 * */
 	function loadCSS(url, callback, context)
 	{
@@ -228,7 +200,7 @@
 		if (script.readyState)
 		{  //IE
 			script.onreadystatechange = function () {
-				if (script.readyState == "loaded" || script.readyState == "complete")
+				if (script.readyState === "loaded" || script.readyState === "complete")
 				{
 					script.onreadystatechange = null;
 					callback && (context ? context[callback]() : callback());
@@ -245,19 +217,78 @@
 		script.src = url;
 		document.body.appendChild(script);
 	}
+
+	// Functions: Parse and Process Url
+	var URL_TYPES = {
+			'js': {name: 'js', tagName: 'script', urlAttrName: 'src', loadFnName: 'loadJS', loadFnPromiseName: 'loadJSWithPromise'},
+			'css': {name: 'css', tagName: 'link', urlAttrName: 'href', loadFnName: 'loadCSS', loadFnPromiseName: 'loadJSWithPromise'}
+		};
+
+	function getFileNameFromURL(url)
+	{
+		return url.split('/').pop().split('#')[0].split('?')[0];
+	}
+
+	function checkResourceLoaded(url)
+	{
+		var type = getUrlTypeInfo(url),
+				typeSelector = type['tagName'] || '[src]',
+				allUrls = Array.prototype.slice.call(document.querySelectorAll(typeSelector))
+						.map(function (scriptElement) {
+							return scriptElement[type['urlAttrName']];
+						});
+		return allUrls.indexOf(url) !== -1;
+	}
+
+	function getUrlTypeInfo(url)
+	{
+		// Current only support js and css resources;
+		var resourceName = getFileNameFromURL(url),
+				resourceNameSplitArray = resourceName.split('.');
+		if (resourceNameSplitArray.length > 1)
+		{
+			return URL_TYPES[resourceNameSplitArray[resourceNameSplitArray.length - 1]];
+		}
+		return null;
+	}
+
+	function loadResource(url)
+	{
+		if (!checkResourceLoaded(url))
+		{
+			eval(getUrlTypeInfo(url).loadFnName)(url);
+		}
+	}
+
+	function loadResources(urls)
+	{
+		if (urls !== null && urls !== '')
+		{
+			if (Array.isArray(urls))
+			{
+				for (var i = 0, l = urls.length; i < l; i++)
+				{
+					loadResource(urls[i]);
+				}
+			}
+			else
+			{
+				loadResource(urls);
+			}
+		}
+		else
+		{
+			return null;
+		}
+	}
 }());
 
 // Instance PreLoader immediately
 var preLoader = new PreLoader({
-	endLoader: true,
-	coverLay: true,
 	loaderHTML: true,
 	loaderHTMLInfo: {
 		// content: '<div class="loader-container"><div class="loader"><span></span><span></span><span></span><span></span></div></div>'  // element or html string
 		content: '<div class="loader"><span></span><span></span><span></span><span></span></div>'  // element or html string
 	},
-	loaderCSS: true,
-	loaderCSSInfo: {
-		cssUrl: 'https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css'  // Support url string and array
-	}
+	resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css']
 });
