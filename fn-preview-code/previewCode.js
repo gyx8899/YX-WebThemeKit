@@ -1,39 +1,53 @@
 /**
- * Auto preview code
+ * Javascript plugin: PreviewCode v2.1
+ *
  * Setting in html tag:
  * 1. Required:
  * 1.1 data-toggle="previewCode"
  * 1.2 data-target="#[targetId]" (append preview code to target)
+ *
  * 2. Optional:
  * 2.1 data-title="titleAboveCode"
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
- * Not Support: IE (Promise not support IE)
+ * Not Support: IE (Promise not support in IE)
+ *
+ * Dependency: highlight
+ * https://highlightjs.org/
+ *
  * */
 (function () {
 
-	this.PreviewCode = function (elements) {
-		var defaults = {
-			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.css',
-				'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js'],
-			resourceType: {
-				css: {type: 'css', tagName: 'link', url: ''},
-				js: {type: 'js', tagName: 'script', url: ''}
-			}
+	this.PreviewCode = function (elements, options) {
+		this.resourceType = {
+			css: {type: 'css', tagName: 'link', url: ''},
+			js: {type: 'js', tagName: 'script', url: ''}
 		};
-		this._loadResources(elements, defaults);
+		this.options = deepExtend(PreviewCode.DEFAULTS, options);
+
+		this._loadResources(elements, this.options);
 	};
 
-	PreviewCode.prototype._loadResources = function (elements, defaults) {
+	PreviewCode.DEFAULTS = {
+		highlight: {
+			css: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.css',
+			js: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js',
+			others: []
+		},
+		initHighlight: null
+	};
+
+	PreviewCode.prototype._loadResources = function (elements, options) {
 		var that = this,
-				unLoadedResources = defaults.resources.filter(function (resource) {
+				allResources = [options.highlight.css, options.highlight.js].concat(options.highlight.others),
+				unLoadedResources = allResources.filter(function (resource) {
 					return !checkResourceLoaded(resource);
 				});
 		if (unLoadedResources.length)
 		{
 			var unLoadedResourcesInfo = unLoadedResources.map(function (resource) {
 						var type = getUrlType(resource),
-								resourceInfo = JSON.parse(JSON.stringify(defaults.resourceType[type.name]));
+								resourceInfo = JSON.parse(JSON.stringify(that.resourceType[type.name]));
 						resourceInfo.url = resource;
 						return resourceInfo;
 					}),
@@ -85,7 +99,23 @@
 						previewElementCode(element);
 					});
 		}
+
+		if (this.options.initHighlight)
+		{
+			this.options.initHighlight();
+		}
+		else
+		{
+			initHighlight();
+		}
 	};
+
+	// Functions: init Highlight
+	function initHighlight()
+	{
+		hljs.configure({tabReplace: '  '});
+		hljs.initHighlightingOnLoad();
+	}
 
 	// Functions: Process code
 	function previewElementCode(element)
@@ -305,5 +335,31 @@
 				callback && (context ? context[callback](data) : callback(data));
 			}
 		});
+	}
+
+	// Deep copy
+	function deepExtend(out) // arguments: (source, source1, source2, ...)
+	{
+		out = out || {};
+
+		for (var i = 1; i < arguments.length; i++)
+		{
+			var obj = arguments[i];
+
+			if (!obj)
+				continue;
+
+			for (var key in obj)
+			{
+				if (obj.hasOwnProperty(key))
+				{
+					if (typeof obj[key] === 'object')
+						out[key] = arguments.callee(out[key], obj[key]);
+					else
+						out[key] = obj[key];
+				}
+			}
+		}
+		return out;
 	}
 })();

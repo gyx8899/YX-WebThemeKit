@@ -72,9 +72,10 @@
 <script src="https://gyx8899.github.io/YX-JS-ToolKit/asset/js/common.js"></script>
 
 <!-- Script Theme *** JS -->
-<script data-toggle="previewCode" data-target="#demoWrap" src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/header-footer-auto.js"></script>
+<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/header-footer-auto.js"></script>
 
 <!-- Script Demo *** JS -->
+<!--<script src="../previewCode-auto.js"></script>-->
 <script src="../previewCode.js"></script>
 <script id="tapId" data-toggle="previewCode" data-target="#demoWrap" type="text/javascript">
 	//	Demo's JS here
@@ -85,7 +86,24 @@
 //	new PreviewCode($('#tapId'));
 
 	//	2. To all items on body;
+	var options = {
+		highlight: {
+			css: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
+			js: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js'
+		},
+		initHighlight: initCustomHighlight
+	};
+
+	//	Custom the config your highlight plugin
+	function initCustomHighlight()
+	{
+		hljs.configure({tabReplace: '****'});
+		hljs.initHighlightingOnLoad();
+	}
+
+//	new PreviewCode(null, options);
 	new PreviewCode();
+
 </script>
 </body>
 </html>
