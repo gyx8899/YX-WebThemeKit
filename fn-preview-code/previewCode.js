@@ -54,11 +54,11 @@
 					resourcePromise = unLoadedResourcesInfo.map(function (resourceInfo) {
 						if (resourceInfo.type === 'js')
 						{
-							return loadScript(resourceInfo.url);
+							return loadScriptWithPromise(resourceInfo.url);
 						}
 						else if (resourceInfo.type === 'css')
 						{
-							return loadCSS(resourceInfo.url);
+							return loadCSSWitPromise(resourceInfo.url);
 						}
 					});
 			Promise.all(resourcePromise).then(function () {
@@ -256,7 +256,7 @@
 	}
 
 	// loadCSS with Promise
-	function loadCSS(url)
+	function loadCSSWitPromise(url)
 	{
 		return new Promise(function (resolve, reject) {
 			if (!url)
@@ -279,7 +279,7 @@
 	}
 
 	// loadScript with Promise
-	function loadScript(url)
+	function loadScriptWithPromise(url)
 	{
 		return new Promise(function (resolve, reject) {
 			if (!url)
