@@ -238,7 +238,7 @@
 })();
 
 /**
- * Javascript plugin:   V1.1
+ * Javascript plugin: loadResources V1.2
  * Support list:
  * 1. css file;
  * 2. js file;
@@ -262,7 +262,7 @@
 				});
 				if (urls.length === 0)
 				{
-					callback();
+					callback && callback();
 				}
 				else if (urls.length === 1)
 				{
@@ -331,7 +331,7 @@
 					return eval(resourceInfo.loadFnPromiseName)(resourceInfo.url);
 				});
 		Promise.all(resourcePromise).then(function () {
-			callback();
+			callback && callback();
 		}).catch(function (error) {
 			console.log("Error: in load resources! " + error);
 		});
