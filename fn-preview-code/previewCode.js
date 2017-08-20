@@ -238,7 +238,7 @@
 })();
 
 /**
- * Javascript plugin:   V1.0
+ * Javascript plugin:   V1.1
  * Support list:
  * 1. css file;
  * 2. js file;
@@ -257,22 +257,40 @@
 		{
 			if (Array.isArray(urls))
 			{
-				if (callback)
+				urls = urls.filter(function (url) {
+					return (String(url) === url && url !== '');
+				});
+				if (urls.length === 0)
 				{
-					loadUrls(urls, callback);
+					callback();
+				}
+				else if (urls.length === 1)
+				{
+					this.loadResource(urls[0], callback);
 				}
 				else
 				{
-					var that = this;
-					urls.map(function (url) {
-						that.loadResource(url);
-					})
+					if (callback)
+					{
+						loadUrls(urls, callback);
+					}
+					else
+					{
+						var that = this;
+						urls.map(function (url) {
+							that.loadResource(url);
+						})
+					}
 				}
 			}
-			else
+			else if (String(urls) === urls)
 			{
 				this.loadResource(urls, callback);
 			}
+		}
+		else
+		{
+			callback && callback();
 		}
 	};
 
