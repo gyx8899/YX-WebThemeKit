@@ -238,7 +238,7 @@
 })();
 
 /**
- * Javascript plugin: loadResources V1.2
+ * Javascript plugin: loadResources V1.3
  * Support list:
  * 1. css file;
  * 2. js file;
@@ -266,7 +266,7 @@
 				}
 				else if (urls.length === 1)
 				{
-					this.loadResource(urls[0], callback);
+					loadResource(urls[0], callback);
 				}
 				else
 				{
@@ -278,14 +278,14 @@
 					{
 						var that = this;
 						urls.map(function (url) {
-							that.loadResource(url);
+							loadResource(url);
 						})
 					}
 				}
 			}
 			else if (String(urls) === urls)
 			{
-				this.loadResource(urls, callback);
+				loadResource(urls, callback);
 			}
 		}
 		else
@@ -311,14 +311,15 @@
 		}
 	};
 
-	LoadResources.prototype.loadResource = function (url) {
+	// Tools: functions
+	function loadResource(url)
+	{
 		if (!checkResourceLoaded(url))
 		{
-			LoadResources[getUrlTypeInfo(url).loadFnName](url);
+			eval(getUrlTypeInfo(url).loadFnName)(url);
 		}
-	};
+	}
 
-	// Tools: functions
 	function loadUrls(urls, callback)
 	{
 		var unLoadedResourcesInfo = urls.map(function (resource) {
@@ -462,14 +463,6 @@
 			return LoadResources.DEFAULTS[resourceNameSplitArray[resourceNameSplitArray.length - 1]];
 		}
 		return null;
-	}
-
-	function loadResource(url)
-	{
-		if (!checkResourceLoaded(url))
-		{
-			eval(getUrlTypeInfo(url).loadFnName)(url);
-		}
 	}
 })();
 // Auto Init previewCode;
