@@ -44,7 +44,10 @@
 				<span></span> <span></span> <span></span>
 			</a>
 			<div class="nav-bar">
-				<ul class="clearfix">{{menuItems}}</ul>
+				<ul class="clearfix">
+					<!--<li><a href="/index.html">Home</a></li>-->
+					{{menuItems}}
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -56,10 +59,10 @@
 	<section class="title">
 		<div class="row">
 			<div class="large-12 columns">
-				<a href="{{referrer}}">{{referrerName}}</a>
+				<a href="/">Title</a>
 			</div>
 			<div class="large-12 columns">
-				<h1>{{subTitle}}</h1>
+				<h1>subTitle</h1>
 			</div>
 		</div>
 	</section>
@@ -70,7 +73,7 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<h5>
-				<img class="avatar" src="{{rootLink}}owl/images/avatar.jpg" alt="avatar">
+				<img class="avatar" src="{{path}}/images/avatar.jpg" alt="avatar">
 				<a href="{{authorLink}}">{{author}}</a>
 			</h5>
 		</div>
@@ -81,7 +84,8 @@
 <script src="https://gyx8899.github.io/YX-JS-ToolKit/asset/js/common.js"></script>
 
 <!-- Script Theme *** JS -->
-<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/header-footer-auto.js"></script>
+<!--<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/header-footer-auto.js"></script>-->
+<script src="headerFooter-owl.js"></script>
 
 </body>
 </html>
