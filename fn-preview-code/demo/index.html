@@ -10,7 +10,6 @@
 	<title>Demo: background image with min-resolution</title>
 
 	<!-- Link *** CSS  -->
-	<link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic,300italic' rel='stylesheet' type='text/css'>
 
 	<!-- Style custom *** CSS -->
 	<style data-toggle="previewCode" data-target="#demoWrap" type="text/css">
@@ -86,7 +85,8 @@
 //	new PreviewCode($('#tapId'));
 
 	//	2. To all items on body;
-	var options = {
+//	Theme original Highlight;
+	var highlightOptions = {
 		highlight: {
 			css: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
 			js: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js'
@@ -101,8 +101,11 @@
 		hljs.initHighlightingOnLoad();
 	}
 
-//	new PreviewCode(null, options);
+//	Default theme Owl
 	new PreviewCode();
+
+//	Theme Original Highlight
+//	new PreviewCode(null, highlightOptions);
 
 </script>
 </body>
