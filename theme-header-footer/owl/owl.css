@@ -9470,8 +9470,8 @@ blockquote p
 .demo-block
 {
 	background: #eaeaea;
-	height: 6rem;
-	padding: 1rem;
+	min-height: 6rem;
+	padding: 10px;
 	margin-bottom: 1rem;
 	display: block;
 	-webkit-transition: background 200ms ease-in-out;
