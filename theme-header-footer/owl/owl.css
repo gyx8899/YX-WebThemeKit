@@ -9471,7 +9471,7 @@ blockquote p
 {
 	background: #eaeaea;
 	min-height: 6rem;
-	padding: 10px;
+	padding: 1rem;
 	margin-bottom: 1rem;
 	display: block;
 	-webkit-transition: background 200ms ease-in-out;
@@ -9479,6 +9479,13 @@ blockquote p
 	-ms-transition: background 200ms ease-in-out;
 	-o-transition: background 200ms ease-in-out;
 	transition: background 200ms ease-in-out
+}
+@media (max-width: 767px)
+{
+	.demo-block
+	{
+		padding: 10px;
+	}
 }
 .demo-block:hover
 {
