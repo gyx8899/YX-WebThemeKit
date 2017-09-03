@@ -75,8 +75,8 @@
 		console.log(new Date().toLocaleTimeString() + " 44 " + document.readyState);
 	};
 	var loadingImages = ['loading-dot-circle-rotate.svg', 'loading-pacman.gif', 'loading-three-dot-scaling.gif'];
-
-	var imageSelected = getQueryParam('load') || 'loading-dot-circle-rotate.svg';
+	var imageIndex = parseInt(getQueryParam('load') || 0, 10);
+	var imageSelected = loadingImages[imageIndex];
 	// Instance PreLoader immediately
 	new PreLoader({
 		imageAnimate: true,
