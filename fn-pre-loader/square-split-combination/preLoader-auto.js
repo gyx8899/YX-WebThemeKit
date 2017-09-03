@@ -1,4 +1,4 @@
-loadScriptResource('https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.js', loadPreLoaderCallback);
+loadScriptResource('https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/preLoader.js', loadPreLoaderCallback);
 
 function loadPreLoaderCallback()
 {
