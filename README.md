@@ -1,8 +1,8 @@
 ## YX-WebThemeKit (网页组件工具包)
 
-首先，可以点击[YX-WebThemeKit (Home Page)](https://gyx8899.github.io/YX-WebThemeKit/)预览;
+一. 点击[YX-WebThemeKit (Home Page)](https://gyx8899.github.io/YX-WebThemeKit/)预览;
 
-其次，可以直接引入脚本标签到页面，查看意想不到的Surprise;
+二. 尝试引入脚本标签到页面，查看意想不到的效果;
 
 ----
 
@@ -17,7 +17,7 @@
 3. 根据[`headerFooter.js`](https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.js)的要求修改你的`html`文件；
 4. 引入你修改后的自定义的脚本`headerFooter-[name].js`到你想要的页面；
 
-```
+```javascript
 <!-- Script Theme *** JS -->
 <script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-owl.js"></script>
 ```
@@ -28,7 +28,7 @@
 2. 支持自定义的动画样式；
 3. 支持自定义载入成功事件；
 
-```
+```javascript
 <!-- Script Preload code *** JS -->
 <script src="https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader-auto.js"></script>
 ```
@@ -37,15 +37,10 @@
 ##### [福利-开发者专有] 在你的示例页面，帮你直接显示你的代码，省去查看源代码。
 1. 在要显示的代码标签上，加上`data-toggle="previewCode"` 和 `data-target="#[targetId]"`，[targetId] 是代码要显示的位置标签Id；
 2. 可选项，自定义代码显示区域的标题，`data-title="titleAboveCode"`；
-```
+```javascript
 <!-- Script PreViewCode *** JS-->
 <script src="https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode-auto.js" defer></script>
 ```
-
-### 联系方式
-
- [Email: @gyx8899](<gyx8899@126.com>).
- 
 
 
  ## YX-WebThemeKit
@@ -69,7 +64,7 @@
  - Apply [`headerFooter.js`](https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.js) rules to your `html` file;
  - Import your custom `headerFooter-[name].js` to the anywhere page you want; 
  
- ```
+ ```javascript
  <!-- Script Theme *** JS -->
  <script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-owl.js"></script>
  ```
@@ -80,7 +75,7 @@
  - Support custom animation style;
  - Support custom loaded event to end the loading state;
  
- ```
+ ```javascript
  <!-- Script Preload code *** JS -->
  <script src="https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader-auto.js"></script>
  ```
@@ -89,7 +84,7 @@
  ##### Help your demo page display code directly; 
  - Just set `data-toggle="previewCode"` and target code displaying tag `data-target="#[targetId]"`; 
  - Optional code title's setting with `data-title="titleAboveCode"`; 
- ```
+ ```javascript
  <!-- Script PreViewCode *** JS-->
  <script src="https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode-auto.js" defer></script>
  ```
