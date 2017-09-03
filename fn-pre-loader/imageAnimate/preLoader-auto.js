@@ -405,6 +405,6 @@
 new PreLoader({
 	imageAnimate: true,
 	imageAnimateInfo: {
-		src: 'loading.svg'
+		src: 'loading-dot-circle-rotate.svg'
 	}
 });
