@@ -172,11 +172,124 @@
 
 	// Functions: loadResource
 	// Copy from common.js (https://gyx8899.github.io/YX-JS-ToolKit/asset/js/common.js)
+	var resourceMethod = {
+		loadCSS: function (url, callback, context) {
+			if (!url)
+				return;
+
+			if (Array.isArray(url))
+			{
+				// Process the url and callback if they are array;
+				parameterArrayToItem(arguments.callee, url, callback);
+			}
+			else
+			{
+				var link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = url;
+				link.onload = function () {
+					callback && (context ? context[callback]() : callback());
+				};
+				link.onerror = function () {
+					console.log("Error load css:" + url);
+				};
+				document.getElementsByTagName('head')[0].appendChild(link);
+			}
+		},
+		loadScript: function (url, callback, context) {
+			if (!url)
+				return;
+
+			if (Array.isArray(url))
+			{
+				// Process the url and callback if they are array;
+				parameterArrayToItem(arguments.callee, url, callback);
+			}
+			else
+			{
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+
+				if (script.readyState)
+				{  //IE
+					script.onreadystatechange = function () {
+						if (script.readyState === "loaded" || script.readyState === "complete")
+						{
+							script.onreadystatechange = null;
+							callback && (context ? context[callback]() : callback());
+						}
+					};
+				}
+				else
+				{  //Others
+					script.onload = function () {
+						callback && (context ? context[callback]() : callback());
+					};
+				}
+
+				script.src = url;
+				document.body.appendChild(script);
+			}
+		},
+		loadCSSWithPromise: function (url) {
+			return new Promise(function (resolve, reject) {
+				if (!url)
+				{
+					reject(new Error("url is null!"));
+				}
+
+				var link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = url;
+				link.onload = function () {
+					resolve();
+				};
+				link.onerror = function (error) {
+					reject(new Error(error));
+				};
+				document.getElementsByTagName('head')[0].appendChild(link);
+			});
+		},
+		loadScriptWithPromise: function (url) {
+			return new Promise(function (resolve, reject) {
+				if (!url)
+				{
+					reject(new Error("url is null!"));
+				}
+
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+
+				if (script.readyState)
+				{  //IE
+					script.onreadystatechange = function () {
+						if (script.readyState === "loaded" || script.readyState === "complete")
+						{
+							script.onreadystatechange = null;
+							resolve();
+						}
+					};
+				}
+				else
+				{  //Others
+					script.onload = function () {
+						resolve();
+					};
+				}
+
+				script.src = url;
+				document.body.appendChild(script);
+			});
+		}
+	};
+
 	function loadResource(url, callback)
 	{
 		if (!checkResourceLoaded(url))
 		{
-			window[getUrlTypeInfo(url).loadFn](url, callback);
+			resourceMethod[getUrlTypeInfo(url).loadFn](url, callback);
 		}
 	}
 
@@ -233,7 +346,7 @@
 		if (typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1)
 		{
 			var resourcePromise = unLoadedResourcesInfo.map(function (resourceInfo) {
-				return window[resourceInfo.loadFnPromise](resourceInfo.url);
+				return resourceMethod[resourceInfo.loadFnPromise](resourceInfo.url);
 			});
 			Promise.all(resourcePromise).then(function () {
 				callback && callback();
@@ -244,130 +357,10 @@
 		else
 		{
 			unLoadedResourcesInfo.forEach(function (resourceInfo) {
-				window[resourceInfo.loadFn](resourceInfo.url);
+				resourceMethod[resourceInfo.loadFn](resourceInfo.url);
 			});
 			callback && callback();
 		}
-	}
-
-	function loadCSS(url, callback, context)
-	{
-		if (!url)
-			return;
-
-		if (Array.isArray(url))
-		{
-			// Process the url and callback if they are array;
-			parameterArrayToItem(arguments.callee, url, callback);
-		}
-		else
-		{
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = url;
-			link.onload = function () {
-				callback && (context ? context[callback]() : callback());
-			};
-			link.onerror = function () {
-				console.log("Error load css:" + url);
-			};
-			document.getElementsByTagName('head')[0].appendChild(link);
-		}
-	}
-
-	function loadScript(url, callback, context)
-	{
-		if (!url)
-			return;
-
-		if (Array.isArray(url))
-		{
-			// Process the url and callback if they are array;
-			parameterArrayToItem(arguments.callee, url, callback);
-		}
-		else
-		{
-			var script = document.createElement("script");
-			script.type = "text/javascript";
-
-			if (script.readyState)
-			{  //IE
-				script.onreadystatechange = function () {
-					if (script.readyState === "loaded" || script.readyState === "complete")
-					{
-						script.onreadystatechange = null;
-						callback && (context ? context[callback]() : callback());
-					}
-				};
-			}
-			else
-			{  //Others
-				script.onload = function () {
-					callback && (context ? context[callback]() : callback());
-				};
-			}
-
-			script.src = url;
-			document.body.appendChild(script);
-		}
-	}
-
-	// loadCSS with Promise
-	function loadCSSWithPromise(url)
-	{
-		return new Promise(function (resolve, reject) {
-			if (!url)
-			{
-				reject(new Error("url is null!"));
-			}
-
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = url;
-			link.onload = function () {
-				resolve();
-			};
-			link.onerror = function (error) {
-				reject(new Error(error));
-			};
-			document.getElementsByTagName('head')[0].appendChild(link);
-		});
-	}
-
-	// loadScript with Promise
-	function loadScriptWithPromise(url)
-	{
-		return new Promise(function (resolve, reject) {
-			if (!url)
-			{
-				reject(new Error("url is null!"));
-			}
-
-			var script = document.createElement("script");
-			script.type = "text/javascript";
-
-			if (script.readyState)
-			{  //IE
-				script.onreadystatechange = function () {
-					if (script.readyState === "loaded" || script.readyState === "complete")
-					{
-						script.onreadystatechange = null;
-						resolve();
-					}
-				};
-			}
-			else
-			{  //Others
-				script.onload = function () {
-					resolve();
-				};
-			}
-
-			script.src = url;
-			document.body.appendChild(script);
-		});
 	}
 
 	function getFileNameFromURL(url)
@@ -398,15 +391,15 @@
 					name: 'js',
 					tagName: 'script',
 					urlAttrName: 'src',
-					loadFn: loadScript.name,
-					loadFnPromise: loadScriptWithPromise.name
+					loadFn: resourceMethod.loadScript.name,
+					loadFnPromise: resourceMethod.loadScriptWithPromise.name
 				},
 				'css': {
 					name: 'css',
 					tagName: 'link',
 					urlAttrName: 'href',
-					loadFn: loadCSS.name,
-					loadFnPromise: loadCSSWithPromise.name
+					loadFn: resourceMethod.loadCSS.name,
+					loadFnPromise: resourceMethod.loadCSSWithPromise.name
 				}
 			};
 			return urlType[resourceNameSplitArray.pop()];
