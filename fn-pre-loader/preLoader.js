@@ -169,11 +169,9 @@
 		}
 		return out;
 	}
-}());
 
-// Functions: loadResource
-// Copy from common.js (https://gyx8899.github.io/YX-JS-ToolKit/asset/js/common.js)
-(function () {
+	// Functions: loadResource
+	// Copy from common.js (https://gyx8899.github.io/YX-JS-ToolKit/asset/js/common.js)
 	function loadResource(url, callback)
 	{
 		if (!checkResourceLoaded(url))
