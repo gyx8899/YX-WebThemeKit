@@ -391,15 +391,15 @@
 					name: 'js',
 					tagName: 'script',
 					urlAttrName: 'src',
-					loadFn: resourceMethod.loadScript.name,
-					loadFnPromise: resourceMethod.loadScriptWithPromise.name
+					loadFn: "loadScript",
+					loadFnPromise: "loadScriptWithPromise"
 				},
 				'css': {
 					name: 'css',
 					tagName: 'link',
 					urlAttrName: 'href',
-					loadFn: resourceMethod.loadCSS.name,
-					loadFnPromise: resourceMethod.loadCSSWithPromise.name
+					loadFn: "loadCSS",
+					loadFnPromise: "loadCSSWithPromise"
 				}
 			};
 			return urlType[resourceNameSplitArray.pop()];
