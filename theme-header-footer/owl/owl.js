@@ -16,7 +16,7 @@ $(document).ready(function ()
 	{
 		var sidenav = $('ul.side-nav').find('a');
 		var url = window.location.pathname.split('/');
-		var url = url[url.length - 1];
+		url = url[url.length - 1];
 
 		sidenav.each(function (i, e)
 		{
