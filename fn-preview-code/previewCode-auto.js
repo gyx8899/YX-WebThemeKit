@@ -3,5 +3,5 @@ loadScript('https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode
 function loadPreviewCodeCallback()
 {
 	// Auto Init previewCode;
-	new PreviewCode();
+	return new PreviewCode();
 }

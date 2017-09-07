@@ -14,5 +14,5 @@ function headerFooterOwlCallback()
 			authorLink: 'mailto:gyx8899@126.com'
 		}
 	};
-	new HeaderFooter(options);
+	return new HeaderFooter(options);
 }
