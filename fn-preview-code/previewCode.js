@@ -176,7 +176,7 @@
 		for (var i = 0, l = array.length; i < l; i++)
 		{
 			// Filter space line
-			if (/^[\s|\t]+$/.test(array[i]) === false && array[i] != '')
+			if (/^[\s|\t]+$/.test(array[i]) === false && array[i] !== '')
 			{
 				return i;
 			}
