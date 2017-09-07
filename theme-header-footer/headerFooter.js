@@ -17,7 +17,7 @@
  *
  * **/
 (function () {
-	this.HeaderFooter = function headerFooter(options) {
+	this.HeaderFooter = function (options) {
 		options = this._processResource(options);
 
 		this.options = deepExtend({}, HeaderFooter.DEFAULTS, options);
