@@ -1,0 +1,67 @@
+.preloader
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #fff;
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	align-items: center;
+	z-index: 2000;
+}
+.spinner-dots
+{
+	width: 70px;
+	text-align: center
+}
+.spinner-dots span
+{
+	width: 12px;
+	height: 12px;
+	background-color: #33cabb;
+	border-radius: 100%;
+	display: inline-block;
+	-webkit-animation: spinner-dots 1.4s infinite ease-in-out both;
+	animation: spinner-dots 1.4s infinite ease-in-out both
+}
+.spinner-dots .dot1
+{
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s
+}
+.spinner-dots .dot2
+{
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s
+}
+@-webkit-keyframes spinner-dots
+{
+	0%, 80%, 100%
+	{
+		-webkit-transform: scale(0);
+		transform: scale(0)
+	}
+	40%
+	{
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+}
+@keyframes spinner-dots
+{
+	0%, 80%, 100%
+	{
+		-webkit-transform: scale(0);
+		transform: scale(0)
+	}
+	40%
+	{
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+}
