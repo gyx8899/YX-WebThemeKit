@@ -1,0 +1,110 @@
+.spinner-linear
+{
+	position: relative;
+	height: 2px;
+	display: block;
+	width: 100%;
+	background-color: #f5f6f7;
+	border-radius: 2px;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	overflow: hidden
+}
+.spinner-linear .line
+{
+	background-color: #33cabb
+}
+.spinner-linear .line::before, .spinner-linear .line::after
+{
+	content: '';
+	position: absolute;
+	background-color: inherit;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	will-change: left, right
+}
+.spinner-linear .line::before
+{
+	-webkit-animation: spinner-linear 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+	animation: spinner-linear 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite
+}
+.spinner-linear .line::after
+{
+	-webkit-animation: spinner-linear-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+	animation: spinner-linear-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+	-webkit-animation-delay: 1.15s;
+	animation-delay: 1.15s
+}
+@-webkit-keyframes spinner-linear
+{
+	0%
+	{
+		left: -35%;
+		right: 100%
+	}
+	60%
+	{
+		left: 100%;
+		right: -90%
+	}
+	100%
+	{
+		left: 100%;
+		right: -90%
+	}
+}
+@keyframes spinner-linear
+{
+	0%
+	{
+		left: -35%;
+		right: 100%
+	}
+	60%
+	{
+		left: 100%;
+		right: -90%
+	}
+	100%
+	{
+		left: 100%;
+		right: -90%
+	}
+}
+@-webkit-keyframes spinner-linear-short
+{
+	0%
+	{
+		left: -200%;
+		right: 100%
+	}
+	60%
+	{
+		left: 107%;
+		right: -8%
+	}
+	100%
+	{
+		left: 107%;
+		right: -8%
+	}
+}
+@keyframes spinner-linear-short
+{
+	0%
+	{
+		left: -200%;
+		right: 100%
+	}
+	60%
+	{
+		left: 107%;
+		right: -8%
+	}
+	100%
+	{
+		left: 107%;
+		right: -8%
+	}
+}
