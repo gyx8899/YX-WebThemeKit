@@ -10,7 +10,6 @@
  * 2.1 data-title="titleAboveCode"
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
- * Not Support: IE (Promise not support in IE)
  *
  * Dependency:
  * 1. highlight, https://highlightjs.org/
