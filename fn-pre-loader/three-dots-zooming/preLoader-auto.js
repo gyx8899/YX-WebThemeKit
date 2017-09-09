@@ -79,7 +79,7 @@
 			preLoaderImg.style.top = 'calc(' + this.positionValue[animateInfo.positionY] + ' + ' + parseInt(animateInfo.height * this.offsetValue[animateInfo.positionY], 10) + 'px)';
 			preLoaderElement.appendChild(preLoaderImg);
 		}
-		if (this.options.coverLay)
+		if (this.options.coverLay && (this.options.loaderHTML || this.options.imageAnimate))
 		{
 			preLoaderElement.style.position = 'fixed';
 			preLoaderElement.style.left = 0;
@@ -407,7 +407,6 @@
 		return null;
 	}
 })();
-
 
 // Instance PreLoader immediately
 new PreLoader({
