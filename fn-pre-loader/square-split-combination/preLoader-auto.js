@@ -22,7 +22,7 @@
 		this.options = deepExtend(PreLoader.DEFAULTS, options);
 		this.preLoaderElement = this._getPreLoader();
 
-		this._addPreLoader();
+		this.preLoaderElement && this._addPreLoader();
 
 		loadResources(this.options.resources);
 
