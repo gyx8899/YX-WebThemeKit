@@ -393,6 +393,304 @@ select
 }
 @media only screen
 {
+	.x-small-push-0
+	{
+		position: relative;
+		left: 0;
+		right: auto
+	}
+	.x-small-pull-0
+	{
+		position: relative;
+		right: 0;
+		left: auto
+	}
+	.x-small-push-1
+	{
+		position: relative;
+		left: 8.3333333333%;
+		right: auto
+	}
+	.x-small-pull-1
+	{
+		position: relative;
+		right: 8.3333333333%;
+		left: auto
+	}
+	.x-small-push-2
+	{
+		position: relative;
+		left: 16.6666666667%;
+		right: auto
+	}
+	.x-small-pull-2
+	{
+		position: relative;
+		right: 16.6666666667%;
+		left: auto
+	}
+	.x-small-push-3
+	{
+		position: relative;
+		left: 25%;
+		right: auto
+	}
+	.x-small-pull-3
+	{
+		position: relative;
+		right: 25%;
+		left: auto
+	}
+	.x-small-push-4
+	{
+		position: relative;
+		left: 33.3333333333%;
+		right: auto
+	}
+	.x-small-pull-4
+	{
+		position: relative;
+		right: 33.3333333333%;
+		left: auto
+	}
+	.x-small-push-5
+	{
+		position: relative;
+		left: 41.6666666667%;
+		right: auto
+	}
+	.x-small-pull-5
+	{
+		position: relative;
+		right: 41.6666666667%;
+		left: auto
+	}
+	.x-small-push-6
+	{
+		position: relative;
+		left: 50%;
+		right: auto
+	}
+	.x-small-pull-6
+	{
+		position: relative;
+		right: 50%;
+		left: auto
+	}
+	.x-small-push-7
+	{
+		position: relative;
+		left: 58.3333333333%;
+		right: auto
+	}
+	.x-small-pull-7
+	{
+		position: relative;
+		right: 58.3333333333%;
+		left: auto
+	}
+	.x-small-push-8
+	{
+		position: relative;
+		left: 66.6666666667%;
+		right: auto
+	}
+	.x-small-pull-8
+	{
+		position: relative;
+		right: 66.6666666667%;
+		left: auto
+	}
+	.x-small-push-9
+	{
+		position: relative;
+		left: 75%;
+		right: auto
+	}
+	.x-small-pull-9
+	{
+		position: relative;
+		right: 75%;
+		left: auto
+	}
+	.x-small-push-10
+	{
+		position: relative;
+		left: 83.3333333333%;
+		right: auto
+	}
+	.x-small-pull-10
+	{
+		position: relative;
+		right: 83.3333333333%;
+		left: auto
+	}
+	.x-small-push-11
+	{
+		position: relative;
+		left: 91.6666666667%;
+		right: auto
+	}
+	.x-small-pull-11
+	{
+		position: relative;
+		right: 91.6666666667%;
+		left: auto
+	}
+	.column, .columns
+	{
+		position: relative;
+		padding-left: .9375rem;
+		padding-right: .9375rem;
+		float: left
+	}
+	.x-small-1
+	{
+		width: 8.3333333333%
+	}
+	.x-small-2
+	{
+		width: 16.6666666667%
+	}
+	.x-small-3
+	{
+		width: 25%
+	}
+	.x-small-4
+	{
+		width: 33.3333333333%
+	}
+	.x-small-5
+	{
+		width: 41.6666666667%
+	}
+	.x-small-6
+	{
+		width: 50%
+	}
+	.x-small-7
+	{
+		width: 58.3333333333%
+	}
+	.x-small-8
+	{
+		width: 66.6666666667%
+	}
+	.x-small-9
+	{
+		width: 75%
+	}
+	.x-small-10
+	{
+		width: 83.3333333333%
+	}
+	.x-small-11
+	{
+		width: 91.6666666667%
+	}
+	.x-small-12
+	{
+		width: 100%
+	}
+	.x-small-offset-0
+	{
+		margin-left: 0 !important
+	}
+	.x-small-offset-1
+	{
+		margin-left: 8.3333333333% !important
+	}
+	.x-small-offset-2
+	{
+		margin-left: 16.6666666667% !important
+	}
+	.x-small-offset-3
+	{
+		margin-left: 25% !important
+	}
+	.x-small-offset-4
+	{
+		margin-left: 33.3333333333% !important
+	}
+	.x-small-offset-5
+	{
+		margin-left: 41.6666666667% !important
+	}
+	.x-small-offset-6
+	{
+		margin-left: 50% !important
+	}
+	.x-small-offset-7
+	{
+		margin-left: 58.3333333333% !important
+	}
+	.x-small-offset-8
+	{
+		margin-left: 66.6666666667% !important
+	}
+	.x-small-offset-9
+	{
+		margin-left: 75% !important
+	}
+	.x-small-offset-10
+	{
+		margin-left: 83.3333333333% !important
+	}
+	.x-small-offset-11
+	{
+		margin-left: 91.6666666667% !important
+	}
+	.x-small-reset-order
+	{
+		float: left;
+		left: auto;
+		margin-left: 0;
+		margin-right: 0;
+		right: auto
+	}
+	.column.x-small-centered, .columns.x-small-centered
+	{
+		margin-left: auto;
+		margin-right: auto;
+		float: none
+	}
+	.column.x-small-uncentered, .columns.x-small-uncentered
+	{
+		float: left;
+		margin-left: 0;
+		margin-right: 0
+	}
+	.column.x-small-centered:last-child, .columns.x-small-centered:last-child
+	{
+		float: none
+	}
+	.column.x-small-uncentered:last-child, .columns.x-small-uncentered:last-child
+	{
+		float: left
+	}
+	.column.x-small-uncentered.opposite, .columns.x-small-uncentered.opposite
+	{
+		float: right
+	}
+	.row.x-small-collapse > .column, .row.x-small-collapse > .columns
+	{
+		padding-left: 0;
+		padding-right: 0
+	}
+	.row.x-small-collapse .row
+	{
+		margin-left: 0;
+		margin-right: 0
+	}
+	.row.x-small-uncollapse > .column, .row.x-small-uncollapse > .columns
+	{
+		padding-left: .9375rem;
+		padding-right: .9375rem;
+		float: left
+	}
+}
+@media only screen and (min-width: 30em)
+{
 	.small-push-0
 	{
 		position: relative;
