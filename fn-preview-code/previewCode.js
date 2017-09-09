@@ -1,5 +1,5 @@
 /**
- * Javascript plugin: PreviewCode v2.2
+ * Javascript plugin: PreviewCode v2.3
  *
  * Setting in html tag:
  * 1. Required:
@@ -9,6 +9,7 @@
  * 2. Optional:
  * 2.1 data-title="titleAboveCode"
  * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
+ * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -87,17 +88,28 @@
 	{
 		var targetElement = document.querySelector(element.getAttribute('data-target')),
 				previewPosition = element.getAttribute('data-position') || 'append',
+				previewFetch = element.getAttribute('data-fetch'),
 				previewHTML = element.innerHTML,
 				previewTitle = getPreviewTitle(element),
 				elementTag = element.tagName.toLowerCase(),
 				elementLink = '';
-		if (elementTag === 'script')
+		if (previewFetch === 'file')
 		{
-			elementLink = element.src;
+			if (elementTag === 'script')
+			{
+				elementLink = element.src;
+			}
+			else if (elementTag === 'link')
+			{
+				elementLink = element.href;
+			}
 		}
-		else if (elementTag === 'link')
+		else
 		{
-			elementLink = element.href;
+			if((elementTag === 'script' && element.src) || (elementTag === 'link' && element.href))
+			{
+				previewHTML = element.outerHTML;
+			}
 		}
 		if (elementLink)
 		{
