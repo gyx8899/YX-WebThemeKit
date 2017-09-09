@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="Steper Kuo">
+	<title>Demo: PreLoader - Pace</title>
+
+	<!-- Style custom *** CSS -->
+	<style type="text/css">
+		.themes
+		{
+			overflow: hidden;
+			text-align: center;
+		}
+		.theme
+		{
+			width: 46%;
+			text-align: center;
+		}
+		.theme.even
+		{
+			float: left;
+			clear: both;
+		}
+		.theme.odd
+		{
+			float: right;
+		}
+		@media (max-width: 480px)
+		{
+			.theme
+			{
+				width: 100%;
+			}
+			.theme.even,
+			.theme.odd
+			{
+				float: none;
+			}
+		}
+		.browser
+		{
+			background: #e0e0e0;
+			border: 4px solid #e0e0e0;
+			width: 100%;
+			height: 12rem;
+			padding-top: 20px;
+			margin: 0 0 10px;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		.browser iframe
+		{
+			border: 0;
+			background: #fff;
+			height: 100%;
+			width: 100%;
+		}
+		.btn-link
+		{
+			display: block;
+			width: 150px;
+			margin: 0 auto;
+			font-size: 20px;
+			border-radius: 0;
+			border-style: solid;
+			border-width: 0;
+			cursor: pointer;
+			font-weight: normal;
+			line-height: normal;
+			position: relative;
+			text-align: center;
+			text-decoration: none;
+			padding: 1rem 2rem 1.0625rem 2rem;
+			background-color: #008CBA;
+			border-color: #007095;
+			color: #fff;
+			transition: background-color 300ms ease-out;
+		}
+		.btn-link:hover
+		{
+			background-color: #007095;
+		}
+		.download-link
+		{
+			text-decoration: underline;
+		}
+	</style>
+
+	<!--Jquery.js, HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Script Google Analytics *** JS -->
+	<script src="https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js"></script>
+
+	<link data-toggle="previewCode" data-target="#overview" data-position="insertAfter" data-title="false" href="pace-minimal.css" rel="stylesheet"/>
+</head>
+<body>
+
+<main>
+
+	<!-- Demos -->
+	<section id="demos">
+		<div class="row">
+			<div id="demoWrap" class="large-12 columns">
+				<h3 id="overview">Using: Import in &lt;head&gt;&lt;/head&gt;</h3>
+				<a class="btn-link" href="https://raw.github.com/HubSpot/pace/v1.0.0/pace.min.js">PACE.JS</a>
+				<!--Introduction here-->
+				<h5>
+					Below demo comes from <a href="http://github.hubspot.com/pace/docs/welcome/">"Pace" Official Site</a>.
+				</h5>
+				<div class="themes"></div>
+			</div>
+		</div>
+	</section>
+</main>
+<!-- Script Google Analytics *** JS -->
+<script src="https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js"></script>
+
+<!-- Script Common *** JS -->
+<script src="https://gyx8899.github.io/YX-JS-ToolKit/asset/js/common.js"></script>
+
+<!-- Script Theme *** JS -->
+<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-owl.js"></script>
+
+<!-- Script PreViewCode *** JS-->
+<script src="https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode-auto.js" defer></script>
+
+<script data-toggle="previewCode" data-target="#overview" data-position="insertAfter" data-title="false" type="text/javascript" src="pace.min.js"></script>
+
+<script src="color.js"></script>
+<script src="themes.js"></script>
+<script>
+	$(function () {
+
+		var themes = [{
+			name: 'minimal',
+			title: 'Minimal',
+			author: 'adamschwartz'
+		}, {
+			name: 'flash',
+			title: 'Flash',
+			author: 'adamschwartz'
+		}, {
+			name: 'barber-shop',
+			title: 'Barber Shop',
+			author: 'adamschwartz'
+		}, {
+			name: 'mac-osx',
+			title: 'Mac OSX',
+			author: 'adamschwartz'
+		}, {
+			name: 'fill-left',
+			title: 'Fill Left',
+			author: 'adamschwartz'
+		}, {
+			name: 'flat-top',
+			title: 'Flat Top',
+			author: 'adamschwartz'
+		}, {
+			name: 'big-counter',
+			title: 'Big Counter',
+			author: 'adamschwartz'
+		}, {
+			name: 'corner-indicator',
+			title: 'Corner Indicator',
+			author: 'adamschwartz'
+		}, {
+			name: 'bounce',
+			title: 'Bounce',
+			author: 'adamschwartz'
+		}, {
+			name: 'loading-bar',
+			title: 'Loading Bar',
+			author: 'gavJackson'
+		}, {
+			name: 'center-circle',
+			title: 'Center Circle',
+			author: 'adamschwartz'
+		}, {
+			name: 'center-atom',
+			title: 'Center Atom',
+			author: 'kennyglenn'
+		}, {
+			name: 'center-radar',
+			title: 'Center Radar',
+			author: 'kennyglenn'
+		}, {
+			name: 'center-simple',
+			title: 'Center Simple',
+			author: 'dineshgithub'
+		}];
+
+		var init = function () {
+			$.each(themes, function (i, theme) {
+				$('.themes').append('<div class="theme ' + (i % 2 === 0 ? 'even' : 'odd') + '">' +
+						'<h3>' + theme.title + '</h3>' +
+						(theme.author ? '<br/><a class="author" href="https://github.com/' + theme.author + '" target="_blank" rel="nofollow">@' + theme.author + '</a></h4>' : '') +
+						'<p><a href="http://github.hubspot.com/pace/templates/pace-theme-' + theme.name + '.tmpl.css" class="download-link" data-theme="' + theme.name + '" download="' + theme.name + '">' + theme.name + '.tmpl.css</a></p>' +
+						'<div class="browser"><iframe data-theme="' + theme.name + '"></iframe></div>' +
+						'</div>');
+			});
+
+			var $color = $('input[type="color"]');
+
+			var cssCache = {};
+			var initFrame = function (frame, color) {
+				if ($color.val() != '#2299dd')
+					color = $color.val();
+
+				var $styleEl = $('<style>')
+				$(frame).contents().find('body').append($styleEl);
+
+				var context = {};
+				if (color)
+					context.color = color;
+
+				var themeName = $(frame).data('theme')
+				loadTheme(themeName, function (theme) {
+					body = compileTheme(theme, context);
+
+					cssCache[themeName] = body;
+
+					$styleEl.html(body);
+				});
+
+				$(frame).contents().find('.pace').addClass('pace-active');
+			};
+
+			var updateColor = function (color) {
+				$('.browser iframe').each(function () {
+					initFrame(this, color);
+				});
+			};
+
+			var downloadTheme = function (theme) {
+				location.href = 'data:text/css,' + encodeURIComponent(cssCache[theme]);
+			};
+
+			$('.browser iframe').each(function () {
+				var _this = this;
+
+				doc = (this.contentWindow || this.documentWindow).document;
+				doc.open();
+				doc.write('' +
+						'<div class="pace">' +
+						'<div class="pace-progress" data-progress="50" data-progress-text="50%" style="-webkit-transform: translate3d(50%, 0px, 0px); -ms-transform: translate3d(50%, 0px, 0px); transform: translate3d(50%, 0px, 0px);">' +
+						'<div class="pace-progress-inner"></div>' +
+						'</div>' +
+						'<div class="pace-activity"></div>' +
+						'</div>' +
+						'');
+				doc.close();
+
+				// For some strange reason, the Color library we depend on defines itself
+				// asyncronously
+				setTimeout(function () {
+					initFrame(_this);
+				}, 0);
+			});
+
+			$color.on('change keyup', function () {
+				var color = $(this).val();
+				updateColor(color);
+
+				var css = '.section.colored, a.button { background: ' + color + '; } a, a:hover, a:active, .header .title .title2:before { color: ' + color + '; }';
+				if ($('html').hasClass('ie8-and-less'))
+				{
+					$('#app-colors').get(0).styleSheet.cssText = css
+				}
+				else
+				{
+					$('#app-colors').html(css);
+				}
+			});
+
+			$('a.download-link').click(function (e) {
+				e.preventDefault();
+
+				var theme = $(this).data('theme');
+
+				downloadTheme(theme);
+			});
+		};
+
+		var initTimeout = setTimeout(function () {
+			$(window).unbind('scroll', scrollOnce);
+			init();
+		}, 3000);
+
+		var scrollOnce = function () {
+			$(window).unbind('scroll', scrollOnce);
+			clearTimeout(initTimeout);
+			init();
+		};
+
+		$(window).bind('scroll', scrollOnce);
+	});
+</script>
+
+</body>
+</html>
