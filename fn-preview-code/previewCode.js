@@ -7,7 +7,7 @@
  * 1.2 data-target="#[targetId]" (append preview code to target)
  *
  * 2. Optional:
- * 2.1 data-title="titleAboveCode"
+ * 2.1 data-title="titleAboveCode" // "false" will not show title
  * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
  * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
  *
@@ -168,7 +168,11 @@
 	function getPreviewTitle(element)
 	{
 		var previewTitle = element.getAttribute('data-title');
-		if (!previewTitle)
+		if (previewTitle === 'false')
+		{
+			previewTitle = '';
+		}
+		else if (!previewTitle)
 		{
 			var elementTag = element.tagName.toLowerCase();
 			if (elementTag === 'style' || elementTag === 'link')
