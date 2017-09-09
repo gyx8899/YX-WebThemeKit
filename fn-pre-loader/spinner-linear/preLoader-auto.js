@@ -417,6 +417,5 @@ new PreLoader({
 		'  <div class="line"></div>\n' +
 		'</div>'  // element or html string
 	},
-	// resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/three-dots-zooming/preLoader.css']
-	resources: ['preLoader.css']
+	resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/spinner-linear/preLoader.css']
 });
