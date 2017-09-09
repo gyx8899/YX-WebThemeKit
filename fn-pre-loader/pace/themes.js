@@ -8,7 +8,7 @@
 
   loadTheme = function(name, cb) {
     return $.ajax({
-      url: "http://github.hubspot.com/pace/templates/pace-theme-" + name + ".tmpl.css",
+      url: "https://github.hubspot.com/pace/templates/pace-theme-" + name + ".tmpl.css",
       success: cb
     });
   };
