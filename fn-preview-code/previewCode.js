@@ -153,20 +153,16 @@
 
 	function filterTagAttrData(tagStr)
 	{
-		var tagStrArray1 = tagStr.split('<');
-		if (tagStrArray1.length < 3)
+		var tagStrArray1 = tagStr.split('>');
+		if (tagStrArray1.length < 2)
 		{
 			return tagStr;
 		}
-		var tagStrArray2 = tagStrArray1[1].split('>');
-		if (tagStrArray2.length < 2)
-		{
-			return tagStr;
-		}
-		var attrDataStr = tagStrArray2[0].split(' ').filter(function (t) {
+		var attrDataStr = tagStrArray1[0].split(' ').filter(function (t) {
 			return (t.indexOf('data-') === -1);
 		}).join(' ');
-		return [tagStrArray1[0], [attrDataStr].concat(tagStrArray2.slice(1)).join('>')].concat(tagStrArray1.slice(2)).join('<');
+
+		return [attrDataStr].concat(tagStrArray1.slice(1)).join('>');
 	}
 
 	function getPreviewTitle(element)
