@@ -1,5 +1,5 @@
 /**
- * Javascript plugin: PreviewCode v2.1
+ * Javascript plugin: PreviewCode v2.2
  *
  * Setting in html tag:
  * 1. Required:
@@ -8,6 +8,7 @@
  *
  * 2. Optional:
  * 2.1 data-title="titleAboveCode"
+ * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -85,6 +86,7 @@
 	function previewElementCode(element)
 	{
 		var targetElement = document.querySelector(element.getAttribute('data-target')),
+				previewPosition = element.getAttribute('data-position') || 'append',
 				previewHTML = element.innerHTML,
 				previewTitle = getPreviewTitle(element),
 				elementTag = element.tagName.toLowerCase(),
@@ -100,22 +102,41 @@
 		if (elementLink)
 		{
 			getFileContent(elementLink, function (data) {
-				addPreviewCode(targetElement, data, getFileNameFromURL(elementLink));
+				var positionInfo = {parentElement: targetElement, position: previewPosition};
+				addPreviewCode(positionInfo, data, getFileNameFromURL(elementLink));
 			}, null);
 		}
 		else
 		{
-			addPreviewCode(targetElement, previewHTML, previewTitle);
+			var positionInfo = {parentElement: targetElement, position: previewPosition};
+			addPreviewCode(positionInfo, previewHTML, previewTitle);
 		}
 	}
 
-	function addPreviewCode(parentElement, codeString, demoTitle)
+	function addPreviewCode(positionInfo, codeString, demoTitle)
 	{
 		var codeContent = trimPrevSpace(escapeHTML(codeString)),
 				codeElement = document.createElement('div');
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = '<h3 class="h3-title">' + demoTitle + '</h3><pre><code>' + codeContent + '</code></pre>';
-		parentElement.appendChild(codeElement);
+		addChild(positionInfo.parentElement, positionInfo.position, codeElement);
+	}
+
+	function addChild(parentElement, position, childElement)
+	{
+		switch (position.toLowerCase()){
+			case 'prepend':
+				parentElement.insertBefore(childElement, parentElement.firstChild);
+				break;
+			case 'insertbefore':
+				parentElement.insertAdjacentHTML('beforebegin', childElement.outerHTML);
+				break;
+			case 'insertafter':
+				parentElement.insertAdjacentHTML('afterend', childElement.outerHTML);
+				break;
+			default: //'append'
+				parentElement.appendChild(childElement);
+		}
 	}
 
 	function getPreviewTitle(element)
