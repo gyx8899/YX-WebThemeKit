@@ -128,9 +128,10 @@
 	function addPreviewCode(positionInfo, codeString, demoTitle)
 	{
 		var codeContent = trimPrevSpace(escapeHTML(codeString)),
-				codeElement = document.createElement('div');
+				codeElement = document.createElement('div'),
+				previewTitle = demoTitle !== '' ? '<h3 class="h3-title">' + demoTitle + '</h3>' : '';
 		codeElement.className = "preview-code";
-		codeElement.innerHTML = '<h3 class="h3-title">' + demoTitle + '</h3><pre><code>' + codeContent + '</code></pre>';
+		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
 		addChild(positionInfo.parentElement, positionInfo.position, codeElement);
 	}
 
