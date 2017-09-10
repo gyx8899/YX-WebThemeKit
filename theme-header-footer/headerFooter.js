@@ -18,11 +18,12 @@
  * **/
 (function () {
 	this.HeaderFooter = function (options) {
-		options = this._processResource(options);
+		options = this._processOptions(options);
 
 		this.options = deepExtend({}, HeaderFooter.DEFAULTS, options);
 
-		this._applyThemeHTML();
+		this._getAndApplyTheme();
+
 		loadCSS(this.options.css);
 		loadScript(this.options.js);
 	};
@@ -34,7 +35,7 @@
 		themeData: null
 	};
 
-	HeaderFooter.prototype._processResource = function (options) {
+	HeaderFooter.prototype._processOptions = function (options) {
 		var scriptName = 'headerFooter.js',
 				path = getCurrentScriptPath(scriptName),
 				parentPath = path && path.replace(scriptName, '');
@@ -49,30 +50,30 @@
 		return options;
 	};
 
-	HeaderFooter.prototype._applyThemeHTML = function () {
-		getFileContentJS(this.options.html, 'applyTemplate', this);
+	HeaderFooter.prototype._getAndApplyTheme = function () {
+		getFileContentJS(this.options.html, 'applyThemeData', this);
 	};
 
-	HeaderFooter.prototype.applyTemplate = function (data) {
+	HeaderFooter.prototype.applyThemeData = function (data) {
 		var textArea = document.createElement('textarea');
 		textArea.innerText = data.toString();
 		var sourceHtml = textArea.value;
 
-		this._replaceTag('header', sourceHtml);
-		this._replaceTag('footer', sourceHtml);
+		this._applyThemeTag('header', sourceHtml);
+		this._applyThemeTag('footer', sourceHtml);
 	};
 
-	HeaderFooter.prototype._replaceTag = function (tag, sourceHTML) {
+	HeaderFooter.prototype._applyThemeTag = function (tag, sourceHTML) {
 		var tagHTMLArray = regExpG("<" + tag + ".*(?=)(.|\n)*?</" + tag + ">").exec(sourceHTML),
 				tagTemplate = tagHTMLArray && tagHTMLArray[0];
-		tagTemplate && this._applyData(tag, tagTemplate);
+		tagTemplate && this._applyTagWithTemplate(tag, tagTemplate);
 	};
 
-	HeaderFooter.prototype._applyData = function (tag, template) {
+	HeaderFooter.prototype._applyTagWithTemplate = function (tag, template) {
 		var commentElement = document.createComment(' ' + tag + ' '),
-			tagElement = document.querySelector(tag),
-			tagElementWrapper = document.createElement('div'),
-			body = document.body;
+				tagElement = document.querySelector(tag),
+				tagElementWrapper = document.createElement('div'),
+				body = document.body;
 		tagElementWrapper.innerHTML = replaceTemplateExpressionWithData(template, this.options.themeData);
 
 		// Remove native tag
