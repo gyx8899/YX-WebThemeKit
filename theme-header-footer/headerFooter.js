@@ -69,29 +69,32 @@
 	};
 
 	HeaderFooter.prototype._applyData = function (tag, template) {
-		var comment = "<!-- " + tag + " -->",
-				tagHTML = replaceTemplateExpressionWithData(template, this.options.themeData),
-				resultHTML = comment + tagHTML;
-		var tagElement = document.querySelector(tag);
+		var commentElement = document.createComment(' ' + tag + ' '),
+			tagElement = document.querySelector(tag),
+			tagElementWrapper = document.createElement('div'),
+			body = document.body;
+		tagElementWrapper.innerHTML = replaceTemplateExpressionWithData(template, this.options.themeData);
+
+		// Remove native tag
 		tagElement && tagElement.parentNode.removeChild(tagElement);
-		var newTagElement = document.createElement(tag);
-		newTagElement.innerHTML = resultHTML;
-		var body = document.body;
 
 		if (tag === 'header')
 		{
 			if (body.firstChild)
 			{
-				body.insertBefore(newTagElement, body.firstChild);
+				body.insertBefore(tagElementWrapper.firstChild, body.firstChild);
+				body.insertBefore(commentElement, body.firstChild);
 			}
 			else
 			{
-				body.appendChild(newTagElement);
+				body.appendChild(commentElement);
+				body.appendChild(tagElementWrapper.firstChild);
 			}
 		}
 		else if (tag === 'footer')
 		{
-			body.appendChild(newTagElement);
+			body.appendChild(commentElement);
+			body.appendChild(tagElementWrapper.firstChild);
 		}
 	};
 })();
