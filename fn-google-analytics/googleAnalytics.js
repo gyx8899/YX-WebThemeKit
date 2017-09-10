@@ -13,7 +13,7 @@
 	})[0],
 		pathName = document.location.pathname,
 		page = document.location.href;
-	if (pathName.indexOf(currentSiteInfo.pathNameRoot.toLowerCase() + '/') > -1)
+	if (currentSiteInfo && pathName.indexOf(currentSiteInfo.pathNameRoot.toLowerCase() + '/') > -1)
 	{
 		page = pathName.replace('/' + currentSiteInfo.pathNameRoot + '/', '')
 				.replace('/index.html', '')
