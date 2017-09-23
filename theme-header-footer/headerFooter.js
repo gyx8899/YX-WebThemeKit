@@ -13,7 +13,7 @@
  *  1.4 parameterArrayToItem
  *  1.5 loadCSS
  *  1.6 loadScript
- *  1.7 replaceTemplateExpressionWithData
+ *  1.7 initTemplate
  *
  * **/
 (function () {
@@ -74,7 +74,7 @@
 				tagElement = document.querySelector(tag),
 				tagElementWrapper = document.createElement('div'),
 				body = document.body;
-		tagElementWrapper.innerHTML = replaceTemplateExpressionWithData(template, this.options.themeData);
+		tagElementWrapper.innerHTML = initTemplate(template, this.options.themeData);
 
 		// Remove native tag
 		tagElement && tagElement.parentNode.removeChild(tagElement);
