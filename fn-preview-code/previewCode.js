@@ -22,6 +22,7 @@
  *  2.3 deepExtend
  *  2.4 escapeHTML
  *  2.5 getFileContent
+ *  2.6 addChildElement
  *
  * */
 (function () {
@@ -138,24 +139,6 @@
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
 		addChildElement(positionInfo.parentElement, codeElement, positionInfo.position);
-	}
-
-	function addChildElement(parentElement, childElement, position)
-	{
-		switch (position && position.toLowerCase())
-		{
-			case 'prepend':
-				parentElement.insertBefore(childElement, parentElement.firstChild);
-				break;
-			case 'insertbefore':
-				parentElement.insertAdjacentHTML('beforebegin', childElement.outerHTML);
-				break;
-			case 'insertafter':
-				parentElement.insertAdjacentHTML('afterend', childElement.outerHTML);
-				break;
-			default: //'append'
-				parentElement.appendChild(childElement);
-		}
 	}
 
 	function filterTagAttrData(tagStr)
