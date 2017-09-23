@@ -74,13 +74,14 @@
 		}
 	};
 	PreviewCode.prototype._previewCode = function (element) {
+		var that = this;
 		previewElementCode(element, previewCodeCallback);
 
 		function previewCodeCallback()
 		{
-			if (this.options.initHighlight)
+			if (that.options.initHighlight)
 			{
-				this.options.initHighlight();
+				that.options.initHighlight();
 			}
 			else
 			{
