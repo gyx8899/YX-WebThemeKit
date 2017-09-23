@@ -27,7 +27,7 @@
 (function () {
 
 	this.PreviewCode = function (elements, options) {
-		this.options = deepExtend(PreviewCode.DEFAULTS, options);
+		this.options = deepExtend({}, PreviewCode.DEFAULTS, options);
 
 		var that = this,
 				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
@@ -42,7 +42,7 @@
 			js: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js',
 			others: []
 		},
-		initHighlight: null
+		initHighlight: initHighlight
 	};
 
 	PreviewCode.prototype._init = function (elements) {
@@ -57,36 +57,20 @@
 			{
 				for (var i = 0, l = elements.length; i < l; i++)
 				{
-					that._previewCode(elements[i]);
+					previewElementCode(elements[i], that.options.initHighlight);
 				}
 			}
 			else if (elements.nodeType)
 			{
-				that._previewCode(elements);
+				previewElementCode(elements, that.options.initHighlight);
 			}
 		}
 		else
 		{
 			Array.prototype.slice.call(document.querySelectorAll('[data-toggle="previewCode"]'))
 					.forEach(function (element) {
-						that._previewCode(element);
+						previewElementCode(element, that.options.initHighlight);
 					});
-		}
-	};
-	PreviewCode.prototype._previewCode = function (element) {
-		var that = this;
-		previewElementCode(element, previewCodeCallback);
-
-		function previewCodeCallback()
-		{
-			if (that.options.initHighlight)
-			{
-				that.options.initHighlight();
-			}
-			else
-			{
-				initHighlight();
-			}
 		}
 	};
 
