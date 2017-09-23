@@ -10,12 +10,15 @@
  * 2.1 data-title="titleAboveCode" // "false" will not show title
  * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
  * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
+ * 2.4 data-src="url" // set url to load script/style in current element
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
  * Dependency:
  * 1. highlight, https://highlightjs.org/
  * 2. common.js, for loading resource file (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js)
+ *  2.1 loadResources
+ *  2.2 getFileNameFromURL
  *
  * */
 (function () {
@@ -86,13 +89,14 @@
 	// Functions: Process code
 	function previewElementCode(element)
 	{
-		var targetElement = document.querySelector(element.getAttribute('data-target')),
-				previewPosition = element.getAttribute('data-position') || 'append',
-				previewFetch = element.getAttribute('data-fetch'),
-				previewHTML = element.innerHTML,
-				previewTitle = getPreviewTitle(element),
-				elementTag = element.tagName.toLowerCase(),
-				elementLink = '';
+		var dataTargetValue = element.getAttribute('data-target'),
+			targetElement = dataTargetValue === 'self' ? element : document.querySelector(dataTargetValue),
+			previewPosition = element.getAttribute('data-position') || 'append',
+			previewFetch = element.getAttribute('data-fetch'),
+			previewHTML = element.innerHTML,
+			previewTitle = getPreviewTitle(element),
+			elementTag = element.tagName.toLowerCase(),
+			elementLink = '';
 		if (previewFetch === 'file')
 		{
 			if (elementTag === 'script')
@@ -103,10 +107,14 @@
 			{
 				elementLink = element.href;
 			}
+			else if (element.getAttribute('data-src'))
+			{
+				elementLink = element.getAttribute('data-src');
+			}
 		}
 		else
 		{
-			if((elementTag === 'script' && element.src) || (elementTag === 'link' && element.href))
+			if ((elementTag === 'script' && element.src) || (elementTag === 'link' && element.href))
 			{
 				previewHTML = filterTagAttrData(element.outerHTML);
 			}
@@ -137,7 +145,8 @@
 
 	function addChild(parentElement, position, childElement)
 	{
-		switch (position.toLowerCase()){
+		switch (position.toLowerCase())
+		{
 			case 'prepend':
 				parentElement.insertBefore(childElement, parentElement.firstChild);
 				break;
