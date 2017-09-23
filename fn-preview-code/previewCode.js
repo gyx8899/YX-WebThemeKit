@@ -54,36 +54,35 @@
 			{
 				for (var i = 0, l = elements.length; i < l; i++)
 				{
-					previewElementCode(elements[i], function () {
-						that._initHighlight();
-					});
+					that._previewCode(elements[i]);
 				}
 			}
 			else if (elements.nodeType)
 			{
-				previewElementCode(elements, function () {
-					that._initHighlight();
-				});
+				that._previewCode(elements);
 			}
 		}
 		else
 		{
 			Array.prototype.slice.call(document.querySelectorAll('[data-toggle="previewCode"]'))
 					.forEach(function (element) {
-						previewElementCode(element, function () {
-							that._initHighlight();
-						});
+						that._previewCode(element);
 					});
 		}
 	};
-	PreviewCode.prototype._initHighlight = function () {
-		if (this.options.initHighlight)
+	PreviewCode.prototype._previewCode = function (element) {
+		previewElementCode(element, previewCodeCallback);
+
+		function previewCodeCallback()
 		{
-			this.options.initHighlight();
-		}
-		else
-		{
-			initHighlight();
+			if (this.options.initHighlight)
+			{
+				this.options.initHighlight();
+			}
+			else
+			{
+				initHighlight();
+			}
 		}
 	};
 
