@@ -19,6 +19,9 @@
  * 2. common.js, for loading resource file (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js)
  *  2.1 loadResources
  *  2.2 getFileNameFromURL
+ *  2.3 deepExtend
+ *  2.4 escapeHTML
+ *  2.5 getFileContent
  *
  * */
 (function () {
@@ -149,12 +152,12 @@
 				previewTitle = demoTitle !== '' ? '<h3 class="h3-title">' + demoTitle + '</h3>' : '';
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
-		addChild(positionInfo.parentElement, positionInfo.position, codeElement);
+		addChildElement(positionInfo.parentElement, codeElement, positionInfo.position);
 	}
 
-	function addChild(parentElement, position, childElement)
+	function addChildElement(parentElement, childElement, position)
 	{
-		switch (position.toLowerCase())
+		switch (position && position.toLowerCase())
 		{
 			case 'prepend':
 				parentElement.insertBefore(childElement, parentElement.firstChild);
@@ -251,58 +254,5 @@
 			}
 		}
 		return -1;
-	}
-
-	// Util Functions
-
-	function escapeHTML(text)
-	{
-		var map = {
-			'&': '&amp;',
-			'<': '&lt;',
-			'>': '&gt;',
-			'"': '&quot;',
-			"'": '&#039;'
-		};
-
-		return text.replace(/[&<>"']/g, function (m) {
-			return map[m];
-		});
-	}
-
-	function getFileContent(url, callback, context)
-	{
-		$.ajax({
-			url: url,
-			success: function (data) {
-				callback && (context ? context[callback](data) : callback(data));
-			}
-		});
-	}
-
-	// Deep copy
-	function deepExtend(out) // arguments: (source, source1, source2, ...)
-	{
-		out = out || {};
-
-		for (var i = 1; i < arguments.length; i++)
-		{
-			var obj = arguments[i];
-
-			if (!obj)
-				continue;
-
-			for (var key in obj)
-			{
-				if (obj.hasOwnProperty(key))
-				{
-					if (typeof obj[key] === 'object' && !Array.isArray(obj[key]))
-						out[key] = arguments.callee(out[key], obj[key]);
-					else
-						out[key] = obj[key];
-				}
-			}
-		}
-		return out;
 	}
 })();
