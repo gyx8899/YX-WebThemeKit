@@ -43,6 +43,7 @@
 	};
 
 	PreviewCode.prototype._init = function (elements) {
+		var that = this;
 		if (elements)
 		{
 			if (elements.jquery)
@@ -53,22 +54,29 @@
 			{
 				for (var i = 0, l = elements.length; i < l; i++)
 				{
-					previewElementCode(elements[i]);
+					previewElementCode(elements[i], function () {
+						that._initHighlight();
+					});
 				}
 			}
 			else if (elements.nodeType)
 			{
-				previewElementCode(elements);
+				previewElementCode(elements, function () {
+					that._initHighlight();
+				});
 			}
 		}
 		else
 		{
 			Array.prototype.slice.call(document.querySelectorAll('[data-toggle="previewCode"]'))
 					.forEach(function (element) {
-						previewElementCode(element);
+						previewElementCode(element, function () {
+							that._initHighlight();
+						});
 					});
 		}
-
+	};
+	PreviewCode.prototype._initHighlight = function () {
 		if (this.options.initHighlight)
 		{
 			this.options.initHighlight();
@@ -87,16 +95,16 @@
 	}
 
 	// Functions: Process code
-	function previewElementCode(element)
+	function previewElementCode(element, callback)
 	{
 		var dataTargetValue = element.getAttribute('data-target'),
-			targetElement = dataTargetValue === 'self' ? element : document.querySelector(dataTargetValue),
-			previewPosition = element.getAttribute('data-position') || 'append',
-			previewFetch = element.getAttribute('data-fetch'),
-			previewHTML = element.innerHTML,
-			previewTitle = getPreviewTitle(element),
-			elementTag = element.tagName.toLowerCase(),
-			elementLink = '';
+				targetElement = dataTargetValue === 'self' ? element : document.querySelector(dataTargetValue),
+				previewPosition = element.getAttribute('data-position') || 'append',
+				previewFetch = element.getAttribute('data-fetch'),
+				previewHTML = element.innerHTML,
+				previewTitle = getPreviewTitle(element),
+				elementTag = element.tagName.toLowerCase(),
+				elementLink = '';
 		if (previewFetch === 'file')
 		{
 			if (elementTag === 'script')
@@ -124,12 +132,14 @@
 			getFileContent(elementLink, function (data) {
 				var positionInfo = {parentElement: targetElement, position: previewPosition};
 				addPreviewCode(positionInfo, data, getFileNameFromURL(elementLink));
+				callback && callback();
 			}, null);
 		}
 		else
 		{
 			var positionInfo = {parentElement: targetElement, position: previewPosition};
 			addPreviewCode(positionInfo, previewHTML, previewTitle);
+			callback && callback();
 		}
 	}
 
