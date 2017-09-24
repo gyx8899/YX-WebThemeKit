@@ -23,7 +23,7 @@
  *  2.4 escapeHTML
  *  2.5 getFileContent
  *  2.6 addChildElement
- *
+ *  2.7 getElements
  * */
 (function () {
 
@@ -48,31 +48,10 @@
 
 	PreviewCode.prototype._init = function (elements) {
 		this.options.initHighlight();
-		if (elements)
-		{
-			if (elements.jquery)
-			{
-				elements = elements.length > 1 ? elements.get() : elements[0];
-			}
-			if (NodeList.prototype.isPrototypeOf(elements) || Array.isArray(elements))
-			{
-				for (var i = 0, l = elements.length; i < l; i++)
-				{
-					previewElementCode(elements[i]);
-				}
-			}
-			else if (elements.nodeType)
-			{
-				previewElementCode(elements);
-			}
-		}
-		else
-		{
-			Array.prototype.slice.call(document.querySelectorAll('[data-toggle="previewCode"]'))
-					.forEach(function (element) {
-						previewElementCode(element);
-					});
-		}
+		var elementArray = getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
+		elementArray.forEach(function (element) {
+			previewElementCode(element);
+		});
 	};
 
 	// Functions: init Highlight
@@ -88,7 +67,7 @@
 	}
 
 	// Functions: Process code
-	function previewElementCode(element, callback)
+	function previewElementCode(element)
 	{
 		var dataTargetValue = element.getAttribute('data-target'),
 				targetElement = dataTargetValue === 'self' ? element : document.querySelector(dataTargetValue),
