@@ -31,7 +31,7 @@
 		this.options = deepExtend({}, PreviewCode.DEFAULTS, options);
 
 		var that = this,
-				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
+			urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
 		loadResources(urls, function () {
 			that._init(elements);
 		});
@@ -47,7 +47,7 @@
 	};
 
 	PreviewCode.prototype._init = function (elements) {
-		var that = this;
+		this.options.initHighlight();
 		if (elements)
 		{
 			if (elements.jquery)
@@ -58,19 +58,19 @@
 			{
 				for (var i = 0, l = elements.length; i < l; i++)
 				{
-					previewElementCode(elements[i], that.options.initHighlight);
+					previewElementCode(elements[i]);
 				}
 			}
 			else if (elements.nodeType)
 			{
-				previewElementCode(elements, that.options.initHighlight);
+				previewElementCode(elements);
 			}
 		}
 		else
 		{
 			Array.prototype.slice.call(document.querySelectorAll('[data-toggle="previewCode"]'))
 					.forEach(function (element) {
-						previewElementCode(element, that.options.initHighlight);
+						previewElementCode(element);
 					});
 		}
 	};
@@ -79,7 +79,12 @@
 	function initHighlight()
 	{
 		hljs.configure({tabReplace: '  '});
-		hljs.initHighlightingOnLoad();
+		// hljs.initHighlightingOnLoad();
+	}
+
+	function highlightCode(codeElement)
+	{
+		hljs.highlightBlock(codeElement.querySelector('pre code'));
 	}
 
 	// Functions: Process code
@@ -115,19 +120,16 @@
 				previewHTML = filterTagAttrData(element.outerHTML);
 			}
 		}
+		var positionInfo = {parentElement: targetElement, position: previewPosition};
 		if (elementLink)
 		{
 			getFileContent(elementLink, function (data) {
-				var positionInfo = {parentElement: targetElement, position: previewPosition};
 				addPreviewCode(positionInfo, data, getFileNameFromURL(elementLink));
-				callback && callback();
 			}, null);
 		}
 		else
 		{
-			var positionInfo = {parentElement: targetElement, position: previewPosition};
 			addPreviewCode(positionInfo, previewHTML, previewTitle);
-			callback && callback();
 		}
 	}
 
@@ -139,6 +141,7 @@
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
 		addChildElement(positionInfo.parentElement, codeElement, positionInfo.position);
+		highlightCode(codeElement);
 	}
 
 	function filterTagAttrData(tagStr)
