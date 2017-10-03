@@ -7,7 +7,11 @@
 		name: 'YX-WebThemeKit',
 		pathNameRoot: 'YX-WebThemeKit',
 		trackID: 'UA-104315567-2'
-	}],
+			}, {
+				name: 'YX-CSS-ToolKit',
+				pathNameRoot: 'YX-CSS-ToolKit',
+				trackID: 'UA-104315567-3'
+			}],
 		pathName = document.location.pathname,
 		currentSiteInfo = siteInfo.filter(function (site) {
 			return site.pathNameRoot.toLowerCase() === pathName.split('/')[1].toLowerCase();
