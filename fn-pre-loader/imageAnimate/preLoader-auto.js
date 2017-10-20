@@ -145,7 +145,7 @@
 	};
 
 	// Utility method to extend defaults with user options
-	function deepExtend(out)
+	function deepExtend(out) // arguments: (source, source1, source2, ...)
 	{
 		out = out || {};
 
@@ -160,8 +160,14 @@
 			{
 				if (obj.hasOwnProperty(key))
 				{
-					if (typeof obj[key] === 'object' && !Array.isArray(obj[key]))
+					if (typeof obj[key] === 'object'
+							&& obj[key] !== null
+							&& !Array.isArray(obj[key])
+							&& !(obj[key] instanceof Date)
+							&& !(obj[key] === 'function'))
+					{
 						out[key] = arguments.callee(out[key], obj[key]);
+					}
 					else
 						out[key] = obj[key];
 				}
