@@ -1,5 +1,6 @@
 (function () {
-	var siteInfo = [{
+	var funDebugLibUrl = "https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js",
+			siteInfo = [{
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
 				apikey: 'f3b60739271056d85641a316cd13350f5960922b510427e3ec514bc3f0a74ac5',
@@ -32,7 +33,7 @@
 				return site.pathNameRoot.toLowerCase() === pathName.split('/')[1].toLowerCase();
 			})[0];
 
-	loadScript("https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js", currentSiteInfo);
+	loadScript(funDebugLibUrl, currentSiteInfo);
 
 	function loadScript(url, siteInfo)
 	{
