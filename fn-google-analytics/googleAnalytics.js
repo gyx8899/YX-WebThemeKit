@@ -1,12 +1,12 @@
 (function () {
 	var siteInfo = [{
-		name: 'YX-JS-ToolKit',
-		pathNameRoot: 'YX-JS-ToolKit',
-		trackID: 'UA-104315567-1'
-	}, {
-		name: 'YX-WebThemeKit',
-		pathNameRoot: 'YX-WebThemeKit',
-		trackID: 'UA-104315567-2'
+				name: 'YX-JS-ToolKit',
+				pathNameRoot: 'YX-JS-ToolKit',
+				trackID: 'UA-104315567-1'
+			}, {
+				name: 'YX-WebThemeKit',
+				pathNameRoot: 'YX-WebThemeKit',
+				trackID: 'UA-104315567-2'
 			}, {
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
