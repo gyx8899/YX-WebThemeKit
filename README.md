@@ -19,7 +19,7 @@
 
 ```javascript
 <!-- Script Theme *** JS -->
-<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-owl.js"></script>
+<script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter-auto.js"></script>
 ```
 
 #### 2. 'fn-pre-loader':
@@ -66,7 +66,7 @@
  
  ```javascript
  <!-- Script Theme *** JS -->
- <script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-owl.js"></script>
+ <script src="https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter-auto.js"></script>
  ```
  
  #### 2. 'fn-pre-loader':
