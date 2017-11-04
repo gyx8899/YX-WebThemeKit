@@ -127,6 +127,7 @@ code
 }
 .preview-code pre
 {
+	margin: 0;
 	border-color: #ddd;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
