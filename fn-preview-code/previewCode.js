@@ -1,5 +1,5 @@
 /**
- * Javascript plugin: PreviewCode v2.3
+ * Javascript plugin: PreviewCode v2.4
  *
  * Setting in html tag:
  * 1. Required:
@@ -24,6 +24,9 @@
  *  2.5 getFileContent
  *  2.6 addChildElement
  *  2.7 getElements
+ *  2.8 hasClass
+ *  2.9 addClass
+ *  2.10 removeClass
  * */
 (function () {
 
@@ -120,6 +123,9 @@
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
 		addChildElement(positionInfo.parentElement, codeElement, positionInfo.position);
+
+		bindClickEvent(codeElement, '.h3-title');
+
 		highlightCode(codeElement);
 	}
 
@@ -204,5 +210,12 @@
 			}
 		}
 		return -1;
+	}
+
+	function bindClickEvent(parentElement, selector)
+	{
+		parentElement.querySelector(selector).addEventListener('click', function () {
+			toggleClass(parentElement, 'collapse');
+		});
 	}
 })();
