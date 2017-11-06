@@ -42,8 +42,10 @@
 
 	PreviewCode.DEFAULTS = {
 		highlight: {
-			css: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.css',
-			js: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js',
+			// css: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.css',
+			// js: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js',
+			css: '../previewCode.css',
+			js: '../highlight.js',
 			others: []
 		},
 		initHighlight: initHighlight
@@ -119,13 +121,15 @@
 	{
 		var codeContent = trimPrevSpace(escapeHTML(codeString)),
 				codeElement = document.createElement('div'),
-				previewTitle = demoTitle !== '' ? '<h3 class="h3-title">' + demoTitle + '</h3>' : '';
+				previewTitle = '<div class="preview-title">' +
+						'<span>' + demoTitle + '</span>' +
+						'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' +
+						'</div>';
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
+
 		addChildElement(positionInfo.parentElement, codeElement, positionInfo.position);
-
-		bindClickEvent(codeElement, '.h3-title');
-
+		bindClickEvent(codeElement, '.preview-title');
 		highlightCode(codeElement);
 	}
 
