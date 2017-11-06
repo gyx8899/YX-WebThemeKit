@@ -42,10 +42,8 @@
 
 	PreviewCode.DEFAULTS = {
 		highlight: {
-			// css: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.css',
-			// js: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js',
-			css: '../previewCode.css',
-			js: '../highlight.js',
+			css: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.css',
+			js: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/highlight.js',
 			others: []
 		},
 		initHighlight: initHighlight
