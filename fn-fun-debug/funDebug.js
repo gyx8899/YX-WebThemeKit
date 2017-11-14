@@ -27,11 +27,20 @@
 				silent: false,
 				silentResource: false,
 				silentHttp: false
+			}, {
+				name: 'Others',
+				pathNameRoot: '',
+				apikey: '77900ef947409eaa50cf1ad42697c12eadd3600dbd0a8d4c112eef36fca21fee',
+				appversion: '',
+				releaseStage: '', // 'development', 'test', 'production'
+				silent: false,
+				silentResource: false,
+				silentHttp: false
 			}],
 			pathName = document.location.pathname,
 			currentSiteInfo = siteInfo.filter(function (site) {
 				return site.pathNameRoot.toLowerCase() === pathName.split('/')[1].toLowerCase();
-			})[0];
+			})[0] || siteInfo[siteInfo.length - 1];
 
 	loadScript(funDebugLibUrl, currentSiteInfo);
 
@@ -42,7 +51,10 @@
 		script.src = url;
 		for (var attr in siteInfo)
 		{
-			script.setAttribute(attr, siteInfo[attr]);
+			if (siteInfo.hasOwnProperty(attr))
+			{
+				script.setAttribute(attr, siteInfo[attr]);
+			}
 		}
 		document.body.appendChild(script);
 	}
