@@ -64,7 +64,7 @@
 	};
 
 	HeaderFooter.prototype._applyThemeTag = function (tag, sourceHTML) {
-		var tagHTMLArray = regExpG("<" + tag + ".*(?=)(.|\n)*?</" + tag + ">").exec(sourceHTML),
+		var tagHTMLArray = regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
 				tagTemplate = tagHTMLArray && tagHTMLArray[0];
 		tagTemplate && this._applyTagWithTemplate(tag, tagTemplate);
 	};
