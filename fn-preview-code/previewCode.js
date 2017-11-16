@@ -11,6 +11,7 @@
  * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
  * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
  * 2.4 data-src="url" // set url to load script/style in current element
+ * 2.5 data-collapse="on" // set collapse on, default collapse off
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -102,7 +103,11 @@
 				previewHTML = filterTagAttrData(element.outerHTML);
 			}
 		}
-		var positionInfo = {parentElement: targetElement, position: previewPosition};
+		var positionInfo = {
+			parentElement: targetElement,
+			position: previewPosition,
+			isCollapsed: element.getAttribute('data-collapse') === 'on'
+		};
 		if (elementLink)
 		{
 			getFileContent(elementLink, function (data) {
@@ -119,12 +124,18 @@
 	{
 		var codeContent = trimPrevSpace(escapeHTML(codeString)),
 				codeElement = document.createElement('div'),
-				previewTitle = '<div class="preview-title">' +
+				previewTitle =
+						'<div class="preview-title">' +
 						'<span>' + demoTitle + '</span>' +
 						'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' +
 						'</div>';
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
+
+		if (positionInfo.isCollapsed)
+		{
+			addClass(codeElement, 'collapse');
+		}
 
 		addChildElement(positionInfo.parentElement, codeElement, positionInfo.position);
 		bindClickEvent(codeElement, '.preview-title');
