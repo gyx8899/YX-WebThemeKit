@@ -44,4 +44,5 @@
 		}
 	}
 
+	window.siteConfig = siteConfig;
 })();
