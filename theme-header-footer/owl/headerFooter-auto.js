@@ -42,6 +42,7 @@
 		}
 
 		script.src = url;
+		document.body.appendChild(document.createComment(" Script HeaderFooter Theme *** JS "));
 		document.body.appendChild(script);
 	}
 })();

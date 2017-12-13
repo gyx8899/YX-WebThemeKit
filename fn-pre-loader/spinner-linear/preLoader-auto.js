@@ -200,6 +200,7 @@
 				link.onerror = function () {
 					console.log("Error load css:" + url);
 				};
+				document.getElementsByTagName('head')[0].appendChild(document.createComment(" Style PreLoader *** CSS "));
 				document.getElementsByTagName('head')[0].appendChild(link);
 			}
 		},
@@ -235,6 +236,7 @@
 				}
 
 				script.src = url;
+				document.body.appendChild(document.createComment(" Script PreLoader *** JS "));
 				document.body.appendChild(script);
 			}
 		},
@@ -255,6 +257,7 @@
 				link.onerror = function (error) {
 					reject(new Error(error));
 				};
+				document.getElementsByTagName('head')[0].appendChild(document.createComment(" Style PreLoader *** CSS "));
 				document.getElementsByTagName('head')[0].appendChild(link);
 			});
 		},
@@ -286,6 +289,7 @@
 				}
 
 				script.src = url;
+				document.body.appendChild(document.createComment(" Script PreLoader *** JS "));
 				document.body.appendChild(script);
 			});
 		}

@@ -56,6 +56,7 @@
 				script.setAttribute(attr, siteInfo[attr]);
 			}
 		}
+		document.body.appendChild(document.createComment(" Script Fundebug Lib *** JS "));
 		document.body.appendChild(script);
 	}
 })();
