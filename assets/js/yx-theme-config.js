@@ -3,7 +3,7 @@
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
 				config: {
-					googleAnalytics: false,
+					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true
 				}
@@ -11,7 +11,7 @@
 				name: 'YX-WebThemeKit',
 				pathNameRoot: 'YX-WebThemeKit',
 				config: {
-					googleAnalytics: false,
+					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true
 				}
@@ -19,7 +19,7 @@
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
 				config: {
-					googleAnalytics: false,
+					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true
 				}
