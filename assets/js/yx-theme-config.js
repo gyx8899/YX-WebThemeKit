@@ -3,6 +3,7 @@
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
 				config: {
+					fixedToolbar: true,
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true
@@ -11,6 +12,7 @@
 				name: 'YX-WebThemeKit',
 				pathNameRoot: 'YX-WebThemeKit',
 				config: {
+					fixedToolbar: true,
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true
@@ -19,6 +21,7 @@
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
 				config: {
+					fixedToolbar: true,
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true
@@ -26,6 +29,7 @@
 			}],
 
 			configUrl = {
+				fixedToolbar: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js',
 				googleAnalytics: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js',
 				funDebug: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.js',
 				githubRibbon: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js'

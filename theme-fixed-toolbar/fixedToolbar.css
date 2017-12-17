@@ -1,0 +1,30 @@
+ul.tool-list
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+li.tool-item
+{
+	list-style: none;
+}
+.ui-toolbar
+{
+	position: fixed;
+	right: 30px;
+	bottom: 50px;
+	z-index: 100;
+}
+.ui-toolbar .tool-list
+{
+
+}
+.ui-toolbar .tool-item
+{
+	width: 50px;
+	height: 50px;
+}
+.ui-toolbar a
+{
+	display: inline-block;
+}
