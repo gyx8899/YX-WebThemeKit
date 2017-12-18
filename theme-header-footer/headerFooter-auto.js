@@ -10,7 +10,7 @@
 						menuItems: '',
 						path: '',
 						author: 'Steper Kuo',
-						authorLink: 'mailto:gyx8899@126.com'
+						authorLink: 'https://github.com/gyx8899'
 					}
 				}
 			}, siteInfo = [{
