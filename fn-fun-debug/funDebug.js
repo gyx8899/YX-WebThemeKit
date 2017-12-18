@@ -1,4 +1,3 @@
-(siteConfig && siteConfig.config.funDebug) &&
 (function () {
 	var funDebugLibUrl = "https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js",
 			funDebugConfig = [{

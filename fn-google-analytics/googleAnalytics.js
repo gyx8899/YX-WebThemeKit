@@ -1,4 +1,3 @@
-(siteConfig && siteConfig.config.googleAnalytics) &&
 (function () {
 	var googleAnalyticsConfig = [{
 				name: 'YX-JS-ToolKit',

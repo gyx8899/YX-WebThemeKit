@@ -1,4 +1,3 @@
-(siteConfig && siteConfig.config.githubRibbon) &&
 (function () {
 	var githubAuthor = "gyx8899",
 			ribbonConfig = [{

@@ -1,4 +1,3 @@
-(siteConfig && siteConfig.config.fixedToolbar) &&
 (function () {
 	loadCSS('https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.css', initFixedToolbar);
 
