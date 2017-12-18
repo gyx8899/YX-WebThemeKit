@@ -3,36 +3,40 @@
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
 				config: {
-					fixedToolbar: true,
+					themeHeaderFooter: true,
 					googleAnalytics: true,
 					funDebug: true,
-					githubRibbon: true
+					githubRibbon: true,
+					fixedToolbar: true
 				}
 			}, {
 				name: 'YX-WebThemeKit',
 				pathNameRoot: 'YX-WebThemeKit',
 				config: {
-					fixedToolbar: true,
+					themeHeaderFooter: true,
 					googleAnalytics: true,
 					funDebug: true,
-					githubRibbon: true
+					githubRibbon: true,
+					fixedToolbar: true
 				}
 			}, {
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
 				config: {
-					fixedToolbar: true,
+					themeHeaderFooter: true,
 					googleAnalytics: true,
 					funDebug: true,
-					githubRibbon: true
+					githubRibbon: true,
+					fixedToolbar: true
 				}
 			}],
 
 			configUrl = {
-				fixedToolbar: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js',
+				themeHeaderFooter: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter-auto.js',
 				googleAnalytics: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js',
 				funDebug: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.js',
-				githubRibbon: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js'
+				githubRibbon: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js',
+				fixedToolbar: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js'
 			},
 
 			sitePathName = document.location.pathname,
