@@ -1,35 +1,39 @@
 (function () {
-	var siteInfo = [{
+	var owlTheme = {
+				url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.js',
+				options: {
+					html: 'owl/owl.html',
+					css: ["owl/owl.css"],
+					js: ["owl/owl.js"],
+					themeData: {
+						title: document.querySelector('title').text,
+						menuItems: '',
+						path: '',
+						author: 'Steper Kuo',
+						authorLink: 'mailto:gyx8899@126.com'
+					}
+				}
+			}, siteInfo = [{
 				name: 'YX-JS-ToolKit',
-				pathNameRoot: 'YX-JS-ToolKit',
-				theme: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-auto.js'
+				theme: owlTheme
 			}, {
 				name: 'YX-WebThemeKit',
-				pathNameRoot: 'YX-WebThemeKit',
-				theme: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-auto.js'
+				theme: owlTheme
 			}, {
 				name: 'YX-CSS-ToolKit',
-				pathNameRoot: 'YX-CSS-ToolKit',
-				theme: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-auto.js'
+				theme: owlTheme
 			}, {
 				name: 'Others',
-				pathNameRoot: '',
-				theme: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/owl/headerFooter-auto.js'
+				theme: owlTheme
 			}],
-			pathName = document.location.pathname,
-			currentSiteInfo = siteInfo.filter(function (site) {
-				return site.pathNameRoot.toLowerCase() === pathName.split('/')[1].toLowerCase();
-			})[0] || siteInfo[siteInfo.length - 1];
+			siteHeaderFooterConfig = siteInfo.filter(function (site) {
+				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
+			})[0];
 
-	loadScript(currentSiteInfo.theme);
+	loadScript(siteHeaderFooterConfig.theme.url, scriptLoadedCallback);
 
-	function loadScript(url)
+	function scriptLoadedCallback()
 	{
-		var script = document.createElement("script");
-		script.type = "text/javascript";
-		script.src = url;
-
-		document.body.appendChild(document.createComment(" Script headerFooter Theme *** JS "));
-		document.body.appendChild(script);
+		return new HeaderFooter(siteHeaderFooterConfig.theme.options);
 	}
 })();
