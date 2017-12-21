@@ -36,7 +36,8 @@
 				googleAnalytics: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js',
 				funDebug: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.js',
 				githubRibbon: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js',
-				fixedToolbar: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js'
+				fixedToolbar: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js',
+				qUnit: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.js'
 			},
 
 			sitePathName = document.location.pathname,
@@ -50,6 +51,12 @@
 		{
 			siteConfig.config[config] && loadScript(configUrl[config]);
 		}
+	}
+
+	// Load qunit when url has param '&qunit=true
+	if (getQueryParamValue('qunit') === 'true')
+	{
+		loadScript(configUrl['qUnit']);
 	}
 
 	window.siteConfig = siteConfig;
