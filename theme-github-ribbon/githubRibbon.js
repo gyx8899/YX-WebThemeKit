@@ -81,9 +81,10 @@
 				}
 			},
 
-			ribbonHTML = '<a href="https://github.com/' + githubAuthor + '/' + siteRibbonConfig.repo + '">' + getRibbonImgHTML(imageType[siteRibbonConfig.type]) + '</a>';
-
-	document.body.innerHTML += ribbonHTML;
+			githubRibbon = document.createElement('a');
+	githubRibbon.setAttribute('href', 'https://github.com/' + githubAuthor + '/' + siteRibbonConfig.repo);
+	githubRibbon.innerHTML = getRibbonImgHTML(imageType[siteRibbonConfig.type]);
+	document.body.appendChild(githubRibbon);
 
 	function getRibbonImgHTML(imageInfo)
 	{
