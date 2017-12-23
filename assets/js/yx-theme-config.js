@@ -37,6 +37,7 @@
 				funDebug: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.js',
 				githubRibbon: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js',
 				fixedToolbar: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js',
+				previewCode: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.js',
 				qUnit: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.js'
 			},
 
@@ -52,6 +53,16 @@
 			siteConfig.config[config] && loadScript(configUrl[config]);
 		}
 	}
+
+	// Load previewCode when has 'data-toggle="previewCode"'
+	setTimeout(function () {
+		if (document.querySelectorAll('[data-toggle="previewCode"]').length)
+		{
+			loadScript(configUrl['previewCode'], function () {
+				return new PreviewCode();
+			});
+		}
+	}, 0);
 
 	// Load qunit when url has param '&qunit=true
 	if (getQueryParamValue('qunit') === 'true')
