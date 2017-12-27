@@ -4,7 +4,7 @@
  * Setting in html tag:
  * 1. Required:
  * 1.1 data-toggle="previewCode"
- * 1.2 data-target="#[targetId]" (append preview code to target)
+ * 1.2 data-target="#[targetId]" (element querySelector, append preview code to target element)
  *
  * 2. Optional:
  * 2.1 data-title="titleAboveCode" // "false" will not show title
@@ -12,6 +12,7 @@
  * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
  * 2.4 data-src="url" // set url to load script/style in current element
  * 2.5 data-collapse="on" // set collapse on, default collapse off
+ * 2.6 data-tag="show" // show the wrapper tag, default not show (For data-fetch not set)
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -28,6 +29,7 @@
  *  2.8 hasClass
  *  2.9 addClass
  *  2.10 removeClass
+ *  2.11 toggleClass
  * */
 (function () {
 
@@ -77,7 +79,7 @@
 				targetElement = dataTargetValue === 'self' ? element : document.querySelector(dataTargetValue),
 				previewPosition = element.getAttribute('data-position') || 'append',
 				previewFetch = element.getAttribute('data-fetch'),
-				previewHTML = element.innerHTML,
+				previewHTML = getPreviewElementHTML(element),
 				previewTitle = getPreviewTitle(element),
 				elementTag = element.tagName.toLowerCase(),
 				elementLink = '';
@@ -190,6 +192,29 @@
 			}
 		}
 		return previewTitle;
+	}
+
+	function getPreviewElementHTML(element)
+	{
+		var previewCodeElement = element.cloneNode(true),
+				elementHTML = '';
+
+		if (previewCodeElement.getAttribute('data-tag') === 'show')
+		{
+			delete previewCodeElement.dataset['toggle'];
+			delete previewCodeElement.dataset['target'];
+			delete previewCodeElement.dataset['title'];
+			delete previewCodeElement.dataset['position'];
+			delete previewCodeElement.dataset['fetch'];
+			delete previewCodeElement.dataset['collapse'];
+			delete previewCodeElement.dataset['tag'];
+			elementHTML = previewCodeElement.outerHTML;
+		}
+		else
+		{
+			elementHTML = previewCodeElement.innerHTML;
+		}
+		return elementHTML;
 	}
 
 	function trimPrevSpace(str)
