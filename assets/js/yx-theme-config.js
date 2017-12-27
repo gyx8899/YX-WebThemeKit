@@ -46,11 +46,14 @@
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
 			})[0];
 
-	for (var config in siteConfig.config)
+	if (siteConfig)
 	{
-		if (siteConfig.config.hasOwnProperty(config))
+		for (var config in siteConfig.config)
 		{
-			siteConfig.config[config] && loadScript(configUrl[config]);
+			if (siteConfig.config.hasOwnProperty(config))
+			{
+				siteConfig.config[config] && loadScript(configUrl[config]);
+			}
 		}
 	}
 
