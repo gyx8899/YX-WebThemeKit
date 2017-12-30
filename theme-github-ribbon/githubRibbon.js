@@ -86,14 +86,29 @@
 	githubRibbon.innerHTML = getRibbonImgHTML(imageType[siteRibbonConfig.type]);
 	document.body.appendChild(githubRibbon);
 
+	setMediaQueryStyle();
+
 	function getRibbonImgHTML(imageInfo)
 	{
 		var img = document.createElement('img');
+		img.id = "githubRibbonId";
 		img.setAttribute('style', 'position: absolute; top: 0; border: 0; z-index: 100;');
 		img.style[imageInfo.position] = 0;
 		img.setAttribute('alt', 'Fork me on GitHub');
 		img.setAttribute('src', imageInfo.src);
 		img.setAttribute('data-canonical-src', imageInfo['data-canonical-src']);
 		return img.outerHTML;
+	}
+
+	function setMediaQueryStyle()
+	{
+		var ribbonStyle = '@media (max-width: 767px)' +
+				'{' +
+				'#githubRibbonId' +
+				'{' +
+				'display: none;' +
+				'}' +
+				'}';
+		addStyleToHead(ribbonStyle);
 	}
 })();
