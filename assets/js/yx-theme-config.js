@@ -72,7 +72,7 @@
 			if (configInfo.hasOwnProperty(config) &&
 					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)))
 			{
-				loadScript(configUrl[config].url);
+				loadScript(configUrl[config].url, null, null, !isFirstScreen);
 			}
 		}
 	}
@@ -80,14 +80,12 @@
 	function loadPreviewCode()
 	{
 		// Load previewCode when has 'data-toggle="previewCode"'
-		setTimeout(function () {
 			if (document.querySelectorAll('[data-toggle="previewCode"]').length)
 			{
 				loadScript(configUrl['previewCode'].url, function () {
 					return new PreviewCode();
-				});
+				}, null, true);
 			}
-		}, 0);
 	}
 
 	function loadQunit()
@@ -95,7 +93,7 @@
 		// Load qunit when url has param '&qunit=true
 		if (getQueryParamValue('qunit') === 'true')
 		{
-			loadScript(configUrl['qUnit'].url);
+			loadScript(configUrl['qUnit'].url, null, null, true);
 		}
 	}
 
