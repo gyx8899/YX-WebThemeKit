@@ -32,13 +32,28 @@
 			}],
 
 			configUrl = {
-				themeHeaderFooter: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter-auto.js',
-				googleAnalytics: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js',
-				funDebug: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.js',
-				githubRibbon: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js',
-				fixedToolbar: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js',
-				previewCode: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.js',
-				qUnit: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.js'
+				themeHeaderFooter: {
+					firstScreen: true,
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter-auto.js'
+				},
+				googleAnalytics: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js'
+				},
+				funDebug: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.js'
+				},
+				githubRibbon: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js'
+				},
+				fixedToolbar: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js'
+				},
+				previewCode: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.js'
+				},
+				qUnit: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.js'
+				}
 			},
 
 			sitePathName = document.location.pathname,
@@ -46,31 +61,49 @@
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
 			})[0];
 
-	if (siteConfig)
+	window.addEventListener("load", loadConfigWhenLoaded, false);
+
+	siteConfig && loadConfigs(siteConfig.config, true);
+
+	function loadConfigs(configInfo, isFirstScreen)
 	{
-		for (var config in siteConfig.config)
+		for (var config in configInfo)
 		{
-			if (siteConfig.config.hasOwnProperty(config))
+			if (configInfo.hasOwnProperty(config) &&
+					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)))
 			{
-				siteConfig.config[config] && loadScript(configUrl[config]);
+				loadScript(configUrl[config].url);
 			}
 		}
 	}
 
-	// Load previewCode when has 'data-toggle="previewCode"'
-	setTimeout(function () {
-		if (document.querySelectorAll('[data-toggle="previewCode"]').length)
-		{
-			loadScript(configUrl['previewCode'], function () {
-				return new PreviewCode();
-			});
-		}
-	}, 0);
-
-	// Load qunit when url has param '&qunit=true
-	if (getQueryParamValue('qunit') === 'true')
+	function loadPreviewCode()
 	{
-		loadScript(configUrl['qUnit']);
+		// Load previewCode when has 'data-toggle="previewCode"'
+		setTimeout(function () {
+			if (document.querySelectorAll('[data-toggle="previewCode"]').length)
+			{
+				loadScript(configUrl['previewCode'].url, function () {
+					return new PreviewCode();
+				});
+			}
+		}, 0);
+	}
+
+	function loadQunit()
+	{
+		// Load qunit when url has param '&qunit=true
+		if (getQueryParamValue('qunit') === 'true')
+		{
+			loadScript(configUrl['qUnit'].url);
+		}
+	}
+
+	function loadConfigWhenLoaded()
+	{
+		siteConfig && loadConfigs(siteConfig.config, false);
+		loadPreviewCode();
+		loadQunit();
 	}
 
 	window.siteConfig = siteConfig;
