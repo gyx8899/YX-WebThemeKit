@@ -65,6 +65,11 @@
 
 	siteConfig && loadConfigs(siteConfig.config, true);
 
+	/***
+	 * Load site config components
+	 * @param {Object} configInfo
+	 * @param {Bool} isFirstScreen, true: load resource before dom ready, false: load resource after dom ready
+	 */
 	function loadConfigs(configInfo, isFirstScreen)
 	{
 		for (var config in configInfo)
@@ -77,26 +82,33 @@
 		}
 	}
 
+	/***
+	 * Load previewCode component when dom has 'data-toggle="previewCode"'
+	 */
 	function loadPreviewCode()
 	{
-		// Load previewCode when has 'data-toggle="previewCode"'
-			if (document.querySelectorAll('[data-toggle="previewCode"]').length)
-			{
-				loadScript(configUrl['previewCode'].url, function () {
-					return new PreviewCode();
-				}, null, true);
-			}
+		if (document.querySelectorAll('[data-toggle="previewCode"]').length)
+		{
+			loadScript(configUrl['previewCode'].url, function () {
+				return new PreviewCode();
+			}, null, true);
+		}
 	}
 
+	/***
+	 * Load QUnit when url has param '&qunit=true
+	 */
 	function loadQUnit()
 	{
-		// Load qunit when url has param '&qunit=true
 		if (getQueryParamValue('qunit') === 'true')
 		{
 			loadScript(configUrl['qUnit'].url, null, null, true);
 		}
 	}
 
+	/***
+	 * Load config components after dom ready
+	 */
 	function loadConfigWhenLoaded()
 	{
 		siteConfig && loadConfigs(siteConfig.config, false);
