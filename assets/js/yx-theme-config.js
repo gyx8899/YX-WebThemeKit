@@ -1,4 +1,4 @@
-(function () {
+;(function (global) {
 	var YX_SITE_CONFIG = [{
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
@@ -61,7 +61,7 @@
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
 			})[0];
 
-	window.addEventListener("load", loadConfigWhenLoaded, false);
+	global.addEventListener("load", loadConfigWhenLoaded, false);
 
 	siteConfig && loadConfigs(siteConfig.config, true);
 
@@ -88,7 +88,7 @@
 			}
 	}
 
-	function loadQunit()
+	function loadQUnit()
 	{
 		// Load qunit when url has param '&qunit=true
 		if (getQueryParamValue('qunit') === 'true')
@@ -101,8 +101,8 @@
 	{
 		siteConfig && loadConfigs(siteConfig.config, false);
 		loadPreviewCode();
-		loadQunit();
+		loadQUnit();
 	}
 
-	window.siteConfig = siteConfig;
-})();
+	global.siteConfig = siteConfig;
+})(window);
