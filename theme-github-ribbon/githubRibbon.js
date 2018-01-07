@@ -1,4 +1,4 @@
-(function () {
+(function (global) {
 	var githubAuthor = "gyx8899",
 			ribbonConfig = [{
 				name: 'YX-JS-ToolKit',
@@ -144,4 +144,4 @@
 
 	// Hide github ribbon when window.width < 768px
 	insertStyleToHead('@media (max-width: 767px){#githubRibbonId{display: none;}}');
-})();
+})(window);
