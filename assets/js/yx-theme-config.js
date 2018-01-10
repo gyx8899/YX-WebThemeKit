@@ -68,7 +68,7 @@
 	/***
 	 * Load site config components
 	 * @param {Object} configInfo
-	 * @param {Bool} isFirstScreen, true: load resource before dom ready, false: load resource after dom ready
+	 * @param {Boolean} isFirstScreen, true: load resource before dom ready, false: load resource after dom ready
 	 */
 	function loadConfigs(configInfo, isFirstScreen)
 	{

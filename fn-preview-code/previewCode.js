@@ -24,7 +24,7 @@
  *  2.3 deepExtend
  *  2.4 escapeHTML
  *  2.5 getFileContent
- *  2.6 addChildElement
+ *  2.6 addElement
  *  2.7 getElements
  *  2.8 hasClass
  *  2.9 addClass
@@ -139,7 +139,7 @@
 			addClass(codeElement, 'collapse');
 		}
 
-		addChildElement(positionInfo.parentElement, codeElement, positionInfo.position);
+		addElement(positionInfo.parentElement, codeElement, positionInfo.position);
 		bindClickEvent(codeElement, '.preview-title');
 		highlightCode(codeElement);
 	}
