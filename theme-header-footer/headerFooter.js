@@ -9,7 +9,7 @@
  * 1. common.js functions
  *  1.1 deepExtend
  *  1.2 getCurrentScriptPath
- *  1.3 getFileContentJS
+ *  1.3 getFileContent
  *  1.4 parameterArrayToItem
  *  1.5 loadCSS
  *  1.6 loadScript
@@ -51,7 +51,7 @@
 	};
 
 	HeaderFooter.prototype._getAndApplyTheme = function () {
-		getFileContentJS(this.options.html, 'applyThemeData', this);
+		getFileContent(this.options.html, 'applyThemeData', this);
 	};
 
 	HeaderFooter.prototype.applyThemeData = function (data) {
