@@ -106,11 +106,25 @@
 		}
 	}
 
+	/**
+	 * Load Dev resource when url has param '&env=dev'
+	 */
+	function loadDev()
+	{
+		if (siteConfig.name === 'YX-WebThemeKit' && getQueryParamValue('env') === 'dev')
+		{
+			Object.keys(configUrl).forEach(function (key) {
+				configUrl[key].url = configUrl[key].url.replace('https://gyx8899.github.io', '../../..');
+			});
+		}
+	}
+
 	/***
 	 * Load config components after dom ready
 	 */
 	function loadConfigWhenLoaded()
 	{
+		loadDev();
 		siteConfig && loadConfigs(siteConfig.config, false);
 		loadPreviewCode();
 		loadQUnit();
