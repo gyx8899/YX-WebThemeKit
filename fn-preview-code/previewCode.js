@@ -139,9 +139,9 @@
 			addClass(codeElement, 'collapse');
 		}
 
-		addElement(positionInfo.parentElement, codeElement, positionInfo.position);
-		bindClickEvent(codeElement, '.preview-title');
-		highlightCode(codeElement);
+		var previewCodeElement = addElement(positionInfo.parentElement, codeElement, positionInfo.position);
+		bindClickEvent(previewCodeElement, '.preview-title');
+		highlightCode(previewCodeElement);
 	}
 
 	function filterTagAttrData(tagStr)
