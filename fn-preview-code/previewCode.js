@@ -126,7 +126,7 @@
 	{
 		var codeContent = trimPrevSpace(escapeHTML(codeString)),
 				codeElement = document.createElement('div'),
-				previewTitle =
+				previewTitle = demoTitle === '' ? '' :
 						'<div class="preview-title">' +
 						'<span>' + demoTitle + '</span>' +
 						'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' +
@@ -140,7 +140,7 @@
 		}
 
 		var previewCodeElement = addElement(positionInfo.parentElement, codeElement, positionInfo.position);
-		bindClickEvent(previewCodeElement, '.preview-title');
+		demoTitle !== '' && bindClickEvent(previewCodeElement, '.preview-title');
 		highlightCode(previewCodeElement);
 	}
 
