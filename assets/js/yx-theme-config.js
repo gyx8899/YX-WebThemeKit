@@ -61,9 +61,32 @@
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
 			})[0];
 
+	enableServiceWorker();
+
 	global.addEventListener("load", loadConfigWhenLoaded, false);
 
 	siteConfig && loadConfigs(siteConfig.config, true);
+
+	/**
+	 * Enable PWA server worker when it is available
+	 */
+	function enableServiceWorker()
+	{
+		if ('serviceWorker' in navigator)
+		{
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('/sw.js', {scope: '/'})
+						.then(function (registration) {
+							// 注册成功
+							console.log('ServiceWorker registration successful with scope: ', registration.scope);
+						})
+						.catch(function (err) {
+							// 注册失败:(
+							console.log('ServiceWorker registration failed: ', err);
+						});
+			});
+		}
+	}
 
 	/***
 	 * Load site config components
