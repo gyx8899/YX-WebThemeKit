@@ -61,11 +61,18 @@
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
 			})[0];
 
+	initSiteParams();
+
 	enableServiceWorker();
 
 	global.addEventListener("load", loadConfigWhenLoaded, false);
 
 	siteConfig && loadConfigs(siteConfig.config, true);
+
+	function initSiteParams()
+	{
+		siteConfig.queryParams = getUrlQueryParams();
+	}
 
 	/**
 	 * Enable PWA server worker when it is available
@@ -134,7 +141,7 @@
 	 */
 	function loadDev()
 	{
-		if (siteConfig.name === 'YX-WebThemeKit' && getQueryParamValue('env') === 'dev')
+		if (siteConfig.name === 'YX-WebThemeKit' && siteConfig.queryParams['env'] === 'dev')
 		{
 			Object.keys(configUrl).forEach(function (key) {
 				configUrl[key].url = configUrl[key].url.replace('https://gyx8899.github.io', '../../..');
