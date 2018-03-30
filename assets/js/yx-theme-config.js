@@ -105,6 +105,7 @@
 		for (var config in configInfo)
 		{
 			if (configInfo.hasOwnProperty(config) &&
+					configInfo[config] &&
 					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)))
 			{
 				loadScript(configUrl[config].url, null, null, !isFirstScreen);
