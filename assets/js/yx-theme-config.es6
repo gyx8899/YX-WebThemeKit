@@ -1,7 +1,5 @@
-'use strict';
-
-(function (global) {
-	var YX_SITE_CONFIG = [{
+;(function (global) {
+	let YX_SITE_CONFIG = [{
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
 				config: {
@@ -32,6 +30,7 @@
 					fixedToolbar: true
 				}
 			}],
+
 			configUrl = {
 				themeHeaderFooter: {
 					firstScreen: true,
@@ -56,6 +55,7 @@
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.js'
 				}
 			},
+
 			sitePathName = document.location.pathname,
 			siteConfig = YX_SITE_CONFIG.filter(function (site) {
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
@@ -82,13 +82,15 @@
 		if ('serviceWorker' in navigator)
 		{
 			window.addEventListener('load', function () {
-				navigator.serviceWorker.register(window.location.origin + '/' + siteConfig.pathNameRoot + '/assets/js/sw.js', {scope: '/'}).then(function (registration) {
-					// 注册成功
-					console.log('ServiceWorker registration successful with scope: ', registration.scope);
-				}).catch(function (err) {
-					// 注册失败:(
-					console.log('ServiceWorker registration failed: ', err);
-				});
+				navigator.serviceWorker.register(window.location.origin + '/' + siteConfig.pathNameRoot + '/assets/js/sw.js', {scope: '/'})
+						.then(function (registration) {
+							// 注册成功
+							console.log('ServiceWorker registration successful with scope: ', registration.scope);
+						})
+						.catch(function (err) {
+							// 注册失败:(
+							console.log('ServiceWorker registration failed: ', err);
+						});
 			});
 		}
 	}
@@ -100,9 +102,11 @@
 	 */
 	function loadConfigs(configInfo, isFirstScreen)
 	{
-		for (var config in configInfo)
+		for (let config in configInfo)
 		{
-			if (configInfo.hasOwnProperty(config) && configInfo[config] && (isFirstScreen && configUrl[config].firstScreen || !isFirstScreen && !configUrl[config].firstScreen))
+			if (configInfo.hasOwnProperty(config) &&
+					configInfo[config] &&
+					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)))
 			{
 				loadScript(configUrl[config].url, null, null, !isFirstScreen);
 			}
@@ -159,5 +163,3 @@
 
 	global.siteConfig = siteConfig;
 })(window);
-
-//# sourceMappingURL=yx-theme-config.js.map
