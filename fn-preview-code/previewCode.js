@@ -113,7 +113,7 @@
 		if (elementLink)
 		{
 			getFileContent(elementLink, function (data) {
-				addPreviewCode(positionInfo, data, getFileNameFromURL(elementLink));
+				addPreviewCode(positionInfo, data, getFileNameFromURL(elementLink).baseName);
 			}, null);
 		}
 		else
@@ -174,7 +174,7 @@
 				var href = element.getAttribute('href');
 				if (elementTag === 'link' && href !== null)
 				{
-					previewTitle = getFileNameFromURL(href);
+					previewTitle = getFileNameFromURL(href).name;
 				}
 			}
 			else if (elementTag === 'script')
@@ -183,7 +183,7 @@
 				var src = element.getAttribute('src');
 				if (src !== null)
 				{
-					previewTitle = getFileNameFromURL(src);
+					previewTitle = getFileNameFromURL(src).name;
 				}
 			}
 			else
