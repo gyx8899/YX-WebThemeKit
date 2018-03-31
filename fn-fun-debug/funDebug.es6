@@ -1,5 +1,5 @@
 (function () {
-	let funDebugLibUrl = "https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js",
+	let funDebugLibUrl = "https://js.fundebug.cn/fundebug.0.3.6.min.js",
 			funDebugConfig = [{
 				name: 'YX-JS-ToolKit',
 				apikey: 'f3b60739271056d85641a316cd13350f5960922b510427e3ec514bc3f0a74ac5',
