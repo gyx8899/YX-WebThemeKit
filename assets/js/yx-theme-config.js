@@ -9,7 +9,8 @@
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true,
-					fixedToolbar: true
+					fixedToolbar: true,
+					disqus: true
 				}
 			}, {
 				name: 'YX-WebThemeKit',
@@ -19,7 +20,8 @@
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true,
-					fixedToolbar: true
+					fixedToolbar: true,
+					disqus: true
 				}
 			}, {
 				name: 'YX-CSS-ToolKit',
@@ -29,7 +31,8 @@
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true,
-					fixedToolbar: true
+					fixedToolbar: true,
+					disqus: true
 				}
 			}],
 			configUrl = {
@@ -54,6 +57,9 @@
 				},
 				qUnit: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.js'
+				},
+				disqus: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.js'
 				}
 			},
 			sitePathName = document.location.pathname,
