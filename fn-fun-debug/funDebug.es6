@@ -1,7 +1,5 @@
-'use strict';
-
 (function () {
-	var funDebugLibUrl = "https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js",
+	let funDebugLibUrl = "https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js",
 			funDebugConfig = [{
 				name: 'YX-JS-ToolKit',
 				apikey: 'f3b60739271056d85641a316cd13350f5960922b510427e3ec514bc3f0a74ac5',
@@ -35,11 +33,10 @@
 				silentResource: false,
 				silentHttp: false
 			}],
+
 			siteFunDebugConfig = funDebugConfig.filter(function (site) {
 				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
 			})[0];
 
 	loadScript(funDebugLibUrl, null, null, {attributes: siteFunDebugConfig, isAsync: true});
 })();
-
-//# sourceMappingURL=funDebug.js.map

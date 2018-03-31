@@ -110,7 +110,7 @@
 		{
 			if (configInfo.hasOwnProperty(config) && configInfo[config] && (isFirstScreen && configUrl[config].firstScreen || !isFirstScreen && !configUrl[config].firstScreen))
 			{
-				loadScript(configUrl[config].url, null, null, !isFirstScreen);
+				loadScript(configUrl[config].url, null, null, {isAsync: !isFirstScreen});
 			}
 		}
 	}
@@ -124,7 +124,7 @@
 		{
 			loadScript(configUrl['previewCode'].url, function () {
 				return new PreviewCode();
-			}, null, true);
+			}, null, {isAsync: true});
 		}
 	}
 
@@ -135,7 +135,7 @@
 	{
 		if (getQueryParamValue('qunit') === 'true')
 		{
-			loadScript(configUrl['qUnit'].url, null, null, true);
+			loadScript(configUrl['qUnit'].url, null, null, {isAsync: true});
 		}
 	}
 

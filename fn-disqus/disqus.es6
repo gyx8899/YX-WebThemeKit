@@ -26,5 +26,5 @@
 	disqusElement.innerHTML = '<div class="columns"><div id="disqus_thread"></div></div>';
 	document.body.querySelector('main').appendChild(disqusElement);
 
-	loadScript(libUrl, null, null, {attributes: siteDisqusConfig, libName: libName});
+	loadScript(libUrl, null, null, {attributes: siteDisqusConfig, libName: libName, isAsync: true});
 })(window);
