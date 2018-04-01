@@ -37,7 +37,7 @@
 			configUrl = {
 				themeHeaderFooter: {
 					firstScreen: true,
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter-auto.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.min.js'
 				},
 				googleAnalytics: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.min.js'

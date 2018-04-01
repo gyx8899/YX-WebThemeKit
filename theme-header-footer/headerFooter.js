@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Javascript Plugin: Common header/Footer V2.0
+ * Javascript Plugin: Common header/Footer V2.1
  * Required:
  * 1. html file: contain <header> <footer>;
  * 2. css file: <header> <footer> style file;
@@ -37,9 +37,29 @@
 		themeData: null
 	};
 
+	HeaderFooter.TYPE_ABBRS = {
+		'owl-theme': 'owl-theme'
+	};
+
+	HeaderFooter.TYPE_OPTIONS = {
+		'owl-theme': {
+			html: 'owl/owl.html',
+			css: ["owl/owl.css"],
+			js: ["owl/owl.min.js"],
+			themeData: {
+				title: document.querySelector('title').text,
+				menuItems: '',
+				path: '',
+				author: 'Steper Kuo',
+				authorLink: 'https://github.com/gyx8899'
+			}
+		}
+	};
+
 	HeaderFooter.prototype._processOptions = function (options) {
-		var scriptName = 'headerFooter.js',
-				path = getCurrentScriptPath(scriptName),
+		var scriptName = 'headerFooter.min.js',
+				scripts = document.getElementsByTagName('script'),
+				path = scripts[scripts.length - 1].src,
 				parentPath = path && path.replace(scriptName, '');
 		options.html = parentPath + options.html;
 		options.css = options.css.map(function (styleName) {
@@ -100,6 +120,31 @@
 			body.appendChild(tagElementWrapper.firstChild);
 		}
 	};
+})(window);
+
+(function (global) {
+	var siteInfo = [{
+				name: 'YX-JS-ToolKit',
+				theme: 'owl-theme'
+			}, {
+				name: 'YX-WebThemeKit',
+				theme: 'owl-theme'
+			}, {
+				name: 'YX-CSS-ToolKit',
+				theme: 'owl-theme'
+			}, {
+				name: 'Others',
+				theme: 'owl-theme'
+			}],
+			siteHeaderFooterConfig = siteInfo.filter(function (site) {
+				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
+			})[0];
+
+	// Auto init HeaderFooter
+	if (siteHeaderFooterConfig)
+	{
+		new HeaderFooter(HeaderFooter.TYPE_OPTIONS[siteHeaderFooterConfig.theme]);
+	}
 })(window);
 
 //# sourceMappingURL=headerFooter.js.map
