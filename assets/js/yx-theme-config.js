@@ -91,10 +91,10 @@
 		{
 			global.addEventListener('load', function () {
 				navigator.serviceWorker.register(global.location.origin + '/' + siteConfig.pathNameRoot + '/assets/js/service-worker.js', {scope: '/'}).then(function (registration) {
-					// 注册成功
+					// Registration successful
 					console.log('ServiceWorker registration successful with scope: ', registration.scope);
 				}).catch(function (err) {
-					// 注册失败:(
+					// Registration failed
 					console.log('ServiceWorker registration failed: ', err);
 				});
 			});
