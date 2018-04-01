@@ -89,8 +89,8 @@
 	{
 		if ('serviceWorker' in navigator)
 		{
-			window.addEventListener('load', function () {
-				navigator.serviceWorker.register(window.location.origin + '/' + siteConfig.pathNameRoot + '/assets/js/sw.js', {scope: '/'}).then(function (registration) {
+			global.addEventListener('load', function () {
+				navigator.serviceWorker.register(global.location.origin + '/' + siteConfig.pathNameRoot + '/assets/js/service-worker.js', {scope: '/'}).then(function (registration) {
 					// 注册成功
 					console.log('ServiceWorker registration successful with scope: ', registration.scope);
 				}).catch(function (err) {
