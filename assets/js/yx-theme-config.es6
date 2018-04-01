@@ -90,7 +90,7 @@
 		if ('serviceWorker' in navigator)
 		{
 			global.addEventListener('load', function () {
-				navigator.serviceWorker.register(global.location.origin + '/service-worker.js', {scope: '/'})
+				navigator.serviceWorker.register(global.location.origin + '/service-worker.js', {scope: '/' + siteConfig.pathNameRoot})
 						.then(function (registration) {
 							// Registration successful
 							console.log('ServiceWorker registration successful with scope: ', registration.scope);
