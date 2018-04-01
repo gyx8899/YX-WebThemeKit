@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Javascript Plugin: Common header/Footer V2.0
  * Required:
@@ -38,7 +36,7 @@
 	};
 
 	HeaderFooter.prototype._processOptions = function (options) {
-		var scriptName = 'headerFooter.js',
+		let scriptName = 'headerFooter.js',
 				path = getCurrentScriptPath(scriptName),
 				parentPath = path && path.replace(scriptName, '');
 		options.html = parentPath + options.html;
@@ -57,22 +55,22 @@
 	};
 
 	HeaderFooter.prototype.applyThemeData = function (data) {
-		var textArea = document.createElement('textarea');
+		let textArea = document.createElement('textarea');
 		textArea.innerText = data.toString();
-		var sourceHtml = textArea.value;
+		let sourceHtml = textArea.value;
 
 		this._applyThemeTag('header', sourceHtml);
 		this._applyThemeTag('footer', sourceHtml);
 	};
 
 	HeaderFooter.prototype._applyThemeTag = function (tag, sourceHTML) {
-		var tagHTMLArray = regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
+		let tagHTMLArray = regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
 				tagTemplate = tagHTMLArray && tagHTMLArray[0];
 		tagTemplate && this._applyTagWithTemplate(tag, tagTemplate);
 	};
 
 	HeaderFooter.prototype._applyTagWithTemplate = function (tag, template) {
-		var commentElement = document.createComment(' ' + tag + ' '),
+		let commentElement = document.createComment(' ' + tag + ' '),
 				tagElement = document.querySelector(tag),
 				tagElementWrapper = document.createElement('div'),
 				body = document.body;
@@ -101,5 +99,3 @@
 		}
 	};
 })();
-
-//# sourceMappingURL=headerFooter.js.map
