@@ -16,8 +16,8 @@
  *  1.7 initTemplate
  *
  * **/
-(function () {
-	this.HeaderFooter = function (options) {
+(function (global) {
+	global.HeaderFooter = function (options) {
 		options = this._processOptions(options);
 
 		this.options = deepExtend({}, HeaderFooter.DEFAULTS, options);
@@ -98,4 +98,4 @@
 			body.appendChild(tagElementWrapper.firstChild);
 		}
 	};
-})();
+})(window);

@@ -69,6 +69,8 @@
 
 	initSiteParams();
 
+	loadDev();
+
 	enableServiceWorker();
 
 	global.addEventListener("load", loadConfigWhenLoaded, false);
@@ -157,7 +159,6 @@
 	 */
 	function loadConfigWhenLoaded()
 	{
-		loadDev();
 		siteConfig && loadConfigs(siteConfig.config, false);
 		loadPreviewCode();
 		loadQUnit();

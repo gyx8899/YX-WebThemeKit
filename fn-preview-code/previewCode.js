@@ -33,9 +33,9 @@
  *  2.10 removeClass
  *  2.11 toggleClass
  * */
-(function () {
+(function (global) {
 
-	this.PreviewCode = function (elements, options) {
+	global.PreviewCode = function (elements, options) {
 		this.options = deepExtend({}, PreviewCode.DEFAULTS, options);
 
 		var that = this,
@@ -254,6 +254,6 @@
 			toggleClass(parentElement, 'collapse');
 		});
 	}
-})();
+})(window);
 
 //# sourceMappingURL=previewCode.js.map
