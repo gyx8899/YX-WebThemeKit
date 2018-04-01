@@ -41,25 +41,25 @@
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter-auto.js'
 				},
 				googleAnalytics: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.min.js'
 				},
 				funDebug: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.min.js'
 				},
 				githubRibbon: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.min.js'
 				},
 				fixedToolbar: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.min.js'
 				},
 				previewCode: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js'
 				},
 				qUnit: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.min.js'
 				},
 				disqus: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.min.js'
 				}
 			},
 			sitePathName = document.location.pathname,
