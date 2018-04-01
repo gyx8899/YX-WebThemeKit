@@ -30,7 +30,7 @@
 
 ```javascript
 <!-- Script Preload code *** JS -->
-<script src="https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader-auto.js"></script>
+<script src="https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/preLoader.min.js?type=split-ssc"></script>
 ```
 
 #### 3. 'fn-preview-code': 
@@ -77,7 +77,7 @@
  
  ```javascript
  <!-- Script Preload code *** JS -->
- <script src="https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader-auto.js"></script>
+ <script src="https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/preLoader.min.js?type=split-ssc"></script>
  ```
  
  #### 3. 'fn-preview-code': 
