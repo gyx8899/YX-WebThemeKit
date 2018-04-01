@@ -1,7 +1,5 @@
-'use strict';
-
 (function () {
-	var qUnitFolder = document.createElement('div');
+	let qUnitFolder = document.createElement('div');
 	qUnitFolder.innerHTML = '<div id="qunit"></div><div id="qunit-fixture"></div>';
 	document.body.insertBefore(qUnitFolder, document.body.firstChild);
 
@@ -10,5 +8,3 @@
 		loadScript(getRootPath() + '/test.js');
 	});
 })();
-
-//# sourceMappingURL=qunit.js.map
