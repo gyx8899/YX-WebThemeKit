@@ -1,8 +1,13 @@
-/**
- * Javascript plugin: PreLoader v1.7
- */
-;(function () {
-	this.PreLoader = function (options) {
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+	return typeof obj;
+} : function (obj) {
+	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+(function (global) {
+	global.PreLoader = function (options) {
 		// Create global element references
 		this.preLoaderElement = null;
 		this.positionValue = {
@@ -51,10 +56,69 @@
 		loaderHTML: false,
 		loaderHTMLInfo: {
 			parentNode: null, // default value: document.body
-			content: ''  // element or html string
+			content: '' // element or html string
 		},
 		// Load resources: css, js
 		resources: []
+	};
+
+	PreLoader.TYPE_ABBRS = {
+		'zoom-tdz': 'three-dots-zooming',
+		'split-ssc': 'square-split-combination',
+		'linear-sl': 'spinner-linear',
+		'image-dr': 'image-dot-rotate',
+		'image-p': 'image-pacman',
+		'image-ds': 'image-dot-scale',
+		'ball-bsm': 'ball-scale-multiple'
+	};
+
+	PreLoader.TYPE_OPTIONS = {
+		'three-dots-zooming': {
+			loaderHTML: true,
+			loaderHTMLInfo: {
+				content: '<div class="preloader">\n' + '   <div class="spinner-dots">\n' + '      <span class="dot1"></span>\n' + '      <span class="dot2"></span>\n' + '      <span class="dot3"></span>\n' + '   </div>\n' + '</div>' // element or html string
+			},
+			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/three-dots-zooming/preLoader.css']
+		},
+		'square-split-combination': {
+			loaderHTML: true,
+			loaderHTMLInfo: {
+				content: '<div class="loader"><span></span><span></span><span></span><span></span></div>' // element or html string
+			},
+			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css']
+		},
+		'spinner-linear': {
+			loaderHTML: true,
+			loaderHTMLInfo: {
+				content: '<div class="spinner-linear">\n' + '  <div class="line"></div>\n' + '</div>' // element or html string
+			},
+			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/spinner-linear/preLoader.css']
+		},
+		'image-dot-rotate': {
+			imageAnimate: true,
+			imageAnimateInfo: {
+				src: 'loading-dot-circle-rotate.svg'
+			}
+		},
+		'image-pacman': {
+			imageAnimate: true,
+			imageAnimateInfo: {
+				src: 'loading-pacman.gif'
+			}
+		},
+		'image-dot-scale': {
+			imageAnimate: true,
+			imageAnimateInfo: {
+				src: 'loading-three-dot-scaling.gif'
+			}
+		},
+		'ball-scale-multiple': {
+			loaderHTML: true,
+			loaderHTMLInfo: {
+				content: '<div class="pre-loader">' + ' <div class="background">' + '  <div class="wrapper">' + '   <div class="ball-scale-multiple">' + '    <div></div>' + '    <div></div>' + '    <div></div>' + '   </div>' + '   <div class="loading">LOADING</div>' + '  </div>' + ' </div>' + '</div>' // element or html string
+			},
+			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/ball-scale-multiple/preLoader.css']
+		}
 	};
 
 	// Public Methods
@@ -117,7 +181,7 @@
 		}
 		else
 		{
-			content && (element.appendChild(content));
+			content && element.appendChild(content);
 		}
 		return element;
 	};
@@ -153,23 +217,17 @@
 		{
 			var obj = arguments[i];
 
-			if (!obj)
-				continue;
+			if (!obj) continue;
 
 			for (var key in obj)
 			{
 				if (obj.hasOwnProperty(key))
 				{
-					if (typeof obj[key] === 'object'
-							&& obj[key] !== null
-							&& !Array.isArray(obj[key])
-							&& !(obj[key] instanceof Date)
-							&& !(obj[key] === 'function'))
+					if (_typeof(obj[key]) === 'object' && obj[key] !== null && !Array.isArray(obj[key]) && !(obj[key] instanceof Date) && !(obj[key] === 'function'))
 					{
-						out[key] = arguments.callee(out[key], obj[key]);
+						out[key] = deepExtend(out[key], obj[key]);
 					}
-					else
-						out[key] = obj[key];
+					else out[key] = obj[key];
 				}
 			}
 		}
@@ -179,9 +237,8 @@
 	// Functions: loadResource
 	// Copy from common.js (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js)
 	var resourceMethod = {
-		loadCSS: function (url, callback, context) {
-			if (!url)
-				return;
+		loadCSS: function loadCSS(url, callback, context) {
+			if (!url) return;
 
 			if (Array.isArray(url))
 			{
@@ -204,9 +261,8 @@
 				document.getElementsByTagName('head')[0].appendChild(link);
 			}
 		},
-		loadScript: function (url, callback, context) {
-			if (!url)
-				return;
+		loadScript: function loadScript(url, callback, context) {
+			if (!url) return;
 
 			if (Array.isArray(url))
 			{
@@ -219,7 +275,8 @@
 				script.type = "text/javascript";
 
 				if (script.readyState)
-				{  //IE
+				{
+					//IE
 					script.onreadystatechange = function () {
 						if (script.readyState === "loaded" || script.readyState === "complete")
 						{
@@ -229,7 +286,8 @@
 					};
 				}
 				else
-				{  //Others
+				{
+					//Others
 					script.onload = function () {
 						callback && (context ? context[callback]() : callback());
 					};
@@ -240,7 +298,7 @@
 				document.body.appendChild(script);
 			}
 		},
-		loadCSSWithPromise: function (url) {
+		loadCSSWithPromise: function loadCSSWithPromise(url) {
 			return new Promise(function (resolve, reject) {
 				if (!url)
 				{
@@ -261,7 +319,7 @@
 				document.getElementsByTagName('head')[0].appendChild(link);
 			});
 		},
-		loadScriptWithPromise: function (url) {
+		loadScriptWithPromise: function loadScriptWithPromise(url) {
 			return new Promise(function (resolve, reject) {
 				if (!url)
 				{
@@ -272,7 +330,8 @@
 				script.type = "text/javascript";
 
 				if (script.readyState)
-				{  //IE
+				{
+					//IE
 					script.onreadystatechange = function () {
 						if (script.readyState === "loaded" || script.readyState === "complete")
 						{
@@ -282,7 +341,8 @@
 					};
 				}
 				else
-				{  //Others
+				{
+					//Others
 					script.onload = function () {
 						resolve();
 					};
@@ -310,7 +370,7 @@
 			if (Array.isArray(urls))
 			{
 				urls = urls.filter(function (url) {
-					return (String(url) === url && url !== '');
+					return String(url) === url && url !== '';
 				});
 				if (urls.length === 0)
 				{
@@ -330,7 +390,7 @@
 					{
 						urls.map(function (url) {
 							loadResource(url);
-						})
+						});
 					}
 				}
 			}
@@ -382,10 +442,9 @@
 	{
 		var type = getUrlTypeInfo(url),
 				typeSelector = type['tagName'] || '[src]',
-				allUrls = Array.prototype.slice.call(document.querySelectorAll(typeSelector))
-						.map(function (scriptElement) {
-							return scriptElement[type['urlAttrName']];
-						});
+				allUrls = Array.prototype.slice.call(document.querySelectorAll(typeSelector)).map(function (scriptElement) {
+					return scriptElement[type['urlAttrName']];
+				});
 		return allUrls.indexOf(url) !== -1;
 	}
 
@@ -416,4 +475,33 @@
 		}
 		return null;
 	}
-})();
+
+	function getUrlQueryParams(url)
+	{
+		var query = {},
+				searchStr = url ? url.indexOf('?') !== -1 ? url.split('?')[1] : '' : window.location.search.substring(1),
+				queryParams = searchStr.split("&");
+		for (var i = 0; i < queryParams.length; i++)
+		{
+			var queryParam = queryParams[i].split("=");
+			query[queryParam[0]] = queryParam[1];
+		}
+		return query;
+	}
+
+	function getCurrentScriptParameter()
+	{
+		var scripts = document.getElementsByTagName('script'),
+				scriptSrc = scripts[scripts.length - 1].src;
+		return getUrlQueryParams(scriptSrc);
+	}
+
+	// Auto init preLoader
+	var typeParam = getCurrentScriptParameter()['type'];
+	if (typeParam && PreLoader.TYPE_ABBRS[typeParam])
+	{
+		new PreLoader(PreLoader.TYPE_OPTIONS[PreLoader.TYPE_ABBRS[typeParam]]);
+	}
+})(window);
+
+//# sourceMappingURL=preLoader.js.map
