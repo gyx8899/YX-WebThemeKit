@@ -58,8 +58,7 @@
 
 	HeaderFooter.prototype._processOptions = function (options) {
 		var scriptName = 'headerFooter.min.js',
-				scripts = document.getElementsByTagName('script'),
-				path = scripts[scripts.length - 1].src,
+				path = getCurrentScriptPath(scriptName),
 				parentPath = path && path.replace(scriptName, '');
 		options.html = parentPath + options.html;
 		options.css = options.css.map(function (styleName) {
