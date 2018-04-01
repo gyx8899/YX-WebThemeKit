@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Javascript plugin: PreviewCode v2.4
  *
@@ -38,7 +36,7 @@
 	this.PreviewCode = function (elements, options) {
 		this.options = deepExtend({}, PreviewCode.DEFAULTS, options);
 
-		var that = this,
+		let that = this,
 				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
 		loadResources(urls, function () {
 			that._init(elements);
@@ -56,7 +54,7 @@
 
 	PreviewCode.prototype._init = function (elements) {
 		this.options.initHighlight();
-		var elementArray = getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
+		let elementArray = getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
 		elementArray.forEach(function (element) {
 			previewElementCode(element);
 		});
@@ -77,7 +75,7 @@
 	// Functions: Process code
 	function previewElementCode(element)
 	{
-		var dataTargetValue = element.getAttribute('data-target'),
+		let dataTargetValue = element.getAttribute('data-target'),
 				targetElement = dataTargetValue === 'self' ? element : document.querySelector(dataTargetValue),
 				previewPosition = element.getAttribute('data-position') || 'append',
 				previewFetch = element.getAttribute('data-fetch'),
@@ -102,12 +100,12 @@
 		}
 		else
 		{
-			if (elementTag === 'script' && element.src || elementTag === 'link' && element.href)
+			if ((elementTag === 'script' && element.src) || (elementTag === 'link' && element.href))
 			{
 				previewHTML = filterTagAttrData(element.outerHTML);
 			}
 		}
-		var positionInfo = {
+		let positionInfo = {
 			parentElement: targetElement,
 			position: previewPosition,
 			isCollapsed: element.getAttribute('data-collapse') === 'on'
@@ -126,9 +124,13 @@
 
 	function addPreviewCode(positionInfo, codeString, demoTitle)
 	{
-		var codeContent = trimPrevSpace(escapeHTML(codeString)),
+		let codeContent = trimPrevSpace(escapeHTML(codeString)),
 				codeElement = document.createElement('div'),
-				previewTitle = demoTitle === '' ? '' : '<div class="preview-title">' + '<span>' + demoTitle + '</span>' + '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' + '</div>';
+				previewTitle = demoTitle === '' ? '' :
+						'<div class="preview-title">' +
+						'<span>' + demoTitle + '</span>' +
+						'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' +
+						'</div>';
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
 
@@ -137,20 +139,20 @@
 			addClass(codeElement, 'collapse');
 		}
 
-		var previewCodeElement = addElement(positionInfo.parentElement, codeElement, positionInfo.position);
+		let previewCodeElement = addElement(positionInfo.parentElement, codeElement, positionInfo.position);
 		demoTitle !== '' && bindClickEvent(previewCodeElement, '.preview-title');
 		highlightCode(previewCodeElement);
 	}
 
 	function filterTagAttrData(tagStr)
 	{
-		var tagStrArray1 = tagStr.split('>');
+		let tagStrArray1 = tagStr.split('>');
 		if (tagStrArray1.length < 2)
 		{
 			return tagStr;
 		}
-		var attrDataStr = tagStrArray1[0].split(' ').filter(function (t) {
-			return t.indexOf('data-') === -1;
+		let attrDataStr = tagStrArray1[0].split(' ').filter(function (t) {
+			return (t.indexOf('data-') === -1);
 		}).join(' ');
 
 		return [attrDataStr].concat(tagStrArray1.slice(1)).join('>');
@@ -158,18 +160,18 @@
 
 	function getPreviewTitle(element)
 	{
-		var previewTitle = element.getAttribute('data-title');
+		let previewTitle = element.getAttribute('data-title');
 		if (previewTitle === 'false')
 		{
 			previewTitle = '';
 		}
 		else if (!previewTitle)
 		{
-			var elementTag = element.tagName.toLowerCase();
+			let elementTag = element.tagName.toLowerCase();
 			if (elementTag === 'style' || elementTag === 'link')
 			{
 				previewTitle = 'CSS';
-				var href = element.getAttribute('href');
+				let href = element.getAttribute('href');
 				if (elementTag === 'link' && href !== null)
 				{
 					previewTitle = getFileNameFromURL(href).name;
@@ -178,7 +180,7 @@
 			else if (elementTag === 'script')
 			{
 				previewTitle = 'JS';
-				var src = element.getAttribute('src');
+				let src = element.getAttribute('src');
 				if (src !== null)
 				{
 					previewTitle = getFileNameFromURL(src).name;
@@ -194,7 +196,7 @@
 
 	function getPreviewElementHTML(element)
 	{
-		var previewCodeElement = element.cloneNode(true),
+		let previewCodeElement = element.cloneNode(true),
 				elementHTML = '';
 
 		if (previewCodeElement.getAttribute('data-tag') === 'show')
@@ -217,16 +219,16 @@
 
 	function trimPrevSpace(str)
 	{
-		var strArray = str.split('\n'),
+		let strArray = str.split('\n'),
 				beginIndex = getFirstNonSpaceValueIndex(strArray),
 				resultStr = '';
 		if (beginIndex !== -1)
 		{
-			var newStrArray = [],
+			let newStrArray = [],
 					reverseStrArray = strArray.slice(0).reverse(),
 					endIndex = strArray.length - getFirstNonSpaceValueIndex(reverseStrArray),
 					commonPreSpace = /(^\s*)/g.exec(strArray[beginIndex])[0];
-			for (var i = beginIndex, j = 0; i < endIndex; i++)
+			for (let i = beginIndex, j = 0; i < endIndex; i++)
 			{
 				newStrArray[j++] = strArray[i].replace(commonPreSpace, '');
 			}
@@ -237,7 +239,7 @@
 
 	function getFirstNonSpaceValueIndex(array)
 	{
-		for (var i = 0, l = array.length; i < l; i++)
+		for (let i = 0, l = array.length; i < l; i++)
 		{
 			// Filter space line
 			if (/^[\s|\t]+$/.test(array[i]) === false && array[i] !== '')
@@ -255,5 +257,3 @@
 		});
 	}
 })();
-
-//# sourceMappingURL=previewCode.js.map
