@@ -5,7 +5,6 @@
 				config: {
 					themeHeaderFooter: true,
 					googleAnalytics: true,
-					funDebug: true,
 					githubRibbon: true,
 					fixedToolbar: true
 				}
@@ -15,7 +14,6 @@
 				config: {
 					themeHeaderFooter: true,
 					googleAnalytics: true,
-					funDebug: true,
 					githubRibbon: true,
 					fixedToolbar: true
 				}
@@ -25,7 +23,6 @@
 				config: {
 					themeHeaderFooter: true,
 					googleAnalytics: true,
-					funDebug: true,
 					githubRibbon: true,
 					fixedToolbar: true
 				}
@@ -38,9 +35,6 @@
 				},
 				googleAnalytics: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.min.js'
-				},
-				funDebug: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-fun-debug/funDebug.min.js'
 				},
 				githubRibbon: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.min.js'
