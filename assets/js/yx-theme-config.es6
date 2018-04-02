@@ -7,8 +7,7 @@
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true,
-					fixedToolbar: true,
-					disqus: true
+					fixedToolbar: true
 				}
 			}, {
 				name: 'YX-WebThemeKit',
@@ -18,8 +17,7 @@
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true,
-					fixedToolbar: true,
-					disqus: true
+					fixedToolbar: true
 				}
 			}, {
 				name: 'YX-CSS-ToolKit',
@@ -29,8 +27,7 @@
 					googleAnalytics: true,
 					funDebug: true,
 					githubRibbon: true,
-					fixedToolbar: true,
-					disqus: true
+					fixedToolbar: true
 				}
 			}],
 
@@ -158,6 +155,18 @@
 		}
 	}
 
+	function loadDisqus()
+	{
+		if (isZHLanguage())
+		{
+			// TODO: discuss plugin in China
+		}
+		else
+		{
+			loadScript(configUrl['disqus'].url, null, null, {isAsync: true});
+		}
+	}
+
 	/***
 	 * Load config components after dom ready
 	 */
@@ -166,6 +175,7 @@
 		siteConfig && loadConfigs(siteConfig.config, false);
 		loadPreviewCode();
 		loadQUnit();
+		loadDisqus();
 	}
 
 	global.siteConfig = siteConfig;
