@@ -1,4 +1,23 @@
-;(function (global) {
+/**
+ * Site Config v1.0.0.180404_beta
+ */
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd)
+	{
+		define(['yx'], factory);
+		// define(['jquery', 'underscore'], factory);
+	}
+	else if (typeof module === 'object' && module.exports)
+	{
+		module.exports = factory(require('yx'));
+		// module.exports = factory(require('jquery'), require('underscore'));
+	}
+	else
+	{
+		root.siteConfig = factory(root.YX);
+		// root.SiteConfig = factory(root.jQuery, root._);
+	}
+}(window, function (YX) {
 	let YX_SITE_CONFIG = [{
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
@@ -64,13 +83,13 @@
 
 	enableServiceWorker();
 
-	global.addEventListener("load", loadConfigWhenLoaded, false);
+	window.addEventListener("load", loadConfigWhenLoaded, false);
 
 	siteConfig && loadConfigs(siteConfig.config, true);
 
 	function initSiteParams()
 	{
-		siteConfig.queryParams = getUrlQueryParams();
+		siteConfig.queryParams = YX.Util.url.getUrlQueryParams();
 	}
 
 	/**
@@ -80,8 +99,8 @@
 	{
 		if ('serviceWorker' in navigator)
 		{
-			global.addEventListener('load', function () {
-				navigator.serviceWorker.register(global.location.origin + '/' + siteConfig.pathNameRoot + '/service-worker.js', {scope: '/' + siteConfig.pathNameRoot + '/'})
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register(this.location.origin + '/' + siteConfig.pathNameRoot + '/service-worker.js', {scope: '/' + siteConfig.pathNameRoot + '/'})
 						.then(function (registration) {
 							// Registration successful
 							console.log('ServiceWorker registration successful with scope: ', registration.scope);
@@ -107,7 +126,7 @@
 					configInfo[config] &&
 					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)))
 			{
-				loadScript(configUrl[config].url, null, null, {isAsync: !isFirstScreen});
+				YX.Util.load.loadScript(configUrl[config].url, null, null, {isAsync: !isFirstScreen});
 			}
 		}
 	}
@@ -119,9 +138,23 @@
 	{
 		if (document.querySelectorAll('[data-toggle="previewCode"]').length)
 		{
-			loadScript(configUrl['previewCode'].url, function () {
-				return new PreviewCode();
-			}, null, {isAsync: true});
+			let scriptParamArray = getScriptName().split('?'),
+					testPreviewCode = scriptParamArray.length < 2 ? null :
+							scriptParamArray[1].split('&')
+									.map(param => {
+										return {
+											param: param.split('=')[0],
+											value: param.split('=')[1]
+										}
+									}).find(param => {
+								return param.param === 'test' && param.value === 'previewcode'
+							});
+			if (!testPreviewCode)
+			{
+				YX.Util.load.loadScript(configUrl['previewCode'].url, function () {
+					return new PreviewCode();
+				}, null, {isAsync: true});
+			}
 		}
 	}
 
@@ -130,9 +163,9 @@
 	 */
 	function loadQUnit()
 	{
-		if (getQueryParamValue('qunit') === 'true')
+		if (siteConfig.queryParams['qunit'] === 'true')
 		{
-			loadScript(configUrl['qUnit'].url, null, null, {isAsync: true});
+			YX.Util.load.loadScript(configUrl['qUnit'].url, null, null, {isAsync: true});
 		}
 	}
 
@@ -141,23 +174,27 @@
 	 */
 	function loadDev()
 	{
-		if (siteConfig.name === 'YX-WebThemeKit' && siteConfig.queryParams['env'] === 'dev')
+		if (siteConfig.name === 'YX-WebThemeKit' &&
+				(siteConfig.queryParams['env'] === 'dev' || siteConfig.queryParams['_ijt'] !== ''))
 		{
 			Object.keys(configUrl).forEach(function (key) {
-				configUrl[key].url = configUrl[key].url.replace('https://gyx8899.github.io', '../../..');
+				configUrl[key].url = configUrl[key].url.replace('https://gyx8899.github.io/', '../../../');
 			});
 		}
 	}
 
+	/**
+	 * Load comment component
+	 */
 	function loadDisqus()
 	{
-		if (isZHLanguage())
+		if (YX.Util.navigator.isZHLanguage())
 		{
 			// TODO: discuss plugin in China
 		}
 		else
 		{
-			loadScript(configUrl['disqus'].url, null, null, {isAsync: true});
+			YX.Util.load.loadScript(configUrl['disqus'].url, null, null, {isAsync: true});
 		}
 	}
 
@@ -172,5 +209,24 @@
 		loadDisqus();
 	}
 
-	global.siteConfig = siteConfig;
-})(window);
+	/**
+	 * getScriptName
+	 * @return {*}
+	 */
+	function getScriptName()
+	{
+		let error = new Error()
+				, source
+				, lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/)
+				, currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
+
+		if ((source = lastStackFrameRegex.exec(error.stack.trim())) && source[1] != "")
+			return source[1];
+		else if ((source = currentStackFrameRegex.exec(error.stack.trim())))
+			return source[1];
+		else if (error['fileName'] !== undefined)
+			return error['fileName'];
+	}
+
+	return siteConfig;
+}));
