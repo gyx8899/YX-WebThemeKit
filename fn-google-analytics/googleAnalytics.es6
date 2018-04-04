@@ -1,3 +1,6 @@
+/**
+ * GoogleAnalytics Integrate Plugin v2.0.0.180404_beta
+ */
 (function () {
 	let googleAnalyticsConfig = [{
 				name: 'YX-JS-ToolKit',

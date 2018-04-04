@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * GoogleAnalytics Integrate Plugin v2.0.0.180404_beta
+ */
 (function () {
 	var googleAnalyticsConfig = [{
 				name: 'YX-JS-ToolKit',
