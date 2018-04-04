@@ -1,4 +1,7 @@
-(function (global) {
+/**
+ * GitHub ribbon plugin v2.0.0.180404_beta
+ */
+(function (global, YX) {
 	let githubAuthor = "gyx8899",
 			ribbonConfig = [{
 				name: 'YX-JS-ToolKit',
@@ -134,14 +137,14 @@
 					}
 				}
 			},
-			imageInfo = deepExtend(imageType[siteRibbonConfig.type], {attr: defaultImageAttr}),
+			imageInfo = YX.Util.tool.deepExtend(imageType[siteRibbonConfig.type], {attr: defaultImageAttr}),
 			githubRibbon = document.createElement('a');
 
 	githubRibbon.setAttribute('href', 'https://github.com/' + githubAuthor + '/' + siteRibbonConfig.repo);
-	githubRibbon.innerHTML = createTagElement('img', imageInfo).outerHTML;
+	githubRibbon.innerHTML = YX.Util.element.createTagElement('img', imageInfo).outerHTML;
 
 	document.body.appendChild(githubRibbon);
 
 	// Hide github ribbon when window.width < 768px
-	insertStyleToHead('@media (max-width: 767px){#githubRibbonId{display: none;}}');
-})(window);
+	YX.Util.element.insertStyleToHead('@media (max-width: 767px){#githubRibbonId{display: none;}}');
+})(window, window.YX);
