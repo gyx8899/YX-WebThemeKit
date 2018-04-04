@@ -1,4 +1,7 @@
-(function (global) {
+/**
+ * Disqus Integrate Plugin v2.0.0.180404_beta
+ */
+(function (global, YX) {
 	let disqusLibUrl = "https://{{sitename}}.disqus.com/embed.js",
 			disqusConfig = [{
 				name: 'YX-JS-ToolKit'
@@ -26,5 +29,5 @@
 	disqusElement.innerHTML = '<div class="columns"><div id="disqus_thread"></div></div>';
 	document.body.querySelector('main').appendChild(disqusElement);
 
-	loadScript(libUrl, null, null, {attributes: siteDisqusConfig, libName: libName, isAsync: true});
-})(window);
+	YX.Util.load.loadScript(libUrl, null, null, {attributes: siteDisqusConfig, libName: libName, isAsync: true});
+})(window, window.YX);
