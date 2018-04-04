@@ -1,7 +1,13 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+	return typeof obj;
+} : function (obj) {
+	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
 /**
- * Javascript plugin: PreviewCode v2.4
+ * PreviewCode Plugin v3.0.0.180404_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -33,14 +39,30 @@
  *  2.10 removeClass
  *  2.11 toggleClass
  * */
-(function (global) {
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd)
+	{
+		define(['yx'], factory);
+		// define(['jquery', 'underscore'], factory);
+	}
+	else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports)
+	{
+		module.exports = factory(require('yx'));
+		// module.exports = factory(require('jquery'), require('underscore'));
+	}
+	else
+	{
+		root.PreviewCode = factory(root.YX);
+		// root.PreviewCode = factory(root.jQuery, root._);
+	}
+})(window, function (YX) {
 
-	global.PreviewCode = function (elements, options) {
-		this.options = deepExtend({}, PreviewCode.DEFAULTS, options);
+	var PreviewCode = function PreviewCode(elements, options) {
+		this.options = YX.Util.tool.deepExtend({}, PreviewCode.DEFAULTS, options);
 
 		var that = this,
 				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
-		loadResources(urls, function () {
+		YX.Util.load.loadResources(urls, function () {
 			that._init(elements);
 		});
 	};
@@ -56,7 +78,7 @@
 
 	PreviewCode.prototype._init = function (elements) {
 		this.options.initHighlight();
-		var elementArray = getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
+		var elementArray = YX.Util.element.getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
 		elementArray.forEach(function (element) {
 			previewElementCode(element);
 		});
@@ -114,8 +136,8 @@
 		};
 		if (elementLink)
 		{
-			getFileContent(elementLink, function (data) {
-				addPreviewCode(positionInfo, data, getFileNameFromURL(elementLink).baseName);
+			YX.Util.load.getFileContent(elementLink, function (data) {
+				addPreviewCode(positionInfo, data, YX.Util.url.getFileNameFromURL(elementLink).baseName);
 			}, null);
 		}
 		else
@@ -126,7 +148,7 @@
 
 	function addPreviewCode(positionInfo, codeString, demoTitle)
 	{
-		var codeContent = trimPrevSpace(escapeHTML(codeString)),
+		var codeContent = trimPrevSpace(YX.Util.string.escapeHTML(codeString)),
 				codeElement = document.createElement('div'),
 				previewTitle = demoTitle === '' ? '' : '<div class="preview-title">' + '<span>' + demoTitle + '</span>' + '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' + '</div>';
 		codeElement.className = "preview-code";
@@ -134,10 +156,10 @@
 
 		if (positionInfo.isCollapsed)
 		{
-			addClass(codeElement, 'collapse');
+			YX.Util.element.addClass(codeElement, 'collapse');
 		}
 
-		var previewCodeElement = addElement(positionInfo.parentElement, codeElement, positionInfo.position);
+		var previewCodeElement = YX.Util.element.addElement(positionInfo.parentElement, codeElement, positionInfo.position);
 		demoTitle !== '' && bindClickEvent(previewCodeElement, '.preview-title');
 		highlightCode(previewCodeElement);
 	}
@@ -251,9 +273,11 @@
 	function bindClickEvent(parentElement, selector)
 	{
 		parentElement.querySelector(selector).addEventListener('click', function () {
-			toggleClass(parentElement, 'collapse');
+			YX.Util.element.toggleClass(parentElement, 'collapse');
 		});
 	}
-})(window);
+
+	return PreviewCode;
+});
 
 //# sourceMappingURL=previewCode.js.map
