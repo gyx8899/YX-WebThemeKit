@@ -1,7 +1,13 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+	return typeof obj;
+} : function (obj) {
+	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
 /**
- * Javascript Plugin: Common header/Footer V2.1
+ * HeaderFooter plugin v3.0.0.180404_beta
  * Required:
  * 1. html file: contain <header> <footer>;
  * 2. css file: <header> <footer> style file;
@@ -18,16 +24,32 @@
  *  1.7 initTemplate
  *
  * **/
-(function (global) {
-	global.HeaderFooter = function (options) {
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd)
+	{
+		define(['yx'], factory);
+		// define(['jquery', 'underscore'], factory);
+	}
+	else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports)
+	{
+		module.exports = factory(require('yx'));
+		// module.exports = factory(require('jquery'), require('underscore'));
+	}
+	else
+	{
+		root.HeaderFooter = factory(root.YX);
+		// root.HeaderFooter = factory(root.jQuery, root._);
+	}
+})(window, function (YX) {
+	var HeaderFooter = function HeaderFooter(options) {
 		options = this._processOptions(options);
 
-		this.options = deepExtend({}, HeaderFooter.DEFAULTS, options);
+		this.options = YX.Util.tool.deepExtend({}, HeaderFooter.DEFAULTS, options);
 
 		this._getAndApplyTheme();
 
-		loadCSS(this.options.css);
-		loadScript(this.options.js);
+		YX.Util.load.loadCSS(this.options.css);
+		YX.Util.load.loadScript(this.options.js);
 	};
 
 	HeaderFooter.DEFAULTS = {
@@ -58,7 +80,7 @@
 
 	HeaderFooter.prototype._processOptions = function (options) {
 		var scriptName = 'headerFooter.min.js',
-				path = getCurrentScriptPath(scriptName),
+				path = YX.Util.url.getCurrentScriptPath(scriptName),
 				parentPath = path && path.replace(scriptName, '');
 		options.html = parentPath + options.html;
 		options.css = options.css.map(function (styleName) {
@@ -72,7 +94,7 @@
 	};
 
 	HeaderFooter.prototype._getAndApplyTheme = function () {
-		getFileContent(this.options.html, 'applyThemeData', this);
+		YX.Util.load.getFileContent(this.options.html, 'applyThemeData', this);
 	};
 
 	HeaderFooter.prototype.applyThemeData = function (data) {
@@ -85,7 +107,7 @@
 	};
 
 	HeaderFooter.prototype._applyThemeTag = function (tag, sourceHTML) {
-		var tagHTMLArray = regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
+		var tagHTMLArray = YX.Util.regExp.regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
 				tagTemplate = tagHTMLArray && tagHTMLArray[0];
 		tagTemplate && this._applyTagWithTemplate(tag, tagTemplate);
 	};
@@ -95,7 +117,7 @@
 				tagElement = document.querySelector(tag),
 				tagElementWrapper = document.createElement('div'),
 				body = document.body;
-		tagElementWrapper.innerHTML = initTemplate(template, this.options.themeData);
+		tagElementWrapper.innerHTML = YX.Util.html.initTemplate(template, this.options.themeData);
 
 		// Remove native tag
 		tagElement && tagElement.parentNode.removeChild(tagElement);
@@ -119,9 +141,11 @@
 			body.appendChild(tagElementWrapper.firstChild);
 		}
 	};
-})(window);
 
-(function (global) {
+	return HeaderFooter;
+});
+
+(function () {
 	var siteInfo = [{
 				name: 'YX-JS-ToolKit',
 				theme: 'owl-theme'
@@ -144,6 +168,6 @@
 	{
 		new HeaderFooter(HeaderFooter.TYPE_OPTIONS[siteHeaderFooterConfig.theme]);
 	}
-})(window);
+})();
 
 //# sourceMappingURL=headerFooter.js.map
