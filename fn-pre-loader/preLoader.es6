@@ -1,8 +1,24 @@
 /**
- * Javascript plugin: PreLoader v1.7
+ * PreLoader Plugin v2.0.0.180404_beta
  */
-;(function (global) {
-	global.PreLoader = function (options) {
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd)
+	{
+		define([], factory);
+		// define(['jquery', 'underscore'], factory);
+	}
+	else if (typeof module === 'object' && module.exports)
+	{
+		module.exports = factory();
+		// module.exports = factory(require('jquery'), require('underscore'));
+	}
+	else
+	{
+		root.PreLoader = factory();
+		// root.SiteConfig = factory(root.jQuery, root._);
+	}
+}(window, function () {
+	let PreLoader = function (options) {
 		// Create global element references
 		this.preLoaderElement = null;
 		this.positionValue = {
@@ -513,8 +529,16 @@
 
 	function getCurrentScriptParameter()
 	{
-		let scripts = document.getElementsByTagName('script'),
-				scriptSrc = scripts[scripts.length - 1].src;
+		let scriptSrc = '';
+		if (document.currentScript)
+		{
+			scriptSrc = document.currentScript.src;
+		}
+		else
+		{
+			let scripts = document.getElementsByTagName('script');
+			scriptSrc = scripts[scripts.length - 1].src;
+		}
 		return getUrlQueryParams(scriptSrc);
 	}
 
@@ -524,4 +548,4 @@
 	{
 		new PreLoader(PreLoader.TYPE_OPTIONS[PreLoader.TYPE_ABBRS[typeParam]]);
 	}
-})(window);
+});

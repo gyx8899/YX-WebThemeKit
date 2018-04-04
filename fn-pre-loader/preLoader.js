@@ -491,8 +491,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	function getCurrentScriptParameter()
 	{
-		var scripts = document.getElementsByTagName('script'),
-				scriptSrc = scripts[scripts.length - 1].src;
+		var scriptSrc = '';
+		if (document.currentScript)
+		{
+			scriptSrc = document.currentScript.src;
+		}
+		else
+		{
+			var scripts = document.getElementsByTagName('script');
+			scriptSrc = scripts[scripts.length - 1].src;
+		}
 		return getUrlQueryParams(scriptSrc);
 	}
 
