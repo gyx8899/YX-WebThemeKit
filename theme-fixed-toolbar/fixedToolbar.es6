@@ -1,5 +1,8 @@
-(function () {
-	loadCSS('https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.css', initFixedToolbar);
+/**
+ * Fixed Toolbar Plugin v2.0.0.180404_beta
+ */
+(function (YX) {
+	YX.Util.load.loadCSS('https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.css', initFixedToolbar);
 
 	function initFixedToolbar()
 	{
@@ -37,7 +40,7 @@
 
 		let that = this;
 		window.onscroll = function () {
-			throttle(isShowScrollToTop, that);
+			YX.Util.tool.throttle(isShowScrollToTop, that);
 		};
 
 		return item;
@@ -51,17 +54,6 @@
 				// window.scrollTo(0, scrollTopValue - scrollTopValue / 8);
 				$('html, body').animate({scrollTop: 0}, 300);
 			}
-		}
-
-		function throttle(method, context)
-		{
-			if (method.tId)
-			{
-				clearTimeout(method.tId);
-			}
-			method.tId = setTimeout(function () {
-				method.call(context);
-			}, 100);
 		}
 
 		function isShowScrollToTop()
@@ -80,4 +72,4 @@
 			}
 		}
 	}
-})();
+})(window.YX);
