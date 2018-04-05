@@ -22,7 +22,7 @@
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
 				config: {
-					themeHeaderFooter: true,
+					headerFooter: true,
 					googleAnalytics: true,
 					githubRibbon: true,
 					fixedToolbar: true
@@ -31,7 +31,7 @@
 				name: 'YX-WebThemeKit',
 				pathNameRoot: 'YX-WebThemeKit',
 				config: {
-					themeHeaderFooter: true,
+					headerFooter: true,
 					googleAnalytics: true,
 					githubRibbon: true,
 					fixedToolbar: true
@@ -40,15 +40,14 @@
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
 				config: {
-					themeHeaderFooter: true,
+					headerFooter: true,
 					googleAnalytics: true,
 					githubRibbon: true,
 					fixedToolbar: true
 				}
 			}],
-
 			configUrl = {
-				themeHeaderFooter: {
+				headerFooter: {
 					firstScreen: true,
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.min.js'
 				},
@@ -77,20 +76,15 @@
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
 			})[0];
 
-	initSiteParams();
+	siteConfig.queryParams = YX.Util.url.getUrlQueryParams();
 
-	loadDev();
+	handleParameters();
 
 	enableServiceWorker();
 
 	window.addEventListener("load", loadConfigWhenLoaded, false);
 
 	siteConfig && loadConfigs(siteConfig.config, true);
-
-	function initSiteParams()
-	{
-		siteConfig.queryParams = YX.Util.url.getUrlQueryParams();
-	}
 
 	/**
 	 * Enable PWA server worker when it is available
@@ -138,23 +132,9 @@
 	{
 		if (document.querySelectorAll('[data-toggle="previewCode"]').length)
 		{
-			let scriptParamArray = getScriptName().split('?'),
-					testPreviewCode = scriptParamArray.length < 2 ? null :
-							scriptParamArray[1].split('&')
-									.map(param => {
-										return {
-											param: param.split('=')[0],
-											value: param.split('=')[1]
-										}
-									}).find(param => {
-								return param.param === 'test' && param.value === 'previewcode'
-							});
-			if (!testPreviewCode)
-			{
-				YX.Util.load.loadScript(configUrl['previewCode'].url, function () {
-					return new PreviewCode();
-				}, null, {isAsync: true});
-			}
+			YX.Util.load.loadScript(configUrl['previewCode'].url, function () {
+				return new PreviewCode();
+			}, null, {isAsync: true});
 		}
 	}
 
@@ -172,14 +152,24 @@
 	/**
 	 * Load Dev resource when url has param '&env=dev'
 	 */
-	function loadDev()
+	function handleParameters()
 	{
+		// Handle page parameters
 		if (siteConfig.name === 'YX-WebThemeKit' &&
 				(siteConfig.queryParams['env'] === 'dev' || siteConfig.queryParams['_ijt'] !== ''))
 		{
 			Object.keys(configUrl).forEach(function (key) {
 				configUrl[key].url = configUrl[key].url.replace('https://gyx8899.github.io/', '../../../');
 			});
+		}
+
+		// Handle theme config parameters
+		let themeConfigParams = YX.Util.url.getUrlQueryParams(getScriptName());
+		if (themeConfigParams['ignore'])
+		{
+			themeConfigParams['ignore'].split(',').forEach(themeName => {
+				configUrl[themeName].url = '';
+			})
 		}
 	}
 
