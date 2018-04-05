@@ -26,4 +26,13 @@ $(document).ready(function () {
 			}
 		});
 	}
+
+	$('[data-image]').each((index, srcElement) => {
+		let dataImage = srcElement.getAttribute('data-image');
+		if (dataImage)
+		{
+			srcElement.setAttribute('src', dataImage);
+			srcElement.setAttribute('data-image', '');
+		}
+	})
 });

@@ -28,6 +28,15 @@ $(document).ready(function () {
 			}
 		});
 	}
+
+	$('[data-image]').each(function (index, srcElement) {
+		var dataImage = srcElement.getAttribute('data-image');
+		if (dataImage)
+		{
+			srcElement.setAttribute('src', dataImage);
+			srcElement.setAttribute('data-image', '');
+		}
+	});
 });
 
 //# sourceMappingURL=owl.js.map
