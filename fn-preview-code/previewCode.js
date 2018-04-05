@@ -7,7 +7,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 };
 
 /**
- * PreviewCode Plugin v3.0.0.180404_beta
+ * PreviewCode Plugin v3.0.1.180405_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -34,10 +34,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  *  2.5 getFileContent
  *  2.6 addElement
  *  2.7 getElements
- *  2.8 hasClass
- *  2.9 addClass
- *  2.10 removeClass
- *  2.11 toggleClass
+ *  2.8 addClass
+ *  2.9 toggleClass
  * */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -194,7 +192,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				var href = element.getAttribute('href');
 				if (elementTag === 'link' && href !== null)
 				{
-					previewTitle = getFileNameFromURL(href).name;
+					previewTitle = YX.Util.url.getFileNameFromURL(href).name;
 				}
 			}
 			else if (elementTag === 'script')
@@ -203,7 +201,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				var src = element.getAttribute('src');
 				if (src !== null)
 				{
-					previewTitle = getFileNameFromURL(src).name;
+					previewTitle = YX.Util.url.getFileNameFromURL(src).name;
 				}
 			}
 			else

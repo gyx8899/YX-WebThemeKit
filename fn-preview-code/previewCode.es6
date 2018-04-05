@@ -1,5 +1,5 @@
 /**
- * PreviewCode Plugin v3.0.0.180404_beta
+ * PreviewCode Plugin v3.0.1.180405_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -26,10 +26,8 @@
  *  2.5 getFileContent
  *  2.6 addElement
  *  2.7 getElements
- *  2.8 hasClass
- *  2.9 addClass
- *  2.10 removeClass
- *  2.11 toggleClass
+ *  2.8 addClass
+ *  2.9 toggleClass
  * */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -190,7 +188,7 @@
 				let href = element.getAttribute('href');
 				if (elementTag === 'link' && href !== null)
 				{
-					previewTitle = getFileNameFromURL(href).name;
+					previewTitle = YX.Util.url.getFileNameFromURL(href).name;
 				}
 			}
 			else if (elementTag === 'script')
@@ -199,7 +197,7 @@
 				let src = element.getAttribute('src');
 				if (src !== null)
 				{
-					previewTitle = getFileNameFromURL(src).name;
+					previewTitle = YX.Util.url.getFileNameFromURL(src).name;
 				}
 			}
 			else
