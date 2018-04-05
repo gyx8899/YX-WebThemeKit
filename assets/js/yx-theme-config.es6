@@ -210,9 +210,9 @@
 				, lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/)
 				, currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
 
-		if ((source = lastStackFrameRegex.exec(error.stack.trim())) && source[1] != "")
+		if (error.stack && (source = lastStackFrameRegex.exec(error.stack.trim())) && (source.length > 1 && source[1] !== ""))
 			return source[1];
-		else if ((source = currentStackFrameRegex.exec(error.stack.trim())))
+		else if (error.stack && (source = currentStackFrameRegex.exec(error.stack.trim())))
 			return source[1];
 		else if (error['fileName'] !== undefined)
 			return error['fileName'];
