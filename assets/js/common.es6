@@ -136,7 +136,8 @@
 	 */
 	function isZHLanguage()
 	{
-		return window.navigator && window.navigator.languages && window.navigator.languages.some(language => {
+		let browserLanguage = window.navigator.languages ? window.navigator.languages : window.navigator.browserLanguage;
+		return browserLanguage.some(language => {
 			return language.indexOf('zh') === 0;
 		});
 	}

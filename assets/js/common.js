@@ -145,7 +145,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	 */
 	function isZHLanguage()
 	{
-		return window.navigator && window.navigator.languages && window.navigator.languages.some(function (language) {
+		var browserLanguage = window.navigator.languages ? window.navigator.languages : window.navigator.browserLanguage;
+		return browserLanguage.some(function (language) {
 			return language.indexOf('zh') === 0;
 		});
 	}
