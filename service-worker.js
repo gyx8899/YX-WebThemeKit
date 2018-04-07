@@ -1,9 +1,9 @@
 'use strict';
 
-var CACHE_NAME = 'YX-JS-ToolKit-180407',
-		urlsToCache_static = ['/', './assets/img/apple-touch-icon.png', './assets/img/favicon.png'],
-		urlsToCache_data = ['./assets/js/yx-theme-config.min.js'],
-		cacheWhiteList = ['urlsToCache_static', 'urlsToCache_data'];
+var CACHE_NAME = 'YX-WebThemeKit-180407',
+    urlsToCache_static = ['./', './assets/img/apple-touch-icon.png', './assets/img/favicon.png'],
+    urlsToCache_data = ['./assets/js/yx-theme-config.min.js'],
+    cacheWhiteList = ['urlsToCache_static', 'urlsToCache_data'];
 
 self.addEventListener('install', function (event) {
 	console.log('ServiceWorker installed!');
@@ -21,8 +21,7 @@ self.addEventListener('activate', function (event) {
 
 	event.waitUntil(caches.keys().then(function (cacheNames) {
 		return Promise.all(cacheNames.map(function (cacheName) {
-			if (cacheWhiteList.indexOf(cacheName) === -1)
-			{
+			if (cacheWhiteList.indexOf(cacheName) === -1) {
 				return caches.delete(cacheName);
 			}
 		}));
@@ -35,28 +34,17 @@ self.addEventListener('fetch', function (event) {
 	console.log('ServiceWorker fetch resources: ');
 
 	event.respondWith(caches.match(event.request).then(function (response) {
-		// Cache hit - return response
-		if (response)
-		{
-			return response;
-		}
-		var fetchRequest = event.request.clone();
-
-		return fetch(fetchRequest).then(function (response) {
-			// Check if we received a valid response
-			if (!response || response.status !== 200 || response.type !== 'basic')
-			{
+		// Cache hint, return response
+		return response || fetch(event.request.clone()).then(function (response) {
+			if (!response || response.status !== 200 || response.type !== 'basic') {
 				return response;
 			}
-
-			var responseToCache = response.clone();
-
+			var responseClone = response.clone();
 			caches.open(CACHE_NAME).then(function (cache) {
-				cache.put(event.request, responseToCache).then(function () {
-					return responseToCache;
+				cache.put(event.request, responseClone).then(function () {
+					return response;
 				});
 			});
-
 			return response;
 		});
 	}));
@@ -64,9 +52,9 @@ self.addEventListener('fetch', function (event) {
 
 self.addEventListener('push', function (event) {
 	var title = 'Receive a message.',
-			body = 'message body!',
-			icon = '/assets/img/favicon.png',
-			tag = '';
+	    body = 'message body!',
+	    icon = '/assets/img/favicon.png',
+	    tag = '';
 	event.waitUntil(self.registration.showNotification(title, {
 		body: body,
 		icon: icon,
