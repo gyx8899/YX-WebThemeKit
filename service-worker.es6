@@ -1,8 +1,8 @@
 let CACHE_NAME = 'YX-WebThemeKit-180407',
 		urlsToCache_static = [
 			'./',
-			'./assets/img/apple-touch-icon.png',
-			'./assets/img/favicon.png'
+			'./assets/img/apple-icon-152x152.png',
+			'./assets/img/favicon-16x16.png'
 		],
 		urlsToCache_data = [
 			'./assets/js/yx-theme-config.min.js'
