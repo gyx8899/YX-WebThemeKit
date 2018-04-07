@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
- * Site Config v1.0.0.180404_beta
+ * Site Config v1.0.1.180407_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
@@ -44,16 +44,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			githubRibbon: true,
 			fixedToolbar: true
 		}
-			}, {
-				name: 'Others',
-				pathNameRoot: '',
-				config: {
-					headerFooter: true,
-					googleAnalytics: false,
-					githubRibbon: false,
-					fixedToolbar: true
-				}
-			}],
+	}, {
+		name: 'Others',
+		pathNameRoot: '',
+		config: {
+			headerFooter: true,
+			googleAnalytics: false,
+			githubRibbon: false,
+			fixedToolbar: true
+		}
+	}],
 	    configUrl = {
 		headerFooter: {
 			firstScreen: true,
@@ -81,7 +81,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	    sitePathName = document.location.pathname,
 	    siteConfig = YX_SITE_CONFIG.filter(function (site) {
 		return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
-	})[0];
+	})[0] || YX_SITE_CONFIG[YX_SITE_CONFIG.length - 1];
 
 	siteConfig.queryParams = YX.Util.url.getUrlQueryParams();
 
@@ -194,9 +194,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		    lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/),
 		    currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
 
-		if (error.stack && (source = lastStackFrameRegex.exec(error.stack.trim())) && source.length > 1 && source[1] !== "") return source[1];
-		else if (error.stack && (source = currentStackFrameRegex.exec(error.stack.trim()))) return source[1];
-		else if (error['fileName'] !== undefined) return error['fileName'];
+		if (error.stack && (source = lastStackFrameRegex.exec(error.stack.trim())) && source.length > 1 && source[1] !== "") return source[1];else if (error.stack && (source = currentStackFrameRegex.exec(error.stack.trim()))) return source[1];else if (error['fileName'] !== undefined) return error['fileName'];
 	}
 
 	return siteConfig;

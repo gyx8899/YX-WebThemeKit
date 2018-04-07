@@ -1,5 +1,5 @@
 /**
- * Site Config v1.0.0.180404_beta
+ * Site Config v1.0.1.180407_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -83,7 +83,7 @@
 			sitePathName = document.location.pathname,
 			siteConfig = YX_SITE_CONFIG.filter(function (site) {
 				return site.pathNameRoot.toLowerCase() === sitePathName.split('/')[1].toLowerCase();
-			})[0];
+			})[0] || YX_SITE_CONFIG[YX_SITE_CONFIG.length - 1];
 
 	siteConfig.queryParams = YX.Util.url.getUrlQueryParams();
 
