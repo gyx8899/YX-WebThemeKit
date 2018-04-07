@@ -45,6 +45,15 @@
 					githubRibbon: true,
 					fixedToolbar: true
 				}
+			}, {
+				name: 'Others',
+				pathNameRoot: '',
+				config: {
+					headerFooter: true,
+					googleAnalytics: false,
+					githubRibbon: false,
+					fixedToolbar: true
+				}
 			}],
 			configUrl = {
 				headerFooter: {
