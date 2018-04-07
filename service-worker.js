@@ -1,8 +1,8 @@
 'use strict';
 
-var CACHE_NAME = 'YX-WebThemeKit-180407',
-		urlsToCache_static = ['/', '/assets/img/apple-touch-icon.png', '/assets/img/favicon.png'],
-		urlsToCache_data = ['/assets/js/yx-theme-config.min.js'],
+var CACHE_NAME = 'YX-JS-ToolKit-180407',
+		urlsToCache_static = ['/', './assets/img/apple-touch-icon.png', './assets/img/favicon.png'],
+		urlsToCache_data = ['./assets/js/yx-theme-config.min.js'],
 		cacheWhiteList = ['urlsToCache_static', 'urlsToCache_data'];
 
 self.addEventListener('install', function (event) {
@@ -35,15 +35,28 @@ self.addEventListener('fetch', function (event) {
 	console.log('ServiceWorker fetch resources: ');
 
 	event.respondWith(caches.match(event.request).then(function (response) {
-		// Cache hint, return response
-		return response || fetch(event.request.clone()).then(function (response) {
+		// Cache hit - return response
+		if (response)
+		{
+			return response;
+		}
+		var fetchRequest = event.request.clone();
+
+		return fetch(fetchRequest).then(function (response) {
+			// Check if we received a valid response
 			if (!response || response.status !== 200 || response.type !== 'basic')
 			{
 				return response;
 			}
+
+			var responseToCache = response.clone();
+
 			caches.open(CACHE_NAME).then(function (cache) {
-				cache.put(event.request, response.clone());
+				cache.put(event.request, responseToCache).then(function () {
+					return responseToCache;
+				});
 			});
+
 			return response;
 		});
 	}));
