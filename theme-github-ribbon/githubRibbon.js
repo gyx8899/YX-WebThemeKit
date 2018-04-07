@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * GitHub ribbon plugin v2.0.0.180404_beta
+ * GitHub ribbon plugin v2.0.0.180407_beta
  */
 (function (global, YX) {
 	var githubAuthor = "gyx8899",
