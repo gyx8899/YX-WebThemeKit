@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
- * Site Config v1.0.1.180407_beta
+ * Site Config v1.0.2.180407_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
@@ -99,7 +99,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	function enableServiceWorker() {
 		if ('serviceWorker' in navigator) {
 			window.addEventListener('load', function () {
-				navigator.serviceWorker.register(this.location.origin + '/' + siteConfig.pathNameRoot + '/service-worker.js', { scope: '/' + siteConfig.pathNameRoot + '/' }).then(function (registration) {
+				var pathNameRoot = siteConfig.pathNameRoot ? siteConfig.pathNameRoot + '/' : '',
+						swPath = this.location.origin + '/' + pathNameRoot + 'service-worker.js',
+						swScope = '/' + pathNameRoot;
+				navigator.serviceWorker.register(swPath, {scope: swScope}).then(function (registration) {
 					// Registration successful
 					console.log('ServiceWorker registration successful with scope: ', registration.scope);
 				}).catch(function (err) {

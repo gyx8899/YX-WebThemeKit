@@ -1,5 +1,5 @@
 /**
- * Site Config v1.0.1.180407_beta
+ * Site Config v1.0.2.180407_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -103,7 +103,10 @@
 		if ('serviceWorker' in navigator)
 		{
 			window.addEventListener('load', function () {
-				navigator.serviceWorker.register(this.location.origin + '/' + siteConfig.pathNameRoot + '/service-worker.js', {scope: '/' + siteConfig.pathNameRoot + '/'})
+				let pathNameRoot = siteConfig.pathNameRoot ? siteConfig.pathNameRoot + '/' : '',
+						swPath = this.location.origin + '/' + pathNameRoot + 'service-worker.js',
+						swScope = '/' + pathNameRoot;
+				navigator.serviceWorker.register(swPath, {scope: swScope})
 						.then(function (registration) {
 							// Registration successful
 							console.log('ServiceWorker registration successful with scope: ', registration.scope);
