@@ -7,7 +7,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 };
 
 /**
- * HeaderFooter plugin v3.0.0.180404_beta
+ * HeaderFooter plugin v3.0.1.180407_beta
  * Required:
  * 1. html file: contain <header> <footer>;
  * 2. css file: <header> <footer> style file;
@@ -160,8 +160,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				theme: 'owl-theme'
 			}],
 			siteHeaderFooterConfig = siteInfo.filter(function (site) {
-				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
-			})[0];
+				return siteConfig && site.name.toLowerCase() === siteConfig.name.toLowerCase();
+			})[0] || siteInfo[siteInfo.length - 1];
 
 	// Auto init HeaderFooter
 	if (siteHeaderFooterConfig)
