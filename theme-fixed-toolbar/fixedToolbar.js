@@ -6,8 +6,7 @@
 (function (YX) {
 	YX.Util.load.loadCSS('https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.css', initFixedToolbar);
 
-	function initFixedToolbar()
-	{
+	function initFixedToolbar() {
 		var toolbar = document.createElement('div');
 		toolbar.className = 'ui-toolbar';
 
@@ -19,8 +18,7 @@
 		document.body.appendChild(toolbar);
 	}
 
-	function toolbarItem(itemElement)
-	{
+	function toolbarItem(itemElement) {
 		var toolItem = document.createElement('li');
 		toolItem.className = 'tool-item';
 
@@ -28,8 +26,7 @@
 		return toolItem;
 	}
 
-	function scrollToTopItem()
-	{
+	function scrollToTopItem() {
 		var item = document.createElement('a');
 		item.className = 'item-scroll-top';
 		item.href = 'javascript: void(0);';
@@ -47,28 +44,34 @@
 
 		return item;
 
-		function scrollToTop()
-		{
-			var scrollTopValue = document.documentElement.scrollTop || document.body.scrollTop;
-			if (scrollTopValue > 0)
-			{
-				// window.requestAnimationFrame(scrollToTop);
-				// window.scrollTo(0, scrollTopValue - scrollTopValue / 8);
-				$('html, body').animate({scrollTop: 0}, 300);
+		function scrollToTop() {
+			var cosParameter = window.scrollY / 2,
+			    scrollCount = 0,
+			    oldTimestamp = performance.now();
+
+			function step(newTimestamp) {
+				scrollCount += Math.PI / (300 / (newTimestamp - oldTimestamp));
+				if (scrollCount >= Math.PI) {
+					window.scrollTo(0, 0);
+				}
+				if (window.scrollY === 0) {
+					return;
+				}
+				window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+				oldTimestamp = newTimestamp;
+				window.requestAnimationFrame(step);
 			}
+
+			window.requestAnimationFrame(step);
 		}
 
-		function isShowScrollToTop()
-		{
+		function isShowScrollToTop() {
 			var scrollTopValue = document.documentElement.scrollTop || document.body.scrollTop,
-					scrollTopItem = document.querySelector('.ui-toolbar .item-scroll-top');
-			if (scrollTopValue > 150)
-			{
+			    scrollTopItem = document.querySelector('.ui-toolbar .item-scroll-top');
+			if (scrollTopValue > 150) {
 				scrollTopItem.style.display = "list-item";
 				scrollTopItem.onclick = scrollToTop;
-			}
-			else
-			{
+			} else {
 				scrollTopItem.style.display = "none";
 				scrollTopItem.onclick = null;
 			}

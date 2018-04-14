@@ -47,13 +47,27 @@
 
 		function scrollToTop()
 		{
-			let scrollTopValue = document.documentElement.scrollTop || document.body.scrollTop;
-			if (scrollTopValue > 0)
+			let cosParameter = window.scrollY / 2,
+					scrollCount = 0,
+					oldTimestamp = performance.now();
+
+			function step(newTimestamp)
 			{
-				// window.requestAnimationFrame(scrollToTop);
-				// window.scrollTo(0, scrollTopValue - scrollTopValue / 8);
-				$('html, body').animate({scrollTop: 0}, 300);
+				scrollCount += Math.PI / (300 / (newTimestamp - oldTimestamp));
+				if (scrollCount >= Math.PI)
+				{
+					window.scrollTo(0, 0);
+				}
+				if (window.scrollY === 0)
+				{
+					return;
+				}
+				window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+				oldTimestamp = newTimestamp;
+				window.requestAnimationFrame(step);
 			}
+
+			window.requestAnimationFrame(step);
 		}
 
 		function isShowScrollToTop()
