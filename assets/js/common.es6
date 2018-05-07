@@ -1,5 +1,5 @@
 /**
- * YX Common Library v1.0.1.180405_beta
+ * YX Common Library v1.0.1.180507_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -46,16 +46,7 @@
 	 */
 	function uniqueArray(sourceArray)
 	{
-		let resultArray = [], hash = {};
-		for (let i = 0, elem, l = sourceArray.length; i < l && (elem = sourceArray[i]) !== null; i++)
-		{
-			if (!hash[elem])
-			{
-				resultArray.push(elem);
-				hash[elem] = true;
-			}
-		}
-		return resultArray;
+		return [...new Set(sourceArray)];
 	}
 
 	YX.Util.array.uniqueArray = uniqueArray;
@@ -182,7 +173,10 @@
 		for (let i = 0; i < queryParams.length; i++)
 		{
 			let queryParam = queryParams[i].split("=");
-			query[queryParam[0]] = queryParam[1];
+			if (queryParam.length > 1)
+			{
+				query[queryParam[0]] = queryParam[1];
+			}
 		}
 		return query;
 	}
@@ -201,7 +195,7 @@
 		for (let i = 0; i < queryParams.length; i++)
 		{
 			let queryParam = queryParams[i].split("=");
-			if (queryParam[0] === param)
+			if (queryParam.length > 1 && queryParam[0] === param)
 			{
 				return queryParam[1];
 			}
@@ -342,6 +336,50 @@
 	}
 
 	YX.Util.url.getScriptName = getScriptName;
+
+	/**
+	 * Check url is exist or not, callback with success state
+	 * @param url
+	 * @param callback
+	 * @param context
+	 */
+	function isExist(url, callback, context)
+	{
+		let link = document.createElement("link"),
+				isSuccess = true;
+
+		link.onerror = function () {
+			isSuccess = false;
+			callback && (context ? context[callback]() : callback(isSuccess));
+		};
+		if (link.readyState)
+		{  //IE
+			link.onreadystatechange = function () {
+				if (link.readyState === "loaded" || link.readyState === "complete")
+				{
+					link.onreadystatechange = null;
+					setTimeout(function () {
+						isSuccess && callback && (context ? context[callback]() : callback(isSuccess));
+					}, 0);
+				}
+			};
+		}
+		else
+		{  //Others
+			link.onload = function () {
+				callback && (context ? context[callback]() : callback(isSuccess));
+			};
+		}
+
+		link.href = url;
+		// TODO: type and rel should be accord to with checked file
+		link.type = 'text/css';
+		link.rel = 'stylesheet';
+
+		document.querySelector('head').appendChild(link);
+	}
+
+	YX.Util.url.isExist = isExist;
 
 	/********************************************************************************************************************/
 	/**
@@ -1248,6 +1286,10 @@
 		let resultAddedElement = null;
 		switch (position && position.toLowerCase())
 		{
+			case 'replace':
+				targetElement.innerHTML = '';
+				resultAddedElement = targetElement.appendChild(addedElement);
+				break;
 			case 'prepend':
 				resultAddedElement = targetElement.insertBefore(addedElement, targetElement.firstChild);
 				break;

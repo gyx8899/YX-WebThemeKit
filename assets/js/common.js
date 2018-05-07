@@ -6,8 +6,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
+function _toConsumableArray(arr)
+{
+	if (Array.isArray(arr))
+	{
+		for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++)
+		{
+			arr2[i] = arr[i];
+		}
+		return arr2;
+	}
+	else
+	{
+		return Array.from(arr);
+	}
+}
+
 /**
- * YX Common Library v1.0.1.180405_beta
+ * YX Common Library v1.0.1.180507_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -54,17 +70,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	 */
 	function uniqueArray(sourceArray)
 	{
-		var resultArray = [],
-				hash = {};
-		for (var i = 0, elem, l = sourceArray.length; i < l && (elem = sourceArray[i]) !== null; i++)
-		{
-			if (!hash[elem])
-			{
-				resultArray.push(elem);
-				hash[elem] = true;
-			}
-		}
-		return resultArray;
+		return [].concat(_toConsumableArray(new Set(sourceArray)));
 	}
 
 	YX.Util.array.uniqueArray = uniqueArray;
@@ -191,7 +197,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		for (var i = 0; i < queryParams.length; i++)
 		{
 			var queryParam = queryParams[i].split("=");
-			query[queryParam[0]] = queryParam[1];
+			if (queryParam.length > 1)
+			{
+				query[queryParam[0]] = queryParam[1];
+			}
 		}
 		return query;
 	}
@@ -210,7 +219,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		for (var i = 0; i < queryParams.length; i++)
 		{
 			var queryParam = queryParams[i].split("=");
-			if (queryParam[0] === param)
+			if (queryParam.length > 1 && queryParam[0] === param)
 			{
 				return queryParam[1];
 			}
@@ -348,6 +357,52 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	YX.Util.url.getScriptName = getScriptName;
+
+	/**
+	 * Check url is exist or not, callback with success state
+	 * @param url
+	 * @param callback
+	 * @param context
+	 */
+	function isExist(url, callback, context)
+	{
+		var link = document.createElement("link"),
+				isSuccess = true;
+
+		link.onerror = function () {
+			isSuccess = false;
+			callback && (context ? context[callback]() : callback(isSuccess));
+		};
+		if (link.readyState)
+		{
+			//IE
+			link.onreadystatechange = function () {
+				if (link.readyState === "loaded" || link.readyState === "complete")
+				{
+					link.onreadystatechange = null;
+					setTimeout(function () {
+						isSuccess && callback && (context ? context[callback]() : callback(isSuccess));
+					}, 0);
+				}
+			};
+		}
+		else
+		{
+			//Others
+			link.onload = function () {
+				callback && (context ? context[callback]() : callback(isSuccess));
+			};
+		}
+
+		link.href = url;
+		// TODO: type and rel should be accord to with checked file
+		link.type = 'text/css';
+		link.rel = 'stylesheet';
+
+		document.querySelector('head').appendChild(link);
+	}
+
+	YX.Util.url.isExist = isExist;
 
 	/********************************************************************************************************************/
 	/**
@@ -1236,6 +1291,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		var resultAddedElement = null;
 		switch (position && position.toLowerCase())
 		{
+			case 'replace':
+				targetElement.innerHTML = '';
+				resultAddedElement = targetElement.appendChild(addedElement);
+				break;
 			case 'prepend':
 				resultAddedElement = targetElement.insertBefore(addedElement, targetElement.firstChild);
 				break;
