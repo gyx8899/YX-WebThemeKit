@@ -1,5 +1,6 @@
 /**
  * Fixed Toolbar Plugin v2.0.0.180404_beta
+ * Auto add toolbar on bottom right;
  */
 (function (YX) {
 	YX.Util.load.loadCSS('https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.css', initFixedToolbar);
