@@ -1,12 +1,12 @@
 /**
- * PreviewCode Plugin v3.0.1.180405_beta
+ * PreviewCode Plugin v3.0.2.180507_beta
  *
  * Setting in html tag:
  * 1. Required:
  * 1.1 data-toggle="previewCode"
- * 1.2 data-target="#[targetId]" (element querySelector, append preview code to target element)
  *
  * 2. Optional:
+ * 2.0 data-target="#[targetId]" (element querySelector, append preview code to target element)
  * 2.1 data-title="titleAboveCode" // "false" will not show title
  * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
  * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
@@ -90,8 +90,8 @@
 	function previewElementCode(element)
 	{
 		let dataTargetValue = element.getAttribute('data-target'),
-				targetElement = dataTargetValue === 'self' ? element : document.querySelector(dataTargetValue),
-				previewPosition = element.getAttribute('data-position') || 'append',
+				targetElement = !dataTargetValue ? element : document.querySelector(dataTargetValue),
+				previewPosition = !dataTargetValue ? 'replace' : (element.getAttribute('data-position') || 'append'),
 				previewFetch = element.getAttribute('data-fetch'),
 				previewHTML = getPreviewElementHTML(element),
 				previewTitle = getPreviewTitle(element),
