@@ -1,10 +1,6 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-	return typeof obj;
-} : function (obj) {
-	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
  * PreviewCode Plugin v3.0.2.180507_beta
@@ -14,7 +10,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * 1.1 data-toggle="previewCode"
  *
  * 2. Optional:
- * 2.0 data-target="#[targetId]" (element querySelector, append preview code to target element)
+ * 2.0 data-target="#[targetId]" // default with not set, and it will be current element. or element querySelector, append preview code to target element)
  * 2.1 data-title="titleAboveCode" // "false" will not show title
  * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
  * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
@@ -38,18 +34,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  *  2.9 toggleClass
  * */
 (function (root, factory) {
-	if (typeof define === 'function' && define.amd)
-	{
+	if (typeof define === 'function' && define.amd) {
 		define(['yx'], factory);
 		// define(['jquery', 'underscore'], factory);
-	}
-	else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports)
-	{
+	} else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
 		module.exports = factory(require('yx'));
 		// module.exports = factory(require('jquery'), require('underscore'));
-	}
-	else
-	{
+	} else {
 		root.PreviewCode = factory(root.YX);
 		// root.PreviewCode = factory(root.jQuery, root._);
 	}
@@ -59,7 +50,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		this.options = YX.Util.tool.deepExtend({}, PreviewCode.DEFAULTS, options);
 
 		var that = this,
-				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
+		    urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
 		YX.Util.load.loadResources(urls, function () {
 			that._init(elements);
 		});
@@ -83,47 +74,35 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	// Functions: init Highlight
-	function initHighlight()
-	{
-		hljs.configure({tabReplace: '  '});
+	function initHighlight() {
+		hljs.configure({ tabReplace: '  ' });
 		// hljs.initHighlightingOnLoad();
 	}
 
-	function highlightCode(codeElement)
-	{
+	function highlightCode(codeElement) {
 		hljs.highlightBlock(codeElement.querySelector('pre code'));
 	}
 
 	// Functions: Process code
-	function previewElementCode(element)
-	{
+	function previewElementCode(element) {
 		var dataTargetValue = element.getAttribute('data-target'),
-				targetElement = !dataTargetValue ? element : document.querySelector(dataTargetValue),
-				previewPosition = !dataTargetValue ? 'replace' : element.getAttribute('data-position') || 'append',
-				previewFetch = element.getAttribute('data-fetch'),
-				previewHTML = getPreviewElementHTML(element),
-				previewTitle = getPreviewTitle(element),
-				elementTag = element.tagName.toLowerCase(),
-				elementLink = '';
-		if (previewFetch === 'file')
-		{
-			if (elementTag === 'script')
-			{
+		    targetElement = !dataTargetValue ? element : document.querySelector(dataTargetValue),
+		    previewPosition = !dataTargetValue ? 'replace' : element.getAttribute('data-position') || 'append',
+		    previewFetch = element.getAttribute('data-fetch'),
+		    previewHTML = getPreviewElementHTML(element),
+		    previewTitle = getPreviewTitle(element),
+		    elementTag = element.tagName.toLowerCase(),
+		    elementLink = '';
+		if (previewFetch === 'file') {
+			if (elementTag === 'script') {
 				elementLink = element.src;
-			}
-			else if (elementTag === 'link')
-			{
+			} else if (elementTag === 'link') {
 				elementLink = element.href;
-			}
-			else if (element.getAttribute('data-src'))
-			{
+			} else if (element.getAttribute('data-src')) {
 				elementLink = element.getAttribute('data-src');
 			}
-		}
-		else
-		{
-			if (elementTag === 'script' && element.src || elementTag === 'link' && element.href)
-			{
+		} else {
+			if (elementTag === 'script' && element.src || elementTag === 'link' && element.href) {
 				previewHTML = filterTagAttrData(element.outerHTML);
 			}
 		}
@@ -132,28 +111,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			position: previewPosition,
 			isCollapsed: element.getAttribute('data-collapse') === 'on'
 		};
-		if (elementLink)
-		{
+		if (elementLink) {
 			YX.Util.load.getFileContent(elementLink, function (data) {
 				addPreviewCode(positionInfo, data, YX.Util.url.getFileNameFromURL(elementLink).baseName);
 			}, null);
-		}
-		else
-		{
+		} else {
 			addPreviewCode(positionInfo, previewHTML, previewTitle);
 		}
 	}
 
-	function addPreviewCode(positionInfo, codeString, demoTitle)
-	{
+	function addPreviewCode(positionInfo, codeString, demoTitle) {
 		var codeContent = trimPrevSpace(YX.Util.string.escapeHTML(codeString)),
-				codeElement = document.createElement('div'),
-				previewTitle = demoTitle === '' ? '' : '<div class="preview-title">' + '<span>' + demoTitle + '</span>' + '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' + '</div>';
+		    codeElement = document.createElement('div'),
+		    previewTitle = demoTitle === '' ? '' : '<div class="preview-title">' + '<span>' + demoTitle + '</span>' + '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' + '</div>';
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
 
-		if (positionInfo.isCollapsed)
-		{
+		if (positionInfo.isCollapsed) {
 			YX.Util.element.addClass(codeElement, 'collapse');
 		}
 
@@ -162,11 +136,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		highlightCode(previewCodeElement);
 	}
 
-	function filterTagAttrData(tagStr)
-	{
+	function filterTagAttrData(tagStr) {
 		var tagStrArray1 = tagStr.split('>');
-		if (tagStrArray1.length < 2)
-		{
+		if (tagStrArray1.length < 2) {
 			return tagStr;
 		}
 		var attrDataStr = tagStrArray1[0].split(' ').filter(function (t) {
@@ -176,49 +148,36 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		return [attrDataStr].concat(tagStrArray1.slice(1)).join('>');
 	}
 
-	function getPreviewTitle(element)
-	{
+	function getPreviewTitle(element) {
 		var previewTitle = element.getAttribute('data-title');
-		if (previewTitle === 'false')
-		{
+		if (previewTitle === 'false') {
 			previewTitle = '';
-		}
-		else if (!previewTitle)
-		{
+		} else if (!previewTitle) {
 			var elementTag = element.tagName.toLowerCase();
-			if (elementTag === 'style' || elementTag === 'link')
-			{
+			if (elementTag === 'style' || elementTag === 'link') {
 				previewTitle = 'CSS';
 				var href = element.getAttribute('href');
-				if (elementTag === 'link' && href !== null)
-				{
+				if (elementTag === 'link' && href !== null) {
 					previewTitle = YX.Util.url.getFileNameFromURL(href).name;
 				}
-			}
-			else if (elementTag === 'script')
-			{
+			} else if (elementTag === 'script') {
 				previewTitle = 'JS';
 				var src = element.getAttribute('src');
-				if (src !== null)
-				{
+				if (src !== null) {
 					previewTitle = YX.Util.url.getFileNameFromURL(src).name;
 				}
-			}
-			else
-			{
+			} else {
 				previewTitle = 'HTML';
 			}
 		}
 		return previewTitle;
 	}
 
-	function getPreviewElementHTML(element)
-	{
+	function getPreviewElementHTML(element) {
 		var previewCodeElement = element.cloneNode(true),
-				elementHTML = '';
+		    elementHTML = '';
 
-		if (previewCodeElement.getAttribute('data-tag') === 'show')
-		{
+		if (previewCodeElement.getAttribute('data-tag') === 'show') {
 			delete previewCodeElement.dataset['toggle'];
 			delete previewCodeElement.dataset['target'];
 			delete previewCodeElement.dataset['title'];
@@ -227,27 +186,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			delete previewCodeElement.dataset['collapse'];
 			delete previewCodeElement.dataset['tag'];
 			elementHTML = previewCodeElement.outerHTML;
-		}
-		else
-		{
+		} else {
 			elementHTML = previewCodeElement.innerHTML;
 		}
 		return elementHTML;
 	}
 
-	function trimPrevSpace(str)
-	{
+	function trimPrevSpace(str) {
 		var strArray = str.split('\n'),
-				beginIndex = getFirstNonSpaceValueIndex(strArray),
-				resultStr = '';
-		if (beginIndex !== -1)
-		{
+		    beginIndex = getFirstNonSpaceValueIndex(strArray),
+		    resultStr = '';
+		if (beginIndex !== -1) {
 			var newStrArray = [],
-					reverseStrArray = strArray.slice(0).reverse(),
-					endIndex = strArray.length - getFirstNonSpaceValueIndex(reverseStrArray),
-					commonPreSpace = /(^\s*)/g.exec(strArray[beginIndex])[0];
-			for (var i = beginIndex, j = 0; i < endIndex; i++)
-			{
+			    reverseStrArray = strArray.slice(0).reverse(),
+			    endIndex = strArray.length - getFirstNonSpaceValueIndex(reverseStrArray),
+			    commonPreSpace = /(^\s*)/g.exec(strArray[beginIndex])[0];
+			for (var i = beginIndex, j = 0; i < endIndex; i++) {
 				newStrArray[j++] = strArray[i].replace(commonPreSpace, '');
 			}
 			resultStr = newStrArray.join('\n');
@@ -255,21 +209,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		return resultStr;
 	}
 
-	function getFirstNonSpaceValueIndex(array)
-	{
-		for (var i = 0, l = array.length; i < l; i++)
-		{
+	function getFirstNonSpaceValueIndex(array) {
+		for (var i = 0, l = array.length; i < l; i++) {
 			// Filter space line
-			if (/^[\s|\t]+$/.test(array[i]) === false && array[i] !== '')
-			{
+			if (/^[\s|\t]+$/.test(array[i]) === false && array[i] !== '') {
 				return i;
 			}
 		}
 		return -1;
 	}
 
-	function bindClickEvent(parentElement, selector)
-	{
+	function bindClickEvent(parentElement, selector) {
 		parentElement.querySelector(selector).addEventListener('click', function () {
 			YX.Util.element.toggleClass(parentElement, 'collapse');
 		});

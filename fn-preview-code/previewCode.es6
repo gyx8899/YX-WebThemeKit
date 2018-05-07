@@ -6,7 +6,7 @@
  * 1.1 data-toggle="previewCode"
  *
  * 2. Optional:
- * 2.0 data-target="#[targetId]" (element querySelector, append preview code to target element)
+ * 2.0 data-target="#[targetId]" // default with not set, and it will be current element. or element querySelector, append preview code to target element)
  * 2.1 data-title="titleAboveCode" // "false" will not show title
  * 2.2 data-position="append"(default), "prepend", "insertBefore", "insertAfter"
  * 2.3 data-fetch="file" //Available for <script>-src and <link>-href, fetch file content; (default not fetch file)
