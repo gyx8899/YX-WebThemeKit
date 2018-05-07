@@ -91,7 +91,7 @@
 	{
 		let dataTargetValue = element.getAttribute('data-target'),
 				targetElement = !dataTargetValue ? element : document.querySelector(dataTargetValue),
-				previewPosition = !dataTargetValue ? 'replace' : (element.getAttribute('data-position') || 'append'),
+				previewPosition = (!dataTargetValue && !element.getAttribute('data-position')) ? 'replace' : (element.getAttribute('data-position') || 'append'),
 				previewFetch = element.getAttribute('data-fetch'),
 				previewHTML = getPreviewElementHTML(element),
 				previewTitle = getPreviewTitle(element),
