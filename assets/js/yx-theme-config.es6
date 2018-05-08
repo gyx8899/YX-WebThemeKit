@@ -1,5 +1,5 @@
 /**
- * Site Config v1.0.2.180407_beta
+ * Site Config v1.0.2.180508_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -18,42 +18,31 @@
 		// root.SiteConfig = factory(root.jQuery, root._);
 	}
 }(window, function (YX) {
-	let YX_SITE_CONFIG = [{
+	let DEFAULT_CONFIG = {
+				headerFooter: true,
+				googleAnalytics: true,
+				githubRibbon: true,
+				fixedToolbar: true,
+				previewCode: true,
+				qUnit: true,
+				disqus: true
+			},
+			YX_SITE_CONFIG = [{
 				name: 'YX-JS-ToolKit',
 				pathNameRoot: 'YX-JS-ToolKit',
-				config: {
-					headerFooter: true,
-					googleAnalytics: true,
-					githubRibbon: true,
-					fixedToolbar: true
-				}
+				customConfig: {},
 			}, {
 				name: 'YX-WebThemeKit',
 				pathNameRoot: 'YX-WebThemeKit',
-				config: {
-					headerFooter: true,
-					googleAnalytics: true,
-					githubRibbon: true,
-					fixedToolbar: true
-				}
+				customConfig: {},
 			}, {
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
-				config: {
-					headerFooter: true,
-					googleAnalytics: true,
-					githubRibbon: true,
-					fixedToolbar: true
-				}
+				customConfig: {},
 			}, {
 				name: 'Others',
 				pathNameRoot: '',
-				config: {
-					headerFooter: true,
-					googleAnalytics: false,
-					githubRibbon: false,
-					fixedToolbar: true
-				}
+				customConfig: {},
 			}],
 			configUrl = {
 				headerFooter: {
@@ -70,13 +59,16 @@
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.min.js'
 				},
 				previewCode: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js?auto=true',
+					condition: () => document.querySelectorAll('[data-toggle="previewCode"]').length
 				},
 				qUnit: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.min.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.min.js',
+					condition: () => siteConfig.queryParams['qunit'] === 'true'
 				},
 				disqus: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.min.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.min.js',
+					condition: () => !YX.Util.navigator.isZHLanguage()
 				}
 			},
 
@@ -91,9 +83,9 @@
 
 	enableServiceWorker();
 
-	window.addEventListener("load", loadConfigWhenLoaded, false);
+	window.addEventListener("load", () => siteConfig && loadConfigs(siteConfig, false), false);
 
-	siteConfig && loadConfigs(siteConfig.config, true);
+	siteConfig && loadConfigs(siteConfig, true);
 
 	/**
 	 * Enable PWA server worker when it is available
@@ -126,38 +118,14 @@
 	 */
 	function loadConfigs(configInfo, isFirstScreen)
 	{
-		for (let config in configInfo)
+		for (let config in DEFAULT_CONFIG)
 		{
-			if (configInfo.hasOwnProperty(config) &&
-					configInfo[config] &&
-					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)))
+			if (((configInfo.customConfig && configInfo.customConfig.hasOwnProperty(config)) ? configInfo.customConfig[config] : DEFAULT_CONFIG[config]) &&
+					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)) &&
+					(!configUrl[config].condition || configUrl[config].condition()))
 			{
 				YX.Util.load.loadScript(configUrl[config].url, null, null, {isAsync: !isFirstScreen});
 			}
-		}
-	}
-
-	/***
-	 * Load previewCode component when dom has 'data-toggle="previewCode"'
-	 */
-	function loadPreviewCode()
-	{
-		if (document.querySelectorAll('[data-toggle="previewCode"]').length)
-		{
-			YX.Util.load.loadScript(configUrl['previewCode'].url, function () {
-				return new PreviewCode();
-			}, null, {isAsync: true});
-		}
-	}
-
-	/***
-	 * Load QUnit when url has param '&qunit=true
-	 */
-	function loadQUnit()
-	{
-		if (siteConfig.queryParams['qunit'] === 'true')
-		{
-			YX.Util.load.loadScript(configUrl['qUnit'].url, null, null, {isAsync: true});
 		}
 	}
 
@@ -183,32 +151,6 @@
 				configUrl[themeName].url = '';
 			})
 		}
-	}
-
-	/**
-	 * Load comment component
-	 */
-	function loadDisqus()
-	{
-		if (YX.Util.navigator.isZHLanguage())
-		{
-			// TODO: discuss plugin in China
-		}
-		else
-		{
-			YX.Util.load.loadScript(configUrl['disqus'].url, null, null, {isAsync: true});
-		}
-	}
-
-	/***
-	 * Load config components after dom ready
-	 */
-	function loadConfigWhenLoaded()
-	{
-		siteConfig && loadConfigs(siteConfig.config, false);
-		loadPreviewCode();
-		loadQUnit();
-		loadDisqus();
 	}
 
 	/**
