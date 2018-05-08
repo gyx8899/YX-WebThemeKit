@@ -8,6 +8,6 @@
 
 	YX.Util.load.loadCSS('https://code.jquery.com/qunit/qunit-2.4.1.css');
 	YX.Util.load.loadScript('https://code.jquery.com/qunit/qunit-2.4.1.js', function () {
-		YX.Util.load.loadScript(getRootPath() + '/test.js');
+		YX.Util.load.loadScript(YX.Util.url.getRootPath() + '/test.js');
 	});
 })(window.YX);

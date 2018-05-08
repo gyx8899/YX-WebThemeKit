@@ -4,9 +4,9 @@
     "qunit.es6"
   ],
   "names": [],
-  "mappings": ";;AAAA;;;AAGA,CAAC,UAAU,EAAV,EAAc;AACd,KAAI,cAAc,SAAS,aAAT,CAAuB,KAAvB,CAAlB;AACA,aAAY,SAAZ,GAAwB,sDAAxB;AACA,UAAS,IAAT,CAAc,YAAd,CAA2B,WAA3B,EAAwC,SAAS,IAAT,CAAc,UAAtD;;AAEA,IAAG,IAAH,CAAQ,IAAR,CAAa,OAAb,CAAqB,+CAArB;AACA,IAAG,IAAH,CAAQ,IAAR,CAAa,UAAb,CAAwB,8CAAxB,EAAwE,YAAY;AACnF,KAAG,IAAH,CAAQ,IAAR,CAAa,UAAb,CAAwB,gBAAgB,UAAxC;AACA,EAFD;AAGA,CATD,EASG,OAAO,EATV",
+  "mappings": ";;AAAA;;;AAGA,CAAC,UAAU,EAAV,EAAc;AACd,KAAI,cAAc,SAAS,aAAT,CAAuB,KAAvB,CAAlB;AACA,aAAY,SAAZ,GAAwB,sDAAxB;AACA,UAAS,IAAT,CAAc,YAAd,CAA2B,WAA3B,EAAwC,SAAS,IAAT,CAAc,UAAtD;;AAEA,IAAG,IAAH,CAAQ,IAAR,CAAa,OAAb,CAAqB,+CAArB;AACA,IAAG,IAAH,CAAQ,IAAR,CAAa,UAAb,CAAwB,8CAAxB,EAAwE,YAAY;AACnF,KAAG,IAAH,CAAQ,IAAR,CAAa,UAAb,CAAwB,GAAG,IAAH,CAAQ,GAAR,CAAY,WAAZ,KAA4B,UAApD;AACA,EAFD;AAGA,CATD,EASG,OAAO,EATV",
   "file": "qunit.js",
   "sourcesContent": [
-    "/**\r\n * Qunit integrate plugin v2.0.0.180404_beta\r\n */\r\n(function (YX) {\r\n\tlet qUnitFolder = document.createElement('div');\r\n\tqUnitFolder.innerHTML = '<div id=\"qunit\"></div><div id=\"qunit-fixture\"></div>';\r\n\tdocument.body.insertBefore(qUnitFolder, document.body.firstChild);\r\n\r\n\tYX.Util.load.loadCSS('https://code.jquery.com/qunit/qunit-2.4.1.css');\r\n\tYX.Util.load.loadScript('https://code.jquery.com/qunit/qunit-2.4.1.js', function () {\r\n\t\tYX.Util.load.loadScript(getRootPath() + '/test.js');\r\n\t});\r\n})(window.YX);"
+    "/**\r\n * Qunit integrate plugin v2.0.0.180404_beta\r\n */\r\n(function (YX) {\r\n\tlet qUnitFolder = document.createElement('div');\r\n\tqUnitFolder.innerHTML = '<div id=\"qunit\"></div><div id=\"qunit-fixture\"></div>';\r\n\tdocument.body.insertBefore(qUnitFolder, document.body.firstChild);\r\n\r\n\tYX.Util.load.loadCSS('https://code.jquery.com/qunit/qunit-2.4.1.css');\r\n\tYX.Util.load.loadScript('https://code.jquery.com/qunit/qunit-2.4.1.js', function () {\r\n\t\tYX.Util.load.loadScript(YX.Util.url.getRootPath() + '/test.js');\r\n\t});\r\n})(window.YX);"
   ]
 }
