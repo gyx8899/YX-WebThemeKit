@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
- * PreviewCode Plugin v3.0.2.180507_beta
+ * PreviewCode Plugin v3.0.2.180508_beta
  *
  * Setting in html tag:
  * 1. Required:

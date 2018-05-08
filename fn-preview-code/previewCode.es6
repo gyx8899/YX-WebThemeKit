@@ -1,5 +1,5 @@
 /**
- * PreviewCode Plugin v3.0.2.180507_beta
+ * PreviewCode Plugin v3.0.2.180508_beta
  *
  * Setting in html tag:
  * 1. Required:
