@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Qunit integrate plugin v2.0.0.180404_beta
+ * Qunit integrate plugin v2.0.0.180508_beta
  */
 (function (YX) {
 	var qUnitFolder = document.createElement('div');

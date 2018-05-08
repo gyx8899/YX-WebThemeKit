@@ -1,5 +1,5 @@
 /**
- * Qunit integrate plugin v2.0.0.180404_beta
+ * Qunit integrate plugin v2.0.0.180508_beta
  */
 (function (YX) {
 	let qUnitFolder = document.createElement('div');
