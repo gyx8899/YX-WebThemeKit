@@ -1,5 +1,5 @@
 /**
- * YX Common Library v1.0.1.180507_beta
+ * YX Common Library v1.0.1.180510_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -113,6 +113,18 @@
 	}
 
 	YX.Util.string.escapeHTML = escapeHTML;
+
+	/**
+	 * Escape string for js parameter
+	 * @param str
+	 * @return {*}
+	 */
+	function escapeJS(str)
+	{
+		return escapeHTML(str.replace(/[\\]/g, '\\\\').replace(/["]/g, '\\\"').replace(/[']/g, "\\\'"));
+	}
+
+	YX.Util.string.escapeJS = escapeJS;
 
 	/********************************************************************************************************************/
 	/**
@@ -586,7 +598,11 @@
 	{
 		if (!checkResourceLoaded(url))
 		{
-			window[getUrlTypeInfo(url).loadFn](url, callback);
+			YX.Util.load[getUrlTypeInfo(url).loadFn](url, callback);
+		}
+		else
+		{
+			callback && callback();
 		}
 	}
 
@@ -666,7 +682,9 @@
 	 */
 	function loadUrls(urls, callback)
 	{
-		let unLoadedResourcesInfo = urls.map(function (resource) {
+		let unLoadedResourcesInfo = urls.filter(function (url) {
+			return !checkResourceLoaded(url);
+		}).map(function (resource) {
 			let resourceInfo = getUrlTypeInfo(resource);
 			resourceInfo.url = resource;
 			return resourceInfo;
