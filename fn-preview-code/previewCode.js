@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
- * PreviewCode Plugin v3.0.2.180510_beta
+ * PreviewCode Plugin v3.0.3.180510_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -45,6 +45,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		// root.PreviewCode = factory(root.jQuery, root._);
 	}
 })(window, function (YX) {
+	var pluginName = 'previewCode';
 
 	var PreviewCode = function PreviewCode(elements, options) {
 		this.options = YX.Util.tool.deepExtend({}, PreviewCode.DEFAULTS, options);
@@ -69,7 +70,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		this.options.initHighlight();
 		var elementArray = YX.Util.element.getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
 		elementArray.forEach(function (element) {
-			previewElementCode(element);
+			if (element.getAttribute("data-" + pluginName) !== pluginName)
+			{
+				element.setAttribute("data-" + pluginName, pluginName);
+				previewElementCode(element);
+			}
 		});
 	};
 

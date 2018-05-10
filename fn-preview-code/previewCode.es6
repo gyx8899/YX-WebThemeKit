@@ -1,5 +1,5 @@
 /**
- * PreviewCode Plugin v3.0.2.180510_beta
+ * PreviewCode Plugin v3.0.3.180510_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -46,6 +46,7 @@
 		// root.PreviewCode = factory(root.jQuery, root._);
 	}
 }(window, function (YX) {
+	let pluginName = 'previewCode';
 
 	let PreviewCode = function (elements, options) {
 		this.options = YX.Util.tool.deepExtend({}, PreviewCode.DEFAULTS, options);
@@ -70,7 +71,11 @@
 		this.options.initHighlight();
 		let elementArray = YX.Util.element.getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
 		elementArray.forEach(function (element) {
-			previewElementCode(element);
+			if (element.getAttribute("data-" + pluginName) !== pluginName)
+			{
+				element.setAttribute("data-" + pluginName, pluginName);
+				previewElementCode(element);
+			}
 		});
 	};
 
