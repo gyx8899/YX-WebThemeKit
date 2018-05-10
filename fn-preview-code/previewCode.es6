@@ -1,5 +1,5 @@
 /**
- * PreviewCode Plugin v3.0.2.180508_beta
+ * PreviewCode Plugin v3.0.2.180510_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -275,14 +275,28 @@
 }));
 
 /**
- * Auto previewCode if previewCode.js?auto=true
+ * Auto init plugin if plugin.js?init=auto
  */
 (function () {
-	if (YX && YX.Util.url.getUrlQueryParams(getScriptName())['auto'] === 'true')
+	/***
+	 * getUrlQueryParams
+	 * @param {string} url
+	 * @returns {object}
+	 */
+	function getUrlQueryParams(url)
 	{
-		setTimeout(function () {
-			new PreviewCode();
-		},);
+		let query = {},
+				searchStr = url ? (url.indexOf('?') !== -1 ? url.split('?')[1] : '') : window.location.search.substring(1),
+				queryParams = searchStr.split("&");
+		for (let i = 0; i < queryParams.length; i++)
+		{
+			let queryParam = queryParams[i].split("=");
+			if (queryParam.length > 1)
+			{
+				query[queryParam[0]] = queryParam[1];
+			}
+		}
+		return query;
 	}
 
 	/**
@@ -302,5 +316,10 @@
 			return source[1];
 		else if (error['fileName'] !== undefined)
 			return error['fileName'];
+	}
+
+	if (getUrlQueryParams(getScriptName())['init'] === 'auto')
+	{
+		setTimeout(() => new PreviewCode(), 0);
 	}
 })();

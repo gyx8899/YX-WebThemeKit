@@ -59,7 +59,7 @@
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.min.js'
 				},
 				previewCode: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js?auto=true',
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js?init=auto',
 					condition: () => document.querySelectorAll('[data-toggle="previewCode"]').length
 				},
 				qUnit: {
