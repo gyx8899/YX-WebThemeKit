@@ -1,5 +1,5 @@
 /**
- * PreLoader Plugin v2.0.0.180404_beta
+ * PreLoader Plugin v2.0.0.180510_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -548,4 +548,4 @@
 	{
 		new PreLoader(PreLoader.TYPE_OPTIONS[PreLoader.TYPE_ABBRS[typeParam]]);
 	}
-});
+}));

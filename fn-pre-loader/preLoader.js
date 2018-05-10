@@ -6,8 +6,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
-(function (global) {
-	global.PreLoader = function (options) {
+/**
+ * PreLoader Plugin v2.0.0.180510_beta
+ */
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd)
+	{
+		define([], factory);
+		// define(['jquery', 'underscore'], factory);
+	}
+	else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports)
+	{
+		module.exports = factory();
+		// module.exports = factory(require('jquery'), require('underscore'));
+	}
+	else
+	{
+		root.PreLoader = factory();
+		// root.SiteConfig = factory(root.jQuery, root._);
+	}
+})(window, function () {
+	var PreLoader = function PreLoader(options) {
 		// Create global element references
 		this.preLoaderElement = null;
 		this.positionValue = {
@@ -510,6 +529,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	{
 		new PreLoader(PreLoader.TYPE_OPTIONS[PreLoader.TYPE_ABBRS[typeParam]]);
 	}
-})(window);
+});
 
 //# sourceMappingURL=preLoader.js.map
