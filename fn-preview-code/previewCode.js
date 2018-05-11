@@ -259,22 +259,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	/**
-	 * getScriptName
-	 * @return {*}
+	 * getCurrentScriptSrc
+	 * @return {string}
 	 */
-	function getScriptName()
+	function getCurrentScriptSrc()
 	{
-		var error = new Error(),
-				source = void 0,
-				lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/),
-				currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/);
-
-		if (error.stack && (source = lastStackFrameRegex.exec(error.stack.trim())) && source.length > 1 && source[1] !== "") return source[1];
-		else if (error.stack && (source = currentStackFrameRegex.exec(error.stack.trim()))) return source[1];
-		else if (error['fileName'] !== undefined) return error['fileName'];
+		var scripts = document.getElementsByTagName("script");
+		return (document.currentScript || scripts[scripts.length - 1]).src;
 	}
 
-	if (getUrlQueryParams(getScriptName())['init'] === 'auto')
+	if (getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto')
 	{
 		window.addEventListener('load', function () {
 			return new PreviewCode();
