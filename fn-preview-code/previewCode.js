@@ -276,9 +276,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	if (getUrlQueryParams(getScriptName())['init'] === 'auto')
 	{
-		setTimeout(function () {
+		window.addEventListener('load', function () {
 			return new PreviewCode();
-		}, 0);
+		});
 	}
 })();
 

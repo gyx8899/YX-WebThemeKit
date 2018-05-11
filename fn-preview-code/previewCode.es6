@@ -325,6 +325,6 @@
 
 	if (getUrlQueryParams(getScriptName())['init'] === 'auto')
 	{
-		setTimeout(() => new PreviewCode(), 0);
+		window.addEventListener('load', () => new PreviewCode());
 	}
 })();
