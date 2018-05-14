@@ -1,5 +1,5 @@
 /**
- * PreviewCode Plugin v3.0.3.180510_beta
+ * PreviewCode Plugin v3.0.4.180514_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -316,6 +316,13 @@
 
 	if (getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto')
 	{
-		window.addEventListener('load', () => new PreviewCode());
+		if (document.readyState !== "complete")
+		{
+			window.addEventListener('load', () => new PreviewCode());
+		}
+		else
+		{
+			new PreviewCode()
+		}
 	}
 })();

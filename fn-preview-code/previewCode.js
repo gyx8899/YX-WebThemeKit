@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
- * PreviewCode Plugin v3.0.3.180510_beta
+ * PreviewCode Plugin v3.0.4.180514_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -270,9 +270,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	if (getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto')
 	{
-		window.addEventListener('load', function () {
-			return new PreviewCode();
-		});
+		if (document.readyState !== "complete")
+		{
+			window.addEventListener('load', function () {
+				return new PreviewCode();
+			});
+		}
+		else
+		{
+			new PreviewCode();
+		}
 	}
 })();
 
