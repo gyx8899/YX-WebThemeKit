@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
- * PreviewCode Plugin v3.0.4.180514_beta
+ * PreviewCode Plugin v3.0.5.180516_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -17,6 +17,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * 2.4 data-src="url" // set url to load script/style in current element
  * 2.5 data-collapse="on" // set collapse on, default collapse off
  * 2.6 data-tag="show" // show the wrapper tag, default not show (For data-fetch not set)
+ * 2.7 data-init="auto" // auto init when page load
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -268,17 +269,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		return (document.currentScript || scripts[scripts.length - 1]).src;
 	}
 
-	if (getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto')
+	var pluginName = 'previewCode';
+	var hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
+	var dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
+
+	if (hasUrlParamInitAuto || dataInitAutoElements.length)
 	{
 		if (document.readyState !== "complete")
 		{
 			window.addEventListener('load', function () {
-				return new PreviewCode();
+				return new PreviewCode(hasUrlParamInitAuto ? null : dataInitAutoElements);
 			});
 		}
 		else
 		{
-			new PreviewCode();
+			new PreviewCode(hasUrlParamInitAuto ? null : dataInitAutoElements);
 		}
 	}
 })();

@@ -1,5 +1,5 @@
 /**
- * PreviewCode Plugin v3.0.4.180514_beta
+ * PreviewCode Plugin v3.0.5.180516_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -13,6 +13,7 @@
  * 2.4 data-src="url" // set url to load script/style in current element
  * 2.5 data-collapse="on" // set collapse on, default collapse off
  * 2.6 data-tag="show" // show the wrapper tag, default not show (For data-fetch not set)
+ * 2.7 data-init="auto" // auto init when page load
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -310,19 +311,23 @@
 	 */
 	function getCurrentScriptSrc()
 	{
-		var scripts = document.getElementsByTagName("script");
+		let scripts = document.getElementsByTagName("script");
 		return (document.currentScript || scripts[scripts.length - 1]).src;
 	}
 
-	if (getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto')
+	let pluginName = 'previewCode';
+	let hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
+	let dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
+
+	if (hasUrlParamInitAuto || dataInitAutoElements.length)
 	{
 		if (document.readyState !== "complete")
 		{
-			window.addEventListener('load', () => new PreviewCode());
+			window.addEventListener('load', () => new PreviewCode(hasUrlParamInitAuto ? null : dataInitAutoElements));
 		}
 		else
 		{
-			new PreviewCode()
+			new PreviewCode(hasUrlParamInitAuto ? null : dataInitAutoElements);
 		}
 	}
 })();
