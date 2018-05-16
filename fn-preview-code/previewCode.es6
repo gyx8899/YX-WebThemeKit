@@ -13,7 +13,7 @@
  * 2.4 data-src="url" // set url to load script/style in current element
  * 2.5 data-collapse="on" // set collapse on, default collapse off
  * 2.6 data-tag="show" // show the wrapper tag, default not show (For data-fetch not set)
- * 2.7 data-init="auto" // auto init when page load
+ * 2.7 data-init="auto" // auto init when page load without special init function
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -315,19 +315,29 @@
 		return (document.currentScript || scripts[scripts.length - 1]).src;
 	}
 
-	let pluginName = 'previewCode';
-	let hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
-	let dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
-
-	if (hasUrlParamInitAuto || dataInitAutoElements.length)
+	/**
+	 * autoInitPlugin
+	 * @param pluginName
+	 * @param initPlugin
+	 */
+	function autoInitPlugin(pluginName, initPlugin)
 	{
-		if (document.readyState !== "complete")
+		let hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
+		let dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
+
+		if (hasUrlParamInitAuto || dataInitAutoElements.length)
 		{
-			window.addEventListener('load', () => new PreviewCode(hasUrlParamInitAuto ? null : dataInitAutoElements));
-		}
-		else
-		{
-			new PreviewCode(hasUrlParamInitAuto ? null : dataInitAutoElements);
+			let initElements = hasUrlParamInitAuto ? undefined : dataInitAutoElements;
+			if (document.readyState !== "complete")
+			{
+				window.addEventListener('load', () => initPlugin(initElements));
+			}
+			else
+			{
+				initPlugin(initElements)
+			}
 		}
 	}
+
+	autoInitPlugin('previewCode', (elements) => new PreviewCode(elements));
 })();
