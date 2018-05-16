@@ -1,11 +1,3 @@
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-	return typeof obj;
-} : function (obj) {
-	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
 /**
  * HeaderFooter plugin v3.0.1.180407_beta
  * Required:
@@ -30,7 +22,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		define(['yx'], factory);
 		// define(['jquery', 'underscore'], factory);
 	}
-	else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports)
+	else if (typeof module === 'object' && module.exports)
 	{
 		module.exports = factory(require('yx'));
 		// module.exports = factory(require('jquery'), require('underscore'));
@@ -40,8 +32,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		root.HeaderFooter = factory(root.YX);
 		// root.HeaderFooter = factory(root.jQuery, root._);
 	}
-})(window, function (YX) {
-	var HeaderFooter = function HeaderFooter(options) {
+}(window, function (YX) {
+	let HeaderFooter = function (options) {
 		options = this._processOptions(options);
 
 		this.options = YX.Util.tool.deepExtend({}, HeaderFooter.DEFAULTS, options);
@@ -79,7 +71,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	HeaderFooter.prototype._processOptions = function (options) {
-		var scriptName = 'headerFooter.min.js',
+		let scriptName = 'headerFooter.min.js',
 				path = YX.Util.url.getCurrentScriptPath(scriptName),
 				parentPath = path && path.replace(scriptName, '');
 		options.html = parentPath + options.html;
@@ -98,22 +90,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	HeaderFooter.prototype.applyThemeData = function (data) {
-		var textArea = document.createElement('textarea');
+		let textArea = document.createElement('textarea');
 		textArea.innerText = data.toString();
-		var sourceHtml = textArea.value;
+		let sourceHtml = textArea.value;
 
 		this._applyThemeTag('header', sourceHtml);
 		this._applyThemeTag('footer', sourceHtml);
 	};
 
 	HeaderFooter.prototype._applyThemeTag = function (tag, sourceHTML) {
-		var tagHTMLArray = YX.Util.regExp.regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
+		let tagHTMLArray = YX.Util.regExp.regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
 				tagTemplate = tagHTMLArray && tagHTMLArray[0];
 		tagTemplate && this._applyTagWithTemplate(tag, tagTemplate);
 	};
 
 	HeaderFooter.prototype._applyTagWithTemplate = function (tag, template) {
-		var commentElement = document.createComment(' ' + tag + ' '),
+		let commentElement = document.createComment(' ' + tag + ' '),
 				tagElement = document.querySelector(tag),
 				tagElementWrapper = document.createElement('div'),
 				body = document.body;
@@ -143,10 +135,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	return HeaderFooter;
-});
+}));
 
 (function () {
-	var siteInfo = [{
+	let siteInfo = [{
 				name: 'YX-JS-ToolKit',
 				theme: 'owl-theme'
 			}, {
@@ -169,5 +161,3 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		new HeaderFooter(HeaderFooter.TYPE_OPTIONS[siteHeaderFooterConfig.theme]);
 	}
 })();
-
-//# sourceMappingURL=headerFooter.js.map

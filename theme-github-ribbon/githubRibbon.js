@@ -1,10 +1,8 @@
-'use strict';
-
 /**
  * GitHub ribbon plugin v2.0.0.180407_beta
  */
 (function (global, YX) {
-	var githubAuthor = "gyx8899",
+	let githubAuthor = "gyx8899",
 			ribbonConfig = [{
 				name: 'YX-JS-ToolKit',
 				repo: 'YX-JS-ToolKit',
@@ -18,14 +16,17 @@
 				repo: 'YX-CSS-ToolKit',
 				type: 'rightYellow'
 			}],
+
 			siteRibbonConfig = ribbonConfig.filter(function (site) {
 				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
 			})[0],
+
 			defaultImageAttr = {
 				id: 'githubRibbonId',
 				alt: 'Fork me on GitHub',
 				style: 'position: absolute; top: 0; border: 0; z-index: 100;'
 			},
+
 			imageType = {
 				leftRed: {
 					style: {
@@ -147,5 +148,3 @@
 	// Hide github ribbon when window.width < 768px
 	YX.Util.element.insertStyleToHead('@media (max-width: 767px){#githubRibbonId{display: none;}}');
 })(window, window.YX);
-
-//# sourceMappingURL=githubRibbon.js.map

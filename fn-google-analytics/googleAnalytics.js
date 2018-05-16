@@ -1,10 +1,8 @@
-'use strict';
-
 /**
  * GoogleAnalytics Integrate Plugin v2.0.0.180404_beta
  */
 (function () {
-	var googleAnalyticsConfig = [{
+	let googleAnalyticsConfig = [{
 				name: 'YX-JS-ToolKit',
 				trackID: 'UA-104315567-1'
 			}, {
@@ -18,20 +16,23 @@
 				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
 			})[0],
 			pathName = document.location.pathname,
-			page = pathName.replace('/' + pathName.split('/')[1] + '/', '').replace('/index.html', '').replace('index.html', '').replace('.html', '') || siteGoogleAnalyticsConfig.name; // Default page name
+			page = pathName.replace('/' + pathName.split('/')[1] + '/', '')
+							.replace('/index.html', '')
+							.replace('index.html', '')
+							.replace('.html', '')
+					|| siteGoogleAnalyticsConfig.name; // Default page name
 
 	(function (i, s, o, g, r, a, m) {
 		i['GoogleAnalyticsObject'] = r;
 		i[r] = i[r] || function () {
-			(i[r].q = i[r].q || []).push(arguments);
+			(i[r].q = i[r].q || []).push(arguments)
 		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0];
 		a.async = 1;
 		a.src = g;
-		m.parentNode.insertBefore(a, m);
+		m.parentNode.insertBefore(a, m)
 	})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 	ga('create', siteGoogleAnalyticsConfig.trackID, 'auto');
 	ga('send', 'pageview', page);
 })();
-
-//# sourceMappingURL=googleAnalytics.js.map

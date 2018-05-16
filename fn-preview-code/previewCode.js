@@ -1,7 +1,3 @@
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 /**
  * PreviewCode Plugin v3.0.5.180516_beta
  *
@@ -35,24 +31,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  *  2.9 toggleClass
  * */
 (function (root, factory) {
-	if (typeof define === 'function' && define.amd) {
+	if (typeof define === 'function' && define.amd)
+	{
 		define(['yx'], factory);
 		// define(['jquery', 'underscore'], factory);
-	} else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+	}
+	else if (typeof module === 'object' && module.exports)
+	{
 		module.exports = factory(require('yx'));
 		// module.exports = factory(require('jquery'), require('underscore'));
-	} else {
+	}
+	else
+	{
 		root.PreviewCode = factory(root.YX);
 		// root.PreviewCode = factory(root.jQuery, root._);
 	}
-})(window, function (YX) {
-	var pluginName = 'previewCode';
+}(window, function (YX) {
+	let pluginName = 'previewCode';
 
-	var PreviewCode = function PreviewCode(elements, options) {
+	let PreviewCode = function (elements, options) {
 		this.options = YX.Util.tool.deepExtend({}, PreviewCode.DEFAULTS, options);
 
-		var that = this,
-		    urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
+		let that = this,
+				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
 		YX.Util.load.loadResources(urls, function () {
 			that._init(elements);
 		});
@@ -69,7 +70,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	PreviewCode.prototype._init = function (elements) {
 		this.options.initHighlight();
-		var elementArray = YX.Util.element.getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
+		let elementArray = YX.Util.element.getElements(elements || document.querySelectorAll('[data-toggle="previewCode"]'));
 		elementArray.forEach(function (element) {
 			if (element.getAttribute("data-" + pluginName) !== pluginName)
 			{
@@ -80,110 +81,146 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	// Functions: init Highlight
-	function initHighlight() {
-		hljs.configure({ tabReplace: '  ' });
+	function initHighlight()
+	{
+		hljs.configure({tabReplace: '  '});
 		// hljs.initHighlightingOnLoad();
 	}
 
-	function highlightCode(codeElement) {
+	function highlightCode(codeElement)
+	{
 		hljs.highlightBlock(codeElement.querySelector('pre code'));
 	}
 
 	// Functions: Process code
-	function previewElementCode(element) {
-		var dataTargetValue = element.getAttribute('data-target'),
-		    targetElement = !dataTargetValue ? element : document.querySelector(dataTargetValue),
-				previewPosition = !dataTargetValue && !element.getAttribute('data-position') ? 'replace' : element.getAttribute('data-position') || 'append',
-		    previewFetch = element.getAttribute('data-fetch'),
-		    previewHTML = getPreviewElementHTML(element),
-		    previewTitle = getPreviewTitle(element),
-		    elementTag = element.tagName.toLowerCase(),
-		    elementLink = '';
-		if (previewFetch === 'file') {
-			if (elementTag === 'script') {
+	function previewElementCode(element)
+	{
+		let dataTargetValue = element.getAttribute('data-target'),
+				targetElement = !dataTargetValue ? element : document.querySelector(dataTargetValue),
+				previewPosition = (!dataTargetValue && !element.getAttribute('data-position')) ? 'replace' : (element.getAttribute('data-position') || 'append'),
+				previewFetch = element.getAttribute('data-fetch'),
+				previewHTML = getPreviewElementHTML(element),
+				previewTitle = getPreviewTitle(element),
+				elementTag = element.tagName.toLowerCase(),
+				elementLink = '';
+		if (previewFetch === 'file')
+		{
+			if (elementTag === 'script')
+			{
 				elementLink = element.src;
-			} else if (elementTag === 'link') {
+			}
+			else if (elementTag === 'link')
+			{
 				elementLink = element.href;
-			} else if (element.getAttribute('data-src')) {
+			}
+			else if (element.getAttribute('data-src'))
+			{
 				elementLink = element.getAttribute('data-src');
 			}
-		} else {
-			if (elementTag === 'script' && element.src || elementTag === 'link' && element.href) {
+		}
+		else
+		{
+			if ((elementTag === 'script' && element.src) || (elementTag === 'link' && element.href))
+			{
 				previewHTML = filterTagAttrData(element.outerHTML);
 			}
 		}
-		var positionInfo = {
+		let positionInfo = {
 			parentElement: targetElement,
 			position: previewPosition,
 			isCollapsed: element.getAttribute('data-collapse') === 'on'
 		};
-		if (elementLink) {
+		if (elementLink)
+		{
 			YX.Util.load.getFileContent(elementLink, function (data) {
 				addPreviewCode(positionInfo, data, YX.Util.url.getFileNameFromURL(elementLink).baseName);
 			}, null);
-		} else {
+		}
+		else
+		{
 			addPreviewCode(positionInfo, previewHTML, previewTitle);
 		}
 	}
 
-	function addPreviewCode(positionInfo, codeString, demoTitle) {
-		var codeContent = trimPrevSpace(YX.Util.string.escapeHTML(codeString)),
-		    codeElement = document.createElement('div'),
-		    previewTitle = demoTitle === '' ? '' : '<div class="preview-title">' + '<span>' + demoTitle + '</span>' + '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' + '</div>';
+	function addPreviewCode(positionInfo, codeString, demoTitle)
+	{
+		let codeContent = trimPrevSpace(YX.Util.string.escapeHTML(codeString)),
+				codeElement = document.createElement('div'),
+				previewTitle = demoTitle === '' ? '' :
+						'<div class="preview-title">' +
+						'<span>' + demoTitle + '</span>' +
+						'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' +
+						'</div>';
 		codeElement.className = "preview-code";
 		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
 
-		if (positionInfo.isCollapsed) {
+		if (positionInfo.isCollapsed)
+		{
 			YX.Util.element.addClass(codeElement, 'collapse');
 		}
 
-		var previewCodeElement = YX.Util.element.addElement(positionInfo.parentElement, codeElement, positionInfo.position);
+		let previewCodeElement = YX.Util.element.addElement(positionInfo.parentElement, codeElement, positionInfo.position);
 		demoTitle !== '' && bindClickEvent(previewCodeElement, '.preview-title');
 		highlightCode(previewCodeElement);
 	}
 
-	function filterTagAttrData(tagStr) {
-		var tagStrArray1 = tagStr.split('>');
-		if (tagStrArray1.length < 2) {
+	function filterTagAttrData(tagStr)
+	{
+		let tagStrArray1 = tagStr.split('>');
+		if (tagStrArray1.length < 2)
+		{
 			return tagStr;
 		}
-		var attrDataStr = tagStrArray1[0].split(' ').filter(function (t) {
-			return t.indexOf('data-') === -1;
+		let attrDataStr = tagStrArray1[0].split(' ').filter(function (t) {
+			return (t.indexOf('data-') === -1);
 		}).join(' ');
 
 		return [attrDataStr].concat(tagStrArray1.slice(1)).join('>');
 	}
 
-	function getPreviewTitle(element) {
-		var previewTitle = element.getAttribute('data-title');
-		if (previewTitle === 'false') {
+	function getPreviewTitle(element)
+	{
+		let previewTitle = element.getAttribute('data-title');
+		if (previewTitle === 'false')
+		{
 			previewTitle = '';
-		} else if (!previewTitle) {
-			var elementTag = element.tagName.toLowerCase();
-			if (elementTag === 'style' || elementTag === 'link') {
+		}
+		else if (!previewTitle)
+		{
+			let elementTag = element.tagName.toLowerCase();
+			if (elementTag === 'style' || elementTag === 'link')
+			{
 				previewTitle = 'CSS';
-				var href = element.getAttribute('href');
-				if (elementTag === 'link' && href !== null) {
+				let href = element.getAttribute('href');
+				if (elementTag === 'link' && href !== null)
+				{
 					previewTitle = YX.Util.url.getFileNameFromURL(href).name;
 				}
-			} else if (elementTag === 'script') {
+			}
+			else if (elementTag === 'script')
+			{
 				previewTitle = 'JS';
-				var src = element.getAttribute('src');
-				if (src !== null) {
+				let src = element.getAttribute('src');
+				if (src !== null)
+				{
 					previewTitle = YX.Util.url.getFileNameFromURL(src).name;
 				}
-			} else {
+			}
+			else
+			{
 				previewTitle = 'HTML';
 			}
 		}
 		return previewTitle;
 	}
 
-	function getPreviewElementHTML(element) {
-		var previewCodeElement = element.cloneNode(true),
-		    elementHTML = '';
+	function getPreviewElementHTML(element)
+	{
+		let previewCodeElement = element.cloneNode(true),
+				elementHTML = '';
 
-		if (previewCodeElement.getAttribute('data-tag') === 'show') {
+		if (previewCodeElement.getAttribute('data-tag') === 'show')
+		{
 			delete previewCodeElement.dataset['toggle'];
 			delete previewCodeElement.dataset['target'];
 			delete previewCodeElement.dataset['title'];
@@ -192,22 +229,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			delete previewCodeElement.dataset['collapse'];
 			delete previewCodeElement.dataset['tag'];
 			elementHTML = previewCodeElement.outerHTML;
-		} else {
+		}
+		else
+		{
 			elementHTML = previewCodeElement.innerHTML;
 		}
 		return elementHTML;
 	}
 
-	function trimPrevSpace(str) {
-		var strArray = str.split('\n'),
-		    beginIndex = getFirstNonSpaceValueIndex(strArray),
-		    resultStr = '';
-		if (beginIndex !== -1) {
-			var newStrArray = [],
-			    reverseStrArray = strArray.slice(0).reverse(),
-			    endIndex = strArray.length - getFirstNonSpaceValueIndex(reverseStrArray),
-			    commonPreSpace = /(^\s*)/g.exec(strArray[beginIndex])[0];
-			for (var i = beginIndex, j = 0; i < endIndex; i++) {
+	function trimPrevSpace(str)
+	{
+		let strArray = str.split('\n'),
+				beginIndex = getFirstNonSpaceValueIndex(strArray),
+				resultStr = '';
+		if (beginIndex !== -1)
+		{
+			let newStrArray = [],
+					reverseStrArray = strArray.slice(0).reverse(),
+					endIndex = strArray.length - getFirstNonSpaceValueIndex(reverseStrArray),
+					commonPreSpace = /(^\s*)/g.exec(strArray[beginIndex])[0];
+			for (let i = beginIndex, j = 0; i < endIndex; i++)
+			{
 				newStrArray[j++] = strArray[i].replace(commonPreSpace, '');
 			}
 			resultStr = newStrArray.join('\n');
@@ -215,24 +257,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		return resultStr;
 	}
 
-	function getFirstNonSpaceValueIndex(array) {
-		for (var i = 0, l = array.length; i < l; i++) {
+	function getFirstNonSpaceValueIndex(array)
+	{
+		for (let i = 0, l = array.length; i < l; i++)
+		{
 			// Filter space line
-			if (/^[\s|\t]+$/.test(array[i]) === false && array[i] !== '') {
+			if (/^[\s|\t]+$/.test(array[i]) === false && array[i] !== '')
+			{
 				return i;
 			}
 		}
 		return -1;
 	}
 
-	function bindClickEvent(parentElement, selector) {
+	function bindClickEvent(parentElement, selector)
+	{
 		parentElement.querySelector(selector).addEventListener('click', function () {
 			YX.Util.element.toggleClass(parentElement, 'collapse');
 		});
 	}
 
 	return PreviewCode;
-});
+}));
 
 /**
  * Auto init plugin if plugin.js?init=auto
@@ -245,12 +291,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	 */
 	function getUrlQueryParams(url)
 	{
-		var query = {},
-				searchStr = url ? url.indexOf('?') !== -1 ? url.split('?')[1] : '' : window.location.search.substring(1),
+		let query = {},
+				searchStr = url ? (url.indexOf('?') !== -1 ? url.split('?')[1] : '') : window.location.search.substring(1),
 				queryParams = searchStr.split("&");
-		for (var i = 0; i < queryParams.length; i++)
+		for (let i = 0; i < queryParams.length; i++)
 		{
-			var queryParam = queryParams[i].split("=");
+			let queryParam = queryParams[i].split("=");
 			if (queryParam.length > 1)
 			{
 				query[queryParam[0]] = queryParam[1];
@@ -265,7 +311,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	 */
 	function getCurrentScriptSrc()
 	{
-		var scripts = document.getElementsByTagName("script");
+		let scripts = document.getElementsByTagName("script");
 		return (document.currentScript || scripts[scripts.length - 1]).src;
 	}
 
@@ -276,28 +322,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	 */
 	function autoInitPlugin(pluginName, initPlugin)
 	{
-		var hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
-		var dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
+		let hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
+		let dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
 
 		if (hasUrlParamInitAuto || dataInitAutoElements.length)
 		{
-			var initElements = hasUrlParamInitAuto ? undefined : dataInitAutoElements;
+			let initElements = hasUrlParamInitAuto ? undefined : dataInitAutoElements;
 			if (document.readyState !== "complete")
 			{
-				window.addEventListener('load', function () {
-					return initPlugin(initElements);
-				});
+				window.addEventListener('load', () => initPlugin(initElements));
 			}
 			else
 			{
-				initPlugin(initElements);
+				initPlugin(initElements)
 			}
 		}
 	}
 
-	autoInitPlugin('previewCode', function (elements) {
-		return new PreviewCode(elements);
-	});
+	autoInitPlugin('previewCode', (elements) => new PreviewCode(elements));
 })();
-
-//# sourceMappingURL=previewCode.js.map

@@ -1,10 +1,8 @@
-'use strict';
-
 /**
  * Qunit integrate plugin v2.0.0.180508_beta
  */
 (function (YX) {
-	var qUnitFolder = document.createElement('div');
+	let qUnitFolder = document.createElement('div');
 	qUnitFolder.innerHTML = '<div id="qunit"></div><div id="qunit-fixture"></div>';
 	document.body.insertBefore(qUnitFolder, document.body.firstChild);
 
@@ -13,5 +11,3 @@
 		YX.Util.load.loadScript(YX.Util.url.getRootPath() + '/test.js');
 	});
 })(window.YX);
-
-//# sourceMappingURL=qunit.js.map

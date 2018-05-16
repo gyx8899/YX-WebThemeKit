@@ -1,11 +1,3 @@
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-	return typeof obj;
-} : function (obj) {
-	return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
 /**
  * PreLoader Plugin v2.0.0.180510_beta
  */
@@ -15,7 +7,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		define([], factory);
 		// define(['jquery', 'underscore'], factory);
 	}
-	else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports)
+	else if (typeof module === 'object' && module.exports)
 	{
 		module.exports = factory();
 		// module.exports = factory(require('jquery'), require('underscore'));
@@ -25,8 +17,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		root.PreLoader = factory();
 		// root.SiteConfig = factory(root.jQuery, root._);
 	}
-})(window, function () {
-	var PreLoader = function PreLoader(options) {
+}(window, function () {
+	let PreLoader = function (options) {
 		// Create global element references
 		this.preLoaderElement = null;
 		this.positionValue = {
@@ -75,7 +67,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		loaderHTML: false,
 		loaderHTMLInfo: {
 			parentNode: null, // default value: document.body
-			content: '' // element or html string
+			content: ''  // element or html string
 		},
 		// Load resources: css, js
 		resources: []
@@ -95,21 +87,31 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		'three-dots-zooming': {
 			loaderHTML: true,
 			loaderHTMLInfo: {
-				content: '<div class="preloader">\n' + '   <div class="spinner-dots">\n' + '      <span class="dot1"></span>\n' + '      <span class="dot2"></span>\n' + '      <span class="dot3"></span>\n' + '   </div>\n' + '</div>' // element or html string
+				content:
+				'<div class="preloader">\n' +
+				'   <div class="spinner-dots">\n' +
+				'      <span class="dot1"></span>\n' +
+				'      <span class="dot2"></span>\n' +
+				'      <span class="dot3"></span>\n' +
+				'   </div>\n' +
+				'</div>'  // element or html string
 			},
 			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/three-dots-zooming/preLoader.css']
 		},
 		'square-split-combination': {
 			loaderHTML: true,
 			loaderHTMLInfo: {
-				content: '<div class="loader"><span></span><span></span><span></span><span></span></div>' // element or html string
+				content: '<div class="loader"><span></span><span></span><span></span><span></span></div>'  // element or html string
 			},
 			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/square-split-combination/preLoader.css']
 		},
 		'spinner-linear': {
 			loaderHTML: true,
 			loaderHTMLInfo: {
-				content: '<div class="spinner-linear">\n' + '  <div class="line"></div>\n' + '</div>' // element or html string
+				content:
+				'<div class="spinner-linear">\n' +
+				'  <div class="line"></div>\n' +
+				'</div>'  // element or html string
 			},
 			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/spinner-linear/preLoader.css']
 		},
@@ -134,7 +136,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		'ball-scale-multiple': {
 			loaderHTML: true,
 			loaderHTMLInfo: {
-				content: '<div class="pre-loader">' + ' <div class="background">' + '  <div class="wrapper">' + '   <div class="ball-scale-multiple">' + '    <div></div>' + '    <div></div>' + '    <div></div>' + '   </div>' + '   <div class="loading">LOADING</div>' + '  </div>' + ' </div>' + '</div>' // element or html string
+				content:
+				'<div class="pre-loader">' +
+				' <div class="background">' +
+				'  <div class="wrapper">' +
+				'   <div class="ball-scale-multiple">' +
+				'    <div></div>' +
+				'    <div></div>' +
+				'    <div></div>' +
+				'   </div>' +
+				'   <div class="loading">LOADING</div>' +
+				'  </div>' +
+				' </div>' +
+				'</div>'  // element or html string
 			},
 			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/ball-scale-multiple/preLoader.css']
 		}
@@ -147,7 +161,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	// Private Methods
 	PreLoader.prototype._getPreLoader = function () {
-		var preLoaderElement = null;
+		let preLoaderElement = null;
 		if (this.options.loaderHTML)
 		{
 			preLoaderElement = this._getDivElement(this.options.id, null, this.options.loaderHTMLInfo.content);
@@ -155,7 +169,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		else if (this.options.imageAnimate)
 		{
 			preLoaderElement = this._getDivElement(this.options.id);
-			var animateInfo = this.options.imageAnimateInfo,
+			let animateInfo = this.options.imageAnimateInfo,
 					preLoaderImg = this._getImgElement(animateInfo.src, animateInfo.width, animateInfo.height);
 			preLoaderImg.style.position = 'absolute';
 			preLoaderImg.style.left = 'calc(' + this.positionValue[animateInfo.positionX] + ' + ' + parseInt(animateInfo.width * this.offsetValue[animateInfo.positionX], 10) + 'px)';
@@ -176,14 +190,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	PreLoader.prototype._addPreLoader = function () {
-		var parentNode = this.options.loaderHTMLInfo.parentNode || document.body;
+		let parentNode = this.options.loaderHTMLInfo.parentNode || document.body;
 		if (parentNode !== null)
 		{
 			parentNode && parentNode.appendChild(this.preLoaderElement);
 		}
 		else
 		{
-			var that = this;
+			let that = this;
 			setTimeout(function () {
 				that._addPreLoader();
 			}, 10);
@@ -191,7 +205,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	PreLoader.prototype._getDivElement = function (id, className, content) {
-		var element = document.createElement("div");
+		let element = document.createElement("div");
 		id && (element.id = id);
 		className && (element.className = className);
 		if (typeof content === 'string')
@@ -200,13 +214,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}
 		else
 		{
-			content && element.appendChild(content);
+			content && (element.appendChild(content));
 		}
 		return element;
 	};
 
 	PreLoader.prototype._getImgElement = function (src, width, height) {
-		var element = document.createElement("img");
+		let element = document.createElement("img");
 		element.src = src;
 		element.style.width = width + 'px';
 		element.style.height = height + 'px';
@@ -214,7 +228,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	PreLoader.prototype._endPreLoaderOnLoaded = function () {
-		var that = this;
+		let that = this;
 		window.addEventListener("load", function () {
 			that.destroy();
 		}, false);
@@ -222,7 +236,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	// Private Methods
 	PreLoader.prototype._destroy = function () {
-		var preLoaderElement = document.getElementById(this.options.id);
+		let preLoaderElement = document.getElementById(this.options.id);
 		// Remove preLoader element from parentNode
 		preLoaderElement.parentNode.removeChild(preLoaderElement);
 	};
@@ -232,21 +246,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	{
 		out = out || {};
 
-		for (var i = 1; i < arguments.length; i++)
+		for (let i = 1; i < arguments.length; i++)
 		{
-			var obj = arguments[i];
+			let obj = arguments[i];
 
-			if (!obj) continue;
+			if (!obj)
+				continue;
 
-			for (var key in obj)
+			for (let key in obj)
 			{
 				if (obj.hasOwnProperty(key))
 				{
-					if (_typeof(obj[key]) === 'object' && obj[key] !== null && !Array.isArray(obj[key]) && !(obj[key] instanceof Date) && !(obj[key] === 'function'))
+					if (typeof obj[key] === 'object'
+							&& obj[key] !== null
+							&& !Array.isArray(obj[key])
+							&& !(obj[key] instanceof Date)
+							&& !(obj[key] === 'function'))
 					{
 						out[key] = deepExtend(out[key], obj[key]);
 					}
-					else out[key] = obj[key];
+					else
+						out[key] = obj[key];
 				}
 			}
 		}
@@ -255,9 +275,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	// Functions: loadResource
 	// Copy from common.js (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js)
-	var resourceMethod = {
-		loadCSS: function loadCSS(url, callback, context) {
-			if (!url) return;
+	let resourceMethod = {
+		loadCSS: function (url, callback, context) {
+			if (!url)
+				return;
 
 			if (Array.isArray(url))
 			{
@@ -266,7 +287,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 			else
 			{
-				var link = document.createElement('link');
+				let link = document.createElement('link');
 				link.rel = 'stylesheet';
 				link.type = 'text/css';
 				link.href = url;
@@ -280,8 +301,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				document.getElementsByTagName('head')[0].appendChild(link);
 			}
 		},
-		loadScript: function loadScript(url, callback, context) {
-			if (!url) return;
+		loadScript: function (url, callback, context) {
+			if (!url)
+				return;
 
 			if (Array.isArray(url))
 			{
@@ -290,12 +312,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 			else
 			{
-				var script = document.createElement("script");
+				let script = document.createElement("script");
 				script.type = "text/javascript";
 
 				if (script.readyState)
-				{
-					//IE
+				{  //IE
 					script.onreadystatechange = function () {
 						if (script.readyState === "loaded" || script.readyState === "complete")
 						{
@@ -305,8 +326,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					};
 				}
 				else
-				{
-					//Others
+				{  //Others
 					script.onload = function () {
 						callback && (context ? context[callback]() : callback());
 					};
@@ -317,14 +337,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				document.body.appendChild(script);
 			}
 		},
-		loadCSSWithPromise: function loadCSSWithPromise(url) {
+		loadCSSWithPromise: function (url) {
 			return new Promise(function (resolve, reject) {
 				if (!url)
 				{
 					reject(new Error("url is null!"));
 				}
 
-				var link = document.createElement('link');
+				let link = document.createElement('link');
 				link.rel = 'stylesheet';
 				link.type = 'text/css';
 				link.href = url;
@@ -338,19 +358,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				document.getElementsByTagName('head')[0].appendChild(link);
 			});
 		},
-		loadScriptWithPromise: function loadScriptWithPromise(url) {
+		loadScriptWithPromise: function (url) {
 			return new Promise(function (resolve, reject) {
 				if (!url)
 				{
 					reject(new Error("url is null!"));
 				}
 
-				var script = document.createElement("script");
+				let script = document.createElement("script");
 				script.type = "text/javascript";
 
 				if (script.readyState)
-				{
-					//IE
+				{  //IE
 					script.onreadystatechange = function () {
 						if (script.readyState === "loaded" || script.readyState === "complete")
 						{
@@ -360,8 +379,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					};
 				}
 				else
-				{
-					//Others
+				{  //Others
 					script.onload = function () {
 						resolve();
 					};
@@ -389,7 +407,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			if (Array.isArray(urls))
 			{
 				urls = urls.filter(function (url) {
-					return String(url) === url && url !== '';
+					return (String(url) === url && url !== '');
 				});
 				if (urls.length === 0)
 				{
@@ -409,7 +427,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					{
 						urls.map(function (url) {
 							loadResource(url);
-						});
+						})
 					}
 				}
 			}
@@ -426,15 +444,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	function loadUrls(urls, callback)
 	{
-		var unLoadedResourcesInfo = urls.map(function (resource) {
-			var resourceInfo = getUrlTypeInfo(resource);
+		let unLoadedResourcesInfo = urls.map(function (resource) {
+			let resourceInfo = getUrlTypeInfo(resource);
 			resourceInfo.url = resource;
 			return resourceInfo;
 		});
 		// If support Promise, use Promise
 		if (typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1)
 		{
-			var resourcePromise = unLoadedResourcesInfo.map(function (resourceInfo) {
+			let resourcePromise = unLoadedResourcesInfo.map(function (resourceInfo) {
 				return resourceMethod[resourceInfo.loadFnPromise](resourceInfo.url);
 			});
 			Promise.all(resourcePromise).then(function () {
@@ -459,22 +477,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	function checkResourceLoaded(url)
 	{
-		var type = getUrlTypeInfo(url),
+		let type = getUrlTypeInfo(url),
 				typeSelector = type['tagName'] || '[src]',
-				allUrls = Array.prototype.slice.call(document.querySelectorAll(typeSelector)).map(function (scriptElement) {
-					return scriptElement[type['urlAttrName']];
-				});
+				allUrls = Array.prototype.slice.call(document.querySelectorAll(typeSelector))
+						.map(function (scriptElement) {
+							return scriptElement[type['urlAttrName']];
+						});
 		return allUrls.indexOf(url) !== -1;
 	}
 
 	function getUrlTypeInfo(url)
 	{
 		// Current only support js and css resources;
-		var resourceName = getFileNameFromURL(url),
+		let resourceName = getFileNameFromURL(url),
 				resourceNameSplitArray = resourceName.split('.');
 		if (resourceNameSplitArray.length > 1)
 		{
-			var urlType = {
+			let urlType = {
 				'js': {
 					name: 'js',
 					tagName: 'script',
@@ -497,12 +516,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	function getUrlQueryParams(url)
 	{
-		var query = {},
-				searchStr = url ? url.indexOf('?') !== -1 ? url.split('?')[1] : '' : window.location.search.substring(1),
+		let query = {},
+				searchStr = url ? (url.indexOf('?') !== -1 ? url.split('?')[1] : '') : window.location.search.substring(1),
 				queryParams = searchStr.split("&");
-		for (var i = 0; i < queryParams.length; i++)
+		for (let i = 0; i < queryParams.length; i++)
 		{
-			var queryParam = queryParams[i].split("=");
+			let queryParam = queryParams[i].split("=");
 			query[queryParam[0]] = queryParam[1];
 		}
 		return query;
@@ -510,25 +529,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	function getCurrentScriptParameter()
 	{
-		var scriptSrc = '';
+		let scriptSrc = '';
 		if (document.currentScript)
 		{
 			scriptSrc = document.currentScript.src;
 		}
 		else
 		{
-			var scripts = document.getElementsByTagName('script');
+			let scripts = document.getElementsByTagName('script');
 			scriptSrc = scripts[scripts.length - 1].src;
 		}
 		return getUrlQueryParams(scriptSrc);
 	}
 
 	// Auto init preLoader
-	var typeParam = getCurrentScriptParameter()['type'];
+	let typeParam = getCurrentScriptParameter()['type'];
 	if (typeParam && PreLoader.TYPE_ABBRS[typeParam])
 	{
 		new PreLoader(PreLoader.TYPE_OPTIONS[PreLoader.TYPE_ABBRS[typeParam]]);
 	}
-});
-
-//# sourceMappingURL=preLoader.js.map
+}));
