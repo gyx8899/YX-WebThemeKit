@@ -1,20 +1,21 @@
 /**
- * Site Config v1.0.2.180508_beta
+ * Site Config v1.0.2.180518_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
 	{
-		define(['yx'], factory);
+		define([], factory);
 		// define(['jquery', 'underscore'], factory);
 	}
 	else if (typeof module === 'object' && module.exports)
 	{
-		module.exports = factory(require('yx'));
+		module.exports.siteConfig = factory(require('./common.min'));
+		// module.exports.siteConfig = factory(require('https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.min.js'));
 		// module.exports = factory(require('jquery'), require('underscore'));
 	}
 	else
 	{
-		root.siteConfig = factory(root.YX);
+		root.siteConfig = factory(root.yx);
 		// root.SiteConfig = factory(root.jQuery, root._);
 	}
 }(window, function (YX) {
