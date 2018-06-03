@@ -1,5 +1,5 @@
 /**
- * YX Common Library v1.0.1.180510_beta
+ * YX Common Library v1.0.1.180518_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -20,7 +20,7 @@
 	{
 		// Browser globals (root is Window)
 		root.YX = factory();
-		// root.YX = factory(root.jQuery, root._);
+		// root.yx = factory(root.jQuery, root._);
 	}
 }(window, function () {
 // }(this, function ($, _) {
@@ -330,6 +330,7 @@
 
 	/**
 	 * getScriptName
+	 * Not support in IE
 	 * @return {*}
 	 */
 	function getScriptName()
@@ -348,6 +349,18 @@
 	}
 
 	YX.Util.url.getScriptName = getScriptName;
+
+	/**
+	 * getCurrentScriptSrc
+	 * @return {string}
+	 */
+	function getCurrentScriptSrc()
+	{
+		var scripts = document.getElementsByTagName("script");
+		return (document.currentScript || scripts[scripts.length - 1]).src;
+	}
+
+	YX.Util.url.getCurrentScriptSrc = getCurrentScriptSrc;
 
 	/**
 	 * Check url is exist or not, callback with success state
@@ -1073,7 +1086,11 @@
 	function getElements(elements)
 	{
 		let resultElement = [];
-		if (elements.jquery)
+		if (elements === undefined || elements === null)
+		{
+			resultElement = [];
+		}
+		else if (elements.jquery)
 		{
 			resultElement = elements.length > 1 ? elements.get() : [elements[0]];
 		}
@@ -1083,9 +1100,11 @@
 		}
 		else if (Array.isArray(elements))
 		{
-			resultElement = elements;
+			resultElement = elements.filter(function (element) {
+				return element.nodeType === 1;
+			});
 		}
-		else if (elements.nodeType)
+		else if (elements.nodeType === 1)
 		{
 			resultElement = [elements];
 		}

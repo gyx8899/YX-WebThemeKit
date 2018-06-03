@@ -1,7 +1,7 @@
 /**
  * GoogleAnalytics Integrate Plugin v2.0.0.180404_beta
  */
-(function () {
+(function (root) {
 	let googleAnalyticsConfig = [{
 				name: 'YX-JS-ToolKit',
 				trackID: 'UA-104315567-1'
@@ -13,7 +13,7 @@
 				trackID: 'UA-104315567-3'
 			}],
 			siteGoogleAnalyticsConfig = googleAnalyticsConfig.filter(function (site) {
-				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
+				return site.name.toLowerCase() === root.siteConfig.name.toLowerCase();
 			})[0],
 			pathName = document.location.pathname,
 			page = pathName.replace('/' + pathName.split('/')[1] + '/', '')
@@ -35,4 +35,4 @@
 	})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 	ga('create', siteGoogleAnalyticsConfig.trackID, 'auto');
 	ga('send', 'pageview', page);
-})();
+})(window);

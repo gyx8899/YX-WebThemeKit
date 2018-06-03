@@ -14,7 +14,7 @@
 				repo: 'YX-CSS-ToolKit'
 			}],
 			siteRibbonConfig = ribbonConfig.filter(function (site) {
-				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
+				return site.name.toLowerCase() === global.siteConfig.name.toLowerCase();
 			})[0],
 			githubLink = document.createElement('a'),
 			githubRibbon = document.createElement('div');

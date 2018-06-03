@@ -29,10 +29,10 @@
 	}
 	else
 	{
-		root.HeaderFooter = factory(root.YX);
+		root.HeaderFooter = factory(root.YX, root.siteConfig);
 		// root.HeaderFooter = factory(root.jQuery, root._);
 	}
-}(window, function (YX) {
+}(window, function (YX, siteConfig) {
 	let HeaderFooter = function (options) {
 		options = this._processOptions(options);
 
@@ -63,7 +63,7 @@
 			themeData: {
 				title: document.querySelector('title').text,
 				menuItems: '',
-				path: '',
+				path: 'theme-header-footer/',
 				author: 'Steper Kuo',
 				authorLink: 'https://github.com/gyx8899'
 			}
@@ -71,7 +71,7 @@
 	};
 
 	HeaderFooter.prototype._processOptions = function (options) {
-		let scriptName = 'headerFooter.min.js',
+		let scriptName = 'headerFooter.js',
 				path = YX.Util.url.getCurrentScriptPath(scriptName),
 				parentPath = path && path.replace(scriptName, '');
 		options.html = parentPath + options.html;
@@ -137,7 +137,7 @@
 	return HeaderFooter;
 }));
 
-(function () {
+(function (root) {
 	let siteInfo = [{
 				name: 'YX-JS-ToolKit',
 				theme: 'owl-theme'
@@ -151,8 +151,8 @@
 				name: 'Others',
 				theme: 'owl-theme'
 			}],
-			siteHeaderFooterConfig = siteInfo.filter(function (site) {
-				return siteConfig && site.name.toLowerCase() === siteConfig.name.toLowerCase();
+			siteHeaderFooterConfig = root.siteConfig && siteInfo.filter(function (site) {
+				return root.siteConfig && site.name.toLowerCase() === root.siteConfig.name.toLowerCase();
 			})[0] || siteInfo[siteInfo.length - 1];
 
 	// Auto init HeaderFooter
@@ -160,4 +160,4 @@
 	{
 		new HeaderFooter(HeaderFooter.TYPE_OPTIONS[siteHeaderFooterConfig.theme]);
 	}
-})();
+})(window);

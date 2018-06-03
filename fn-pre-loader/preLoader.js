@@ -80,7 +80,8 @@
 		'image-dr': 'image-dot-rotate',
 		'image-p': 'image-pacman',
 		'image-ds': 'image-dot-scale',
-		'ball-bsm': 'ball-scale-multiple'
+		'ball-bsm': 'ball-scale-multiple',
+		'circle-spin': 'circle-spin'
 	};
 
 	PreLoader.TYPE_OPTIONS = {
@@ -151,7 +152,14 @@
 				'</div>'  // element or html string
 			},
 			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/ball-scale-multiple/preLoader.css']
-		}
+		},
+		'circle-spin': {
+			loaderHTML: true,
+			loaderHTMLInfo: {
+				content: '<div class="lds-css ng-scope"><div style="width:100%;height:100%" class="lds-dual-ring"><div></div></div>'
+			},
+			resources: ['https://gyx8899.github.io/YX-WebThemeKit/fn-pre-loader/circle-spin/preLoader.css']
+		},
 	};
 
 	// Public Methods

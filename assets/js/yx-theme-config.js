@@ -1,5 +1,5 @@
 /**
- * Site Config v1.0.2.180518_beta
+ * Site Config v1.0.2.180603_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -9,14 +9,14 @@
 	}
 	else if (typeof module === 'object' && module.exports)
 	{
-		module.exports.siteConfig = factory(require('./common.min'));
-		// module.exports.siteConfig = factory(require('https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.min.js'));
+		module.exports = factory(require('./common.min'));
+		// module.exports = factory(require('https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.min.js'));
 		// module.exports = factory(require('jquery'), require('underscore'));
 	}
 	else
 	{
-		root.siteConfig = factory(root.yx);
-		// root.SiteConfig = factory(root.jQuery, root._);
+		root.siteConfig = factory(root.YX);
+		// root.siteConfig = factory(root.jQuery, root._);
 	}
 }(window, function (YX) {
 	let DEFAULT_CONFIG = {
@@ -43,12 +43,17 @@
 			}, {
 				name: 'Others',
 				pathNameRoot: '',
-				customConfig: {},
+				customConfig: {
+					headerFooter: false,
+					googleAnalytics: false,
+					githubRibbon: false
+				},
 			}],
 			configUrl = {
 				headerFooter: {
 					firstScreen: true,
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.min.js'
+					// url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.min.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.js'
 				},
 				googleAnalytics: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.min.js'
@@ -60,7 +65,7 @@
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.min.js'
 				},
 				previewCode: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js?init=auto',
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.js?init=auto',
 					condition: () => document.querySelectorAll('[data-toggle="previewCode"]').length
 				},
 				qUnit: {

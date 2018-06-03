@@ -5,7 +5,7 @@ let CACHE_NAME = 'YX-WebThemeKit-180407',
 			'./assets/img/favicon-16x16.png'
 		],
 		urlsToCache_data = [
-			'./assets/js/yx-theme-config.min.js'
+			'./assets/js/yx-theme-config.js'
 		],
 		cacheWhiteList = [
 			'urlsToCache_static',

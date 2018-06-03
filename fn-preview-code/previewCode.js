@@ -33,12 +33,13 @@
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
 	{
-		define(['yx'], factory);
+		define([], factory);
 		// define(['jquery', 'underscore'], factory);
 	}
 	else if (typeof module === 'object' && module.exports)
 	{
-		module.exports = factory(require('yx'));
+		// module.exports.PreviewCode = factory(require('yx'));
+		module.exports = factory(require('https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js'));
 		// module.exports = factory(require('jquery'), require('underscore'));
 	}
 	else
