@@ -1,5 +1,5 @@
 /**
- * Site Config v1.0.2.180603_beta
+ * Site Config v1.0.2.180708_beta
  */
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd)
@@ -166,6 +166,21 @@
 				window.paramsCases && window.paramsCases[paramsCase] && window.paramsCases[paramsCase]();
 			});
 		}
+
+		// Handle siteConfig param to update customConfig
+		let paramSiteConfigs = siteConfig.queryParams['siteconfig'];
+		paramSiteConfigs && paramSiteConfigs.split(',').forEach((configItem) => {
+			if (!siteConfig.customConfig[configItem])
+			{
+				siteConfig.customConfig[configItem] = true;
+			}
+		});
+
+		// Handle ignoreconfig param to update customConfig
+		let paramIgnoreConfigs = siteConfig.queryParams['ignoreconfig'];
+		paramIgnoreConfigs && paramIgnoreConfigs.split(',').forEach((configItem) => {
+			siteConfig.customConfig[configItem] = false;
+		});
 	}
 
 	/**
