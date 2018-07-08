@@ -157,6 +157,15 @@
 				configUrl[themeName].url = '';
 			})
 		}
+
+		// Handle ?case=1
+		let paramsCase = siteConfig.queryParams['case'];
+		if (paramsCase !== undefined)
+		{
+			window.addEventListener('load', () => {
+				window.paramsCases && window.paramsCases[paramsCase] && window.paramsCases[paramsCase]();
+			});
+		}
 	}
 
 	/**
