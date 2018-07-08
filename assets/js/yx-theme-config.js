@@ -35,7 +35,9 @@
 			}, {
 				name: 'YX-WebThemeKit',
 				pathNameRoot: 'YX-WebThemeKit',
-				customConfig: {},
+				customConfig: {
+					headerFooter: false
+				},
 			}, {
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
@@ -151,10 +153,16 @@
 
 		// Handle theme config parameters
 		let themeConfigParams = YX.Util.url.getUrlQueryParams(getScriptName());
+		if (themeConfigParams['config'])
+		{
+			themeConfigParams['config'].split(',').forEach(themeName => {
+				siteConfig.customConfig[themeName] = true;
+			})
+		}
 		if (themeConfigParams['ignore'])
 		{
 			themeConfigParams['ignore'].split(',').forEach(themeName => {
-				configUrl[themeName].url = '';
+				siteConfig.customConfig[themeName] = false;
 			})
 		}
 
@@ -166,21 +174,6 @@
 				window.paramsCases && window.paramsCases[paramsCase] && window.paramsCases[paramsCase]();
 			});
 		}
-
-		// Handle siteConfig param to update customConfig
-		let paramSiteConfigs = siteConfig.queryParams['siteconfig'];
-		paramSiteConfigs && paramSiteConfigs.split(',').forEach((configItem) => {
-			if (!siteConfig.customConfig[configItem])
-			{
-				siteConfig.customConfig[configItem] = true;
-			}
-		});
-
-		// Handle ignoreconfig param to update customConfig
-		let paramIgnoreConfigs = siteConfig.queryParams['ignoreconfig'];
-		paramIgnoreConfigs && paramIgnoreConfigs.split(',').forEach((configItem) => {
-			siteConfig.customConfig[configItem] = false;
-		});
 	}
 
 	/**
