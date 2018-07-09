@@ -35,9 +35,7 @@
 			}, {
 				name: 'YX-WebThemeKit',
 				pathNameRoot: 'YX-WebThemeKit',
-				customConfig: {
-					headerFooter: false
-				},
+				customConfig: {},
 			}, {
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
