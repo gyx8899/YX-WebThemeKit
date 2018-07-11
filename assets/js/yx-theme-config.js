@@ -141,8 +141,7 @@
 	function handleParameters()
 	{
 		// Handle page parameters
-		if (location.hostname === '127.0.0.1'
-				|| location.hostname === 'localhost'
+		if (siteConfig.queryParams['env'] === 'dev'
 				|| (siteConfig.name === 'YX-WebThemeKit' && siteConfig.queryParams['_ijt'] !== ''))
 		{
 			// Intellij IDEA
