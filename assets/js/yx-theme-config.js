@@ -163,16 +163,19 @@
 		let isAssignEnabled = siteConfig.queryParams['assign'];
 		if (isAssignEnabled === 'true')
 		{
-			window.addEventListener('load', () => {
-				let params = siteConfig.queryParams;
-				for (let key in params)
+			document.onreadystatechange = function () {
+				if (document.readyState === 'interactive')
 				{
-					if (window[key] !== undefined && params.hasOwnProperty(key))
+					let params = siteConfig.queryParams;
+					for (let key in params)
 					{
-						window[key] = JSON.parse(decodeURIComponent(params[key]));
+						if (window[key] !== undefined && params.hasOwnProperty(key))
+						{
+							window[key] = JSON.parse(decodeURIComponent(params[key]));
+						}
 					}
 				}
-			});
+			};
 		}
 
 		// Note: Use double quotes, not single quotes;
