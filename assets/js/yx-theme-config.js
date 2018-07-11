@@ -159,6 +159,36 @@
 			});
 		}
 
+		// Note: Use double quotes, not single quotes;
+		// Handle ?assign=true&aaa=123&bbb="234"&ccc=true&ddd=["a", 2, true]&&eee={"ab": true}
+		let isAssignEnabled = siteConfig.queryParams['assign'];
+		if (isAssignEnabled === 'true')
+		{
+			window.addEventListener('load', () => {
+				let params = siteConfig.queryParams;
+				for (let key in params)
+				{
+					if (window[key] !== undefined && params.hasOwnProperty(key))
+					{
+						window[key] = JSON.parse(decodeURIComponent(params[key]));
+					}
+				}
+			});
+		}
+
+		// Note: Use double quotes, not single quotes;
+		// Handle ?apply=initState(1, "abc", {"a": true})
+		let paramsApply = siteConfig.queryParams['apply'];
+		if (paramsApply !== undefined)
+		{
+			paramsApply = decodeURIComponent(paramsApply);
+			let funcName = paramsApply.split('(')[0],
+					params = JSON.parse('[' + paramsApply.substring(funcName.length + 1, paramsApply.length - 1) + ']');
+			window.addEventListener('load', () => {
+				window[funcName](...params);
+			});
+		}
+
 		// Handle theme config parameters
 		let themeConfigParams = YX.Util.url.getUrlQueryParams(getScriptName());
 		if (themeConfigParams['config'])
@@ -172,15 +202,6 @@
 			themeConfigParams['ignore'].split(',').forEach(themeName => {
 				siteConfig.customConfig[themeName] = false;
 			})
-		}
-
-		// Handle ?case=1
-		let paramsCase = siteConfig.queryParams['case'];
-		if (paramsCase !== undefined)
-		{
-			window.addEventListener('load', () => {
-				window.paramsCases && window.paramsCases[paramsCase] && window.paramsCases[paramsCase]();
-			});
 		}
 	}
 
