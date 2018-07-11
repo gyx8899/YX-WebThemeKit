@@ -70,7 +70,7 @@
 				},
 				qUnit: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.min.js',
-					condition: () => siteConfig.queryParams['qunit'] === 'true'
+					condition: () => siteConfig.queryParams['qunit'] !== undefined
 				},
 				disqus: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.min.js',
