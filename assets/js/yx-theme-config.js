@@ -141,11 +141,21 @@
 	function handleParameters()
 	{
 		// Handle page parameters
-		if (siteConfig.name === 'YX-WebThemeKit' &&
-				(siteConfig.queryParams['env'] === 'dev' || siteConfig.queryParams['_ijt'] !== ''))
+		if (location.hostname === '127.0.0.1'
+				|| location.hostname === 'localhost'
+				|| (siteConfig.name === 'YX-WebThemeKit' && siteConfig.queryParams['_ijt'] !== ''))
 		{
+			// Intellij IDEA
+			let replacedPath = 'https://gyx8899.github.io/',
+					newPath = '../../../';
+			if (location.hostname === '127.0.0.1' || location.hostname === 'localhost')
+			{
+				replacedPath += 'YX-WebThemeKit';
+				newPath = location.origin;
+				siteConfig.customConfig.headerFooter = true;
+			}
 			Object.keys(configUrl).forEach(function (key) {
-				configUrl[key].url = configUrl[key].url.replace('https://gyx8899.github.io/', '../../../');
+				configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath).replace('.min.js', '.js');
 			});
 		}
 
