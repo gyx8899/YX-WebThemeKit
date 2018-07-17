@@ -1,5 +1,5 @@
 /**
- * PreviewCode Plugin v3.0.5.180516_beta
+ * PreviewCode Plugin v3.0.6.180717_beta
  *
  * Setting in html tag:
  * 1. Required:
@@ -14,6 +14,7 @@
  * 2.5 data-collapse="on" // set collapse on, default collapse off
  * 2.6 data-tag="show" // show the wrapper tag, default not show (For data-fetch not set)
  * 2.7 data-init="auto" // auto init when page load without special init function
+ * 2.8 data-isCode="false" // support: not escape html
  *
  * Support: Any html tag, especially support <link> with href, <script> with src;
  *
@@ -129,7 +130,8 @@
 		let positionInfo = {
 			parentElement: targetElement,
 			position: previewPosition,
-			isCollapsed: element.getAttribute('data-collapse') === 'on'
+			isCollapsed: element.getAttribute('data-collapse') === 'on',
+			isNotCode: element.getAttribute('data-isCode') === 'false'
 		};
 		if (elementLink)
 		{
@@ -151,9 +153,14 @@
 						'<div class="preview-title">' +
 						'<span>' + demoTitle + '</span>' +
 						'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRR4iAAAAAIdFJOUwF5q/XXRBg3BwRgrQAAAGRJREFUKBVjYBiSoEQA7uwUBTBTohEmwuZhAGYydQhAhVKaAyAsDagiNg9TqBRMEVwJAwNEEUIJAwNEEZISiCJkJRBFKEpAilCVgBSJwNwCdQCDRgfMLTARJnQlDAziMLmhSAMAhrURVl4zt/IAAAAASUVORK5CYII=">' +
-						'</div>';
+						'</div>',
+				preCode = '<pre><code>' + codeContent + '</code></pre>';
 		codeElement.className = "preview-code";
-		codeElement.innerHTML = previewTitle + '<pre><code>' + codeContent + '</code></pre>';
+		if (positionInfo.isNotCode)
+		{
+			preCode = '<pre>' + positionInfo.parentElement.innerHTML + '</pre>'
+		}
+		codeElement.innerHTML = previewTitle + preCode;
 
 		if (positionInfo.isCollapsed)
 		{
