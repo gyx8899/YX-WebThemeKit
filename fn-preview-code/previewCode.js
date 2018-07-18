@@ -21,7 +21,7 @@
  *
  * Dependency:
  * 1. highlight, https://highlightjs.org/
- * 2. common.js, for loading resource file (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js)
+ * 2. common.js, for loading resource file (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.min.js)
  *  2.1 loadResources
  *  2.2 getFileNameFromURL
  *  2.3 deepExtend

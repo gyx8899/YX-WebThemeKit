@@ -266,7 +266,7 @@
 	}
 
 	// Functions: loadResource
-	// Copy from common.js (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js)
+	// Copy from common.js (https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.min.js)
 	let resourceMethod = {
 		loadCSS: function (url, callback, context) {
 			if (!url)
