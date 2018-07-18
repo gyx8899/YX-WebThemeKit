@@ -1,6 +1,7 @@
+/**!
+ * PreviewCode Plugin v3.0.7.180718_beta
+ */
 /**
- * PreviewCode Plugin v3.0.6.180717_beta
- *
  * Setting in html tag:
  * 1. Required:
  * 1.1 data-toggle="previewCode"
@@ -31,24 +32,7 @@
  *  2.8 addClass
  *  2.9 toggleClass
  * */
-(function (root, factory) {
-	if (typeof define === 'function' && define.amd)
-	{
-		define([], factory);
-		// define(['jquery', 'underscore'], factory);
-	}
-	else if (typeof module === 'object' && module.exports)
-	{
-		// module.exports.PreviewCode = factory(require('yx'));
-		module.exports = factory(require('https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.js'));
-		// module.exports = factory(require('jquery'), require('underscore'));
-	}
-	else
-	{
-		root.PreviewCode = factory(root.YX);
-		// root.PreviewCode = factory(root.jQuery, root._);
-	}
-}(window, function (YX) {
+(function (YX) {
 	let pluginName = 'previewCode';
 
 	let PreviewCode = function (elements, options) {
@@ -91,7 +75,7 @@
 
 	function highlightCode(codeElement)
 	{
-		let preCode = codeElement.querySelector('pre code')
+		let preCode = codeElement.querySelector('pre code');
 		preCode && hljs.highlightBlock(preCode);
 	}
 
@@ -286,10 +270,16 @@
 		});
 	}
 
-	return PreviewCode;
-}));
+	window.PreviewCode = PreviewCode;
 
-/**
+	// Compatible with webpack
+	if (typeof exports === 'object' && typeof module === 'object')
+	{
+		module.exports = PreviewCode;
+	}
+})(window.YX);
+
+/**!
  * Auto init plugin if plugin.js?init=auto
  */
 (function () {

@@ -1,5 +1,7 @@
+/**!
+ * HeaderFooter plugin v3.1.0.180718_beta
+ */
 /**
- * HeaderFooter plugin v3.0.1.180407_beta
  * Required:
  * 1. html file: contain <header> <footer>;
  * 2. css file: <header> <footer> style file;
@@ -14,25 +16,8 @@
  *  1.5 loadCSS
  *  1.6 loadScript
  *  1.7 initTemplate
- *
- * **/
-(function (root, factory) {
-	if (typeof define === 'function' && define.amd)
-	{
-		define(['yx'], factory);
-		// define(['jquery', 'underscore'], factory);
-	}
-	else if (typeof module === 'object' && module.exports)
-	{
-		module.exports = factory(require('yx'));
-		// module.exports = factory(require('jquery'), require('underscore'));
-	}
-	else
-	{
-		root.HeaderFooter = factory(root.YX, root.siteConfig);
-		// root.HeaderFooter = factory(root.jQuery, root._);
-	}
-}(window, function (YX, siteConfig) {
+ */
+(function (YX) {
 	let HeaderFooter = function (options) {
 		options = this._processOptions(options);
 
@@ -71,7 +56,7 @@
 	};
 
 	HeaderFooter.prototype._processOptions = function (options) {
-		let scriptName = 'headerFooter.js',
+		let scriptName = 'headerFooter.min.js',
 				path = YX.Util.url.getCurrentScriptPath(scriptName),
 				parentPath = path && path.replace(scriptName, '');
 		options.html = parentPath + options.html;
@@ -134,8 +119,14 @@
 		}
 	};
 
-	return HeaderFooter;
-}));
+	window.HeaderFooter = HeaderFooter;
+
+	// Compatible with webpack
+	if (typeof exports === 'object' && typeof module === 'object')
+	{
+		module.exports = HeaderFooter;
+	}
+})(window.YX);
 
 (function (root) {
 	let siteInfo = [{

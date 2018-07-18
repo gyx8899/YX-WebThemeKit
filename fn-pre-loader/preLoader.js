@@ -1,23 +1,7 @@
-/**
- * PreLoader Plugin v2.0.0.180510_beta
+/**!
+ * PreLoader Plugin v2.1.0.180718_beta
  */
-(function (root, factory) {
-	if (typeof define === 'function' && define.amd)
-	{
-		define([], factory);
-		// define(['jquery', 'underscore'], factory);
-	}
-	else if (typeof module === 'object' && module.exports)
-	{
-		module.exports = factory();
-		// module.exports = factory(require('jquery'), require('underscore'));
-	}
-	else
-	{
-		root.PreLoader = factory();
-		// root.SiteConfig = factory(root.jQuery, root._);
-	}
-}(window, function () {
+(function () {
 	let PreLoader = function (options) {
 		// Create global element references
 		this.preLoaderElement = null;
@@ -550,10 +534,18 @@
 		return getUrlQueryParams(scriptSrc);
 	}
 
+	window.PreLoader = PreLoader;
+
+	// Compatible with webpack
+	if (typeof exports === 'object' && typeof module === 'object')
+	{
+		module.exports = PreLoader;
+	}
+
 	// Auto init preLoader
 	let typeParam = getCurrentScriptParameter()['type'];
 	if (typeParam && PreLoader.TYPE_ABBRS[typeParam])
 	{
 		new PreLoader(PreLoader.TYPE_OPTIONS[PreLoader.TYPE_ABBRS[typeParam]]);
 	}
-}));
+})();

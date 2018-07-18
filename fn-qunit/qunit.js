@@ -1,4 +1,4 @@
-/**
+/**!
  * Qunit integrate plugin v2.0.0.180508_beta
  */
 (function (YX) {

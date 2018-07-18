@@ -1,24 +1,7 @@
-/**
- * Site Config v1.0.2.180708_beta
+/**!
+ * siteConfig v1.1.0.180718_beta
  */
-(function (root, factory) {
-	if (typeof define === 'function' && define.amd)
-	{
-		define([], factory);
-		// define(['jquery', 'underscore'], factory);
-	}
-	else if (typeof module === 'object' && module.exports)
-	{
-		module.exports = factory(require('./common.min'));
-		// module.exports = factory(require('https://gyx8899.github.io/YX-JS-ToolKit/assets/js/common.min.js'));
-		// module.exports = factory(require('jquery'), require('underscore'));
-	}
-	else
-	{
-		root.siteConfig = factory(root.YX);
-		// root.siteConfig = factory(root.jQuery, root._);
-	}
-}(window, function (YX) {
+(function (YX) {
 	let DEFAULT_CONFIG = {
 				headerFooter: true,
 				googleAnalytics: true,
@@ -52,8 +35,7 @@
 			configUrl = {
 				headerFooter: {
 					firstScreen: true,
-					// url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.min.js'
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.js'
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.min.js'
 				},
 				googleAnalytics: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.min.js'
@@ -65,7 +47,7 @@
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.min.js'
 				},
 				previewCode: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.js?init=auto',
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js?init=auto',
 					condition: () => document.querySelectorAll('[data-toggle="previewCode"]').length
 				},
 				qUnit: {
@@ -147,14 +129,15 @@
 			// Intellij IDEA
 			let replacedPath = 'https://gyx8899.github.io/',
 					newPath = '../../../';
-			if (location.hostname === '127.0.0.1' || location.hostname === 'localhost')
+			if ((location.hostname === '127.0.0.1' || location.hostname === 'localhost') && !siteConfig.queryParams['_ijt'])
 			{
 				replacedPath += 'YX-WebThemeKit';
 				newPath = location.origin;
 				siteConfig.customConfig.headerFooter = true;
 			}
 			Object.keys(configUrl).forEach(function (key) {
-				configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath).replace('.min.js', '.js');
+				// configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath).replace('.min.js', '.js');
+				configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath);
 			});
 		}
 
@@ -226,5 +209,11 @@
 			return error['fileName'];
 	}
 
-	return siteConfig;
-}));
+	window.siteConfig = siteConfig;
+
+	// Compatible with webpack
+	if (typeof exports === 'object' && typeof module === 'object')
+	{
+		module.exports = siteConfig;
+	}
+})(window.YX);

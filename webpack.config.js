@@ -13,7 +13,9 @@ let commonConfig = {
 			test: /\.js$/,
 			exclude: /node_modules/,
 			// include: [path.resolve(__dirname, 'src')],
-			loader: 'babel-loader'
+			use: [
+				'babel-loader'
+			]
 		},
 			{
 				test: /\.css$/,
@@ -24,22 +26,21 @@ let commonConfig = {
 			}
 		]
 	},
-	plugins: [
-		// new webpack.BannerPlugin({
-		// 	banner: 'version' + date
-		// })
-	],
 	mode: 'production'
 };
 let jsFiles = [
-	// {
-	// 	dir: 'assets/js',
-	// 	name: 'common'
-	// },
-	// {
-	// 	dir: 'assets/js',
-	// 	name: 'yx-theme-config'
-	// },
+	{
+		dir: 'assets/js',
+		name: 'common',
+		library: 'YX',
+		libraryTarget: 'umd'
+	},
+	{
+		dir: 'assets/js',
+		name: 'yx-theme-config',
+		library: 'siteConfig',
+		libraryTarget: 'umd'
+	},
 	{
 		dir: 'fn-disqus',
 		name: 'disqus'
@@ -50,11 +51,14 @@ let jsFiles = [
 	},
 	{
 		dir: 'fn-pre-loader',
-		name: 'preLoader'
+		name: 'preLoader',
+		library: 'PreLoader'
 	},
 	{
 		dir: 'fn-preview-code',
-		name: 'previewCode'
+		name: 'previewCode',
+		library: 'previewCode',
+		libraryTarget: 'umd'
 	},
 	{
 		dir: 'fn-qunit',
@@ -70,7 +74,9 @@ let jsFiles = [
 	},
 	{
 		dir: 'theme-header-footer',
-		name: 'headerFooter'
+		name: 'headerFooter',
+		library: 'HeaderFooter',
+		libraryTarget: 'umd'
 	},
 	{
 		dir: 'theme-header-footer/owl',
@@ -88,7 +94,9 @@ let fileConfigs = jsFiles.map((file) => {
 		entry: filePath + file.name + '.js',
 		output: {
 			path: path.resolve(__dirname, filePath),
-			filename: file.name + '.min.js'
+			filename: file.name + '.min.js',
+			library: file.library,
+			libraryTarget: file.libraryTarget
 		}
 	}
 });

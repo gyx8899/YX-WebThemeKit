@@ -1,29 +1,7 @@
-/**
- * YX Common Library v1.0.1.180518_beta
+/**!
+ * YX Common Library v1.1.0.180718_beta
  */
-(function (root, factory) {
-	if (typeof define === 'function' && define.amd)
-	{
-		// AMD. Register as an anonymous module
-		define([], factory);
-		// define(['jquery', 'underscore'], factory);
-	}
-	else if (typeof module === 'object' && module.exports)
-	{
-		// Node. Does not work with strict CommonJS, but
-		// only CommonJS-like environments that support module.exports.
-		// like Node.
-		module.exports = factory();
-		// module.exports = factory(require('jquery'), require('underscore'));
-	}
-	else
-	{
-		// Browser globals (root is Window)
-		root.YX = factory();
-		// root.yx = factory(root.jQuery, root._);
-	}
-}(window, function () {
-// }(this, function ($, _) {
+(function () {
 	let YX = {};
 
 	/********************************************************************************************************************/
@@ -1671,72 +1649,11 @@
 
 	/********************************************************************************************************************/
 
-	YX.Dictionary = function () {
-		function Dictionary()
-		{
-			this._size = 0;
-			this.dataStore = Object.create(null);
-		}
+	window.YX = YX;
 
-		Dictionary.prototype.isEmpty = function () {
-			return this._size === 0;
-		};
-
-		Dictionary.prototype.size = function () {
-			return this._size;
-		};
-
-		Dictionary.prototype.clear = function () {
-			for (let key in this.dataStore)
-			{
-				if (this.dataStore.hasOwnProperty(key))
-				{
-					delete this.dataStore[key];
-				}
-			}
-			this._size = 0;
-		};
-
-		Dictionary.prototype.add = function (key, value) {
-			this.dataStore[key] = value;
-			this._size++;
-		};
-
-		Dictionary.prototype.find = function (key) {
-			return this.dataStore[key];
-		};
-
-		Dictionary.prototype.count = function () {
-			let n = 0;
-			for (let key in this.dataStore)
-			{
-				if (this.dataStore.hasOwnProperty(key))
-				{
-					n++;
-				}
-			}
-			return n;
-		};
-
-		Dictionary.prototype.remove = function (key) {
-			delete this.dataStore[key];
-			this._size--;
-		};
-
-		Dictionary.prototype.showAll = function () {
-			for (let key in this.dataStore)
-			{
-				if (this.dataStore.hasOwnProperty(key))
-				{
-					console.log(key + "->" + this.dataStore[key]);
-				}
-			}
-		};
-
-		return Dictionary;
-	};
-
-	/********************************************************************************************************************/
-
-	return YX;
-}));
+	// Compatible with webpack
+	if (typeof exports === 'object' && typeof module === 'object')
+	{
+		module.exports = YX;
+	}
+})();

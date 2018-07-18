@@ -1,4 +1,4 @@
-/**
+/**!
  * GitHub ribbon plugin v2.0.0.180518_beta
  */
 (function (global, YX) {

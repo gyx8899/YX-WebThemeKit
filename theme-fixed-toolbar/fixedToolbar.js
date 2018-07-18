@@ -1,4 +1,4 @@
-/**
+/**!
  * Fixed Toolbar Plugin v2.0.0.180509_beta
  * Auto add toolbar on bottom right;
  */
