@@ -91,7 +91,8 @@
 
 	function highlightCode(codeElement)
 	{
-		hljs.highlightBlock(codeElement.querySelector('pre code'));
+		let preCode = codeElement.querySelector('pre code')
+		preCode && hljs.highlightBlock(preCode);
 	}
 
 	// Functions: Process code
