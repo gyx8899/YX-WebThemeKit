@@ -9,7 +9,8 @@
 				fixedToolbar: true,
 				previewCode: true,
 				qUnit: true,
-				disqus: true
+				disqus: true,
+				serviceWorker: true
 			},
 			YX_SITE_CONFIG = [{
 				name: 'YX-JS-ToolKit',
@@ -22,14 +23,17 @@
 			}, {
 				name: 'YX-CSS-ToolKit',
 				pathNameRoot: 'YX-CSS-ToolKit',
-				customConfig: {},
+				customConfig: {
+					serviceWorker: false
+				},
 			}, {
 				name: 'Others',
 				pathNameRoot: '',
 				customConfig: {
 					headerFooter: false,
 					googleAnalytics: false,
-					githubRibbon: false
+					githubRibbon: false,
+					serviceWorker: false
 				},
 			}],
 			configUrl = {
@@ -57,6 +61,9 @@
 				disqus: {
 					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.min.js',
 					condition: () => !YX.Util.navigator.isZHLanguage()
+				},
+				serviceWorker: {
+					condition: () => enableServiceWorker()
 				}
 			},
 
@@ -68,8 +75,6 @@
 	siteConfig.queryParams = YX.Util.url.getUrlQueryParams();
 
 	handleParameters();
-
-	enableServiceWorker();
 
 	window.addEventListener("load", () => siteConfig && loadConfigs(siteConfig, false), false);
 
@@ -108,9 +113,11 @@
 	{
 		for (let config in DEFAULT_CONFIG)
 		{
-			if (((configInfo.customConfig && configInfo.customConfig.hasOwnProperty(config)) ? configInfo.customConfig[config] : DEFAULT_CONFIG[config]) &&
-					((isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen)) &&
-					(!configUrl[config].condition || configUrl[config].condition()))
+			let isConfigTrue = (configInfo.customConfig && configInfo.customConfig.hasOwnProperty(config)) ? configInfo.customConfig[config] : DEFAULT_CONFIG[config],
+					isInSameScreen = (isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen),
+					isNoCondition = !configUrl[config].condition,
+					isMatchCondition = !isNoCondition && configUrl[config].condition();
+			if (isConfigTrue && isInSameScreen && (isNoCondition || isMatchCondition))
 			{
 				YX.Util.load.loadScript(configUrl[config].url, null, null, {isAsync: !isFirstScreen});
 			}
@@ -136,8 +143,14 @@
 				siteConfig.customConfig.headerFooter = true;
 			}
 			Object.keys(configUrl).forEach(function (key) {
-				// configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath).replace('.min.js', '.js');
-				configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath);
+				if (configUrl[key].url)
+				{
+					configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath).replace('.min.js', '.js');
+					if (siteConfig.queryParams['min'] === 'false')
+					{
+						configUrl[key].url = configUrl[key].url.replace('.min.js', '.js')
+					}
+				}
 			});
 		}
 
