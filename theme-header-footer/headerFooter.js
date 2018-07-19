@@ -56,9 +56,9 @@
 	};
 
 	HeaderFooter.prototype._processOptions = function (options) {
-		let scriptName = 'headerFooter.min.js',
+		let scriptName = 'headerFooter',
 				path = YX.Util.url.getCurrentScriptPath(scriptName),
-				parentPath = path && path.replace(scriptName, '');
+				parentPath = path && path.split(scriptName)[0];
 		options.html = parentPath + options.html;
 		options.css = options.css.map(function (styleName) {
 			return parentPath + styleName;
