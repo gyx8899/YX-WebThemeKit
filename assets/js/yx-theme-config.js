@@ -63,6 +63,7 @@
 					condition: () => !YX.Util.navigator.isZHLanguage()
 				},
 				serviceWorker: {
+					url: 'https://gyx8899.github.io/YX-WebThemeKit/assets/js/sw-register.js?v=' + Date.now(),
 					condition: () => enableServiceWorker()
 				}
 			},
@@ -85,23 +86,87 @@
 	 */
 	function enableServiceWorker()
 	{
+		let isEnabled = false;
 		if ('serviceWorker' in navigator)
 		{
-			window.addEventListener('load', function () {
+			window.addEventListener('load', () => {
 				let pathNameRoot = siteConfig.pathNameRoot ? siteConfig.pathNameRoot + '/' : '',
-						swPath = this.location.origin + '/' + pathNameRoot + 'service-worker.js',
+						commonPath = this.location.origin + '/' + pathNameRoot,
+						swPath = commonPath + 'service-worker.js',
 						swScope = '/' + pathNameRoot;
 				navigator.serviceWorker.register(swPath, {scope: swScope})
 						.then(function (registration) {
 							// Registration successful
 							console.log('ServiceWorker registration successful with scope: ', registration.scope);
+							let triggerNotification = (title = 'Received Amazing Feature', body = '"Refresh Page" to get update!', tag = title) => {
+								let permissionNotification = () => {
+									const option = {
+										tag: 'reload-window',
+										title: title,
+										body: body,
+										icon: commonPath + 'assets/img/ms-icon-310x310.png'
+									};
+									return registration.showNotification(title, option);
+								};
+
+								if (!("Notification" in window))
+								{
+									alert("This browser does not support desktop notification");
+								}
+								else if (Notification.permission === "granted")
+								{
+									permissionNotification();
+								}
+								else if (Notification.permission !== 'denied')
+								{
+									Notification.requestPermission(function (permission) {
+										if (permission === "granted")
+										{
+											permissionNotification();
+										}
+									});
+								}
+							};
+
+							// updatefound is fired if service-worker.js changes.
+							registration.onupdatefound = function () {
+								// The updatefound event implies that reg.installing is set;
+								// see https://w3c.github.io/ServiceWorker/#service-worker-registration-updatefound-event
+								var installingWorker = registration.installing;
+								installingWorker.onstatechange = function () {
+									switch (installingWorker.state)
+									{
+										case 'installed':
+											if (navigator.serviceWorker.controller)
+											{
+												// At this point, the old content will have been purged and the fresh content will have been added to the cache.
+												// It's the perfect time to display a "New content is available; please refresh." message in the page's interface.
+												console.log('New or updated content is available.');
+												triggerNotification();
+											}
+											else
+											{
+												// At this point, everything has been precached. It's the perfect time to display a "Content is cached for offline use." message.
+												console.log('Content is now available offline!');
+												triggerNotification('Offline', 'You are offline!')
+											}
+											break;
+
+										case 'redundant':
+											console.error('The installing service worker became redundant.');
+											break;
+									}
+								};
+							};
 						})
 						.catch(function (err) {
 							// Registration failed
 							console.log('ServiceWorker registration failed: ', err);
 						});
 			});
+			isEnabled = true;
 		}
+		return isEnabled;
 	}
 
 	/***

@@ -4,27 +4,16 @@ npm install --save-dev webpack webpack-cli webpack-merge babel-loader babel-plug
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-// const date = new Date().toGMTString()
 
 let commonConfig = {
-	devtool: 'source-map',
+	devtool: 'cheap-module-source-map',
 	module: {
 		rules: [{
 			test: /\.js$/,
 			exclude: /node_modules/,
 			// include: [path.resolve(__dirname, 'src')],
-			use: [
-				'babel-loader'
-			]
-		},
-			{
-				test: /\.css$/,
-				use: [
-					"style-loader",
-					"css-loader"
-				]
-			}
-		]
+			use: 'babel-loader'
+		}]
 	},
 	mode: 'production'
 };

@@ -1,12 +1,6 @@
-let CACHE_NAME = 'YX-WebThemeKit-180407',
-		urlsToCache_static = [
-			'./',
-			'./assets/img/apple-icon-152x152.png',
-			'./assets/img/favicon-16x16.png'
-		],
-		urlsToCache_data = [
-			'./assets/js/yx-theme-config.js'
-		],
+let CACHE_NAME = 'V20180720-01',
+		urlsToCache_static = [],
+		urlsToCache_data = [],
 		cacheWhiteList = [
 			'urlsToCache_static',
 			'urlsToCache_data'
@@ -67,8 +61,8 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('push', function (event) {
-	let title = 'Receive a message.',
-			body = 'message body!',
+	let title = 'Hei, you receive a message.',
+			body = 'This is message body!',
 			icon = '/assets/img/favicon.png',
 			tag = '';
 	event.waitUntil(
@@ -79,3 +73,15 @@ self.addEventListener('push', function (event) {
 			})
 	);
 });
+
+self.addEventListener('notificationclick', function (event) {
+	var messageId = event.notification.data;
+	event.notification.close();
+
+	if (event.notification.tag === 'reload-window')
+	{
+		self.clients.matchAll().then((clients) => {
+			clients.forEach((client) => client.postMessage('reload-window'));
+		});
+	}
+}, false);
