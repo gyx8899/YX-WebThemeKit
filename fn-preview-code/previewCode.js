@@ -324,15 +324,16 @@
 		let hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
 		let dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
 
-		if (hasUrlParamInitAuto && dataInitAutoElements.length)
+		if (hasUrlParamInitAuto || dataInitAutoElements.length)
 		{
+			let allPreviewCodeElements = hasUrlParamInitAuto ? null : dataInitAutoElements;
 			if (document.readyState !== "complete")
 			{
-				window.addEventListener('load', () => initPlugin(dataInitAutoElements));
+				window.addEventListener('load', () => initPlugin(allPreviewCodeElements));
 			}
 			else
 			{
-				initPlugin(dataInitAutoElements);
+				initPlugin(allPreviewCodeElements);
 			}
 		}
 	}
