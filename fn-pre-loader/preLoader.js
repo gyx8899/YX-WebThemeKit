@@ -1,5 +1,6 @@
 /**!
- * PreLoader Plugin v2.1.0.180718_beta
+ * PreLoader Plugin v2.2.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-pre-loader
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
 	let PreLoader = function (options) {
@@ -147,12 +148,12 @@
 	};
 
 	// Public Methods
-	PreLoader.prototype.destroy = function () {
+	PreLoader.prototype.destroy = () => {
 		this._destroy();
 	};
 
 	// Private Methods
-	PreLoader.prototype._getPreLoader = function () {
+	PreLoader.prototype._getPreLoader = () => {
 		let preLoaderElement = null;
 		if (this.options.loaderHTML)
 		{
@@ -181,7 +182,7 @@
 		return preLoaderElement;
 	};
 
-	PreLoader.prototype._addPreLoader = function () {
+	PreLoader.prototype._addPreLoader = () => {
 		let parentNode = this.options.loaderHTMLInfo.parentNode || document.body;
 		if (parentNode !== null)
 		{
@@ -196,7 +197,7 @@
 		}
 	};
 
-	PreLoader.prototype._getDivElement = function (id, className, content) {
+	PreLoader.prototype._getDivElement = (id, className, content) => {
 		let element = document.createElement("div");
 		id && (element.id = id);
 		className && (element.className = className);
@@ -211,7 +212,7 @@
 		return element;
 	};
 
-	PreLoader.prototype._getImgElement = function (src, width, height) {
+	PreLoader.prototype._getImgElement = (src, width, height) => {
 		let element = document.createElement("img");
 		element.src = src;
 		element.style.width = width + 'px';
@@ -219,15 +220,14 @@
 		return element;
 	};
 
-	PreLoader.prototype._endPreLoaderOnLoaded = function () {
-		let that = this;
-		window.addEventListener("load", function () {
-			that.destroy();
+	PreLoader.prototype._endPreLoaderOnLoaded = () => {
+		window.addEventListener("load", () => {
+			this.destroy();
 		}, false);
 	};
 
 	// Private Methods
-	PreLoader.prototype._destroy = function () {
+	PreLoader.prototype._destroy = () => {
 		let preLoaderElement = document.getElementById(this.options.id);
 		// Remove preLoader element from parentNode
 		preLoaderElement.parentNode.removeChild(preLoaderElement);

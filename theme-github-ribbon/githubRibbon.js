@@ -1,5 +1,6 @@
 /**!
- * GitHub ribbon plugin v2.0.0.180518_beta
+ * GitHub ribbon plugin v2.1.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/theme-github-ribbon
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (global, YX) {
 	let githubAuthor = "gyx8899",
@@ -13,7 +14,7 @@
 				name: 'YX-CSS-ToolKit',
 				repo: 'YX-CSS-ToolKit'
 			}],
-			siteRibbonConfig = ribbonConfig.filter(function (site) {
+			siteRibbonConfig = ribbonConfig.filter((site) => {
 				return site.name.toLowerCase() === global.siteConfig.name.toLowerCase();
 			})[0],
 			githubLink = document.createElement('a'),

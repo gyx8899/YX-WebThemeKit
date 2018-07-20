@@ -1,5 +1,6 @@
 /**!
- * YX Common Library v1.1.2.180720_beta
+ * YX Common Library v1.2.0.180720_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
 	let YX = {};

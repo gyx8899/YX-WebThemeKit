@@ -1,5 +1,6 @@
 /**!
- * siteConfig v1.1.1.180720_beta
+ * siteConfig v1.2.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/assets/js
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (YX) {
 	const COMMON_CONFIG_PATH = 'https://gyx8899.github.io/YX-WebThemeKit/'

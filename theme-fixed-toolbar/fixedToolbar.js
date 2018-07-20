@@ -1,6 +1,6 @@
 /**!
- * Fixed Toolbar Plugin v2.0.0.180509_beta
- * Auto add toolbar on bottom right;
+ * Fixed Toolbar Plugin v2.1.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/theme-fixed-toolbar
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (YX) {
 	YX.Util.load.loadCSS('https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.css', initFixedToolbar);
@@ -42,7 +42,7 @@
 		item.appendChild(img);
 
 		let that = this;
-		window.onscroll = function () {
+		window.onscroll = () => {
 			YX.Util.tool.throttle(isShowScrollToTop, that);
 		};
 

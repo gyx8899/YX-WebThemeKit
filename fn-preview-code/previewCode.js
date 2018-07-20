@@ -1,5 +1,6 @@
 /**!
- * PreviewCode Plugin v3.0.7.180718_beta
+ * PreviewCode Plugin v3.1.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-preview-code
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 /**
  * Setting in html tag:
@@ -35,12 +36,12 @@
 (function (YX) {
 	let pluginName = 'previewCode';
 
-	let PreviewCode = function (elements, options) {
+	let PreviewCode = (elements, options) => {
 		this.options = YX.Util.tool.deepExtend({}, PreviewCode.DEFAULTS, options);
 
 		let that = this,
 				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
-		YX.Util.load.loadResources(urls, function () {
+		YX.Util.load.loadResources(urls, () => {
 			that._init(elements);
 		});
 	};

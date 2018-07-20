@@ -1,5 +1,6 @@
 /**!
- * HeaderFooter plugin v3.1.0.180718_beta
+ * HeaderFooter plugin v3.2.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/theme-header-footer
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 /**
  * Required:
@@ -55,7 +56,7 @@
 		}
 	};
 
-	HeaderFooter.prototype._processOptions = function (options) {
+	HeaderFooter.prototype._processOptions = (options) => {
 		let scriptName = 'headerFooter',
 				path = YX.Util.url.getCurrentScriptPath(scriptName),
 				parentPath = path && path.split(scriptName)[0];
@@ -70,11 +71,11 @@
 		return options;
 	};
 
-	HeaderFooter.prototype._getAndApplyTheme = function () {
+	HeaderFooter.prototype._getAndApplyTheme = () => {
 		YX.Util.load.getFileContent(this.options.html, 'applyThemeData', this);
 	};
 
-	HeaderFooter.prototype.applyThemeData = function (data) {
+	HeaderFooter.prototype.applyThemeData = (data) => {
 		let textArea = document.createElement('textarea');
 		textArea.innerText = data.toString();
 		let sourceHtml = textArea.value;
@@ -83,13 +84,13 @@
 		this._applyThemeTag('footer', sourceHtml);
 	};
 
-	HeaderFooter.prototype._applyThemeTag = function (tag, sourceHTML) {
+	HeaderFooter.prototype._applyThemeTag = (tag, sourceHTML) => {
 		let tagHTMLArray = YX.Util.regExp.regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
 				tagTemplate = tagHTMLArray && tagHTMLArray[0];
 		tagTemplate && this._applyTagWithTemplate(tag, tagTemplate);
 	};
 
-	HeaderFooter.prototype._applyTagWithTemplate = function (tag, template) {
+	HeaderFooter.prototype._applyTagWithTemplate = (tag, template) => {
 		let commentElement = document.createComment(' ' + tag + ' '),
 				tagElement = document.querySelector(tag),
 				tagElementWrapper = document.createElement('div'),
@@ -142,7 +143,7 @@
 				name: 'Others',
 				theme: 'owl-theme'
 			}],
-			siteHeaderFooterConfig = root.siteConfig && siteInfo.filter(function (site) {
+			siteHeaderFooterConfig = root.siteConfig && siteInfo.filter((site) => {
 				return root.siteConfig && site.name.toLowerCase() === root.siteConfig.name.toLowerCase();
 			})[0] || siteInfo[siteInfo.length - 1];
 

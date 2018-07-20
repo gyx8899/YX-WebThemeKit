@@ -3,10 +3,10 @@ $(document).ready(function () {
 	let responsiveNav = $('#toggle-nav');
 	let navBar = $('.nav-bar');
 
-	responsiveNav.on('click', function (e) {
+	responsiveNav.on('click', (e) => {
 		e.preventDefault();
 		console.log(navBar);
-		navBar.toggleClass('active')
+		navBar.toggleClass('active');
 	});
 
 	// pseudo active
@@ -18,7 +18,6 @@ $(document).ready(function () {
 
 		sidenav.each(function (i, e) {
 			let active = $(e).attr('href');
-
 			if (active === url)
 			{
 				$(e).parent('li').addClass('active');

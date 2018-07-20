@@ -1,5 +1,6 @@
 /**!
- * GoogleAnalytics Integrate Plugin v2.0.0.180404_beta
+ * GoogleAnalytics v2.1.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-google-analytics
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (root) {
 	let googleAnalyticsConfig = [{
@@ -12,7 +13,7 @@
 				name: 'YX-CSS-ToolKit',
 				trackID: 'UA-104315567-3'
 			}],
-			siteGoogleAnalyticsConfig = googleAnalyticsConfig.filter(function (site) {
+			siteGoogleAnalyticsConfig = googleAnalyticsConfig.filter((site) => {
 				return site.name.toLowerCase() === root.siteConfig.name.toLowerCase();
 			})[0],
 			pathName = document.location.pathname,

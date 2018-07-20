@@ -1,5 +1,6 @@
 /**!
- * Disqus Integrate Plugin v2.0.0.180404_beta
+ * Disqus v2.1.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-disqus
+ * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (global, YX) {
 	let disqusLibUrl = "https://{{sitename}}.disqus.com/embed.js",
@@ -11,15 +12,16 @@
 				name: 'YX-CSS-ToolKit'
 			}],
 
-			siteDisqusConfig = disqusConfig.filter(function (site) {
+			siteDisqusConfig = disqusConfig.filter((site) => {
 				return site.name.toLowerCase() === siteConfig.name.toLowerCase();
 			})[0],
 			libUrl = disqusLibUrl.replace('{{sitename}}', siteDisqusConfig.name),
 			libName = "Disqus";
 
-	siteDisqusConfig['data-timestamp'] = new Date().getTime();
+	siteDisqusConfig['data-timestamp'] = Date.now();
 
-	global.disqus_config = function () {
+	global.disqus_config = () => {
+		this.page = this.page || {};
 		this.page.url = window.location.href;
 		this.page.identifier = window.location.pathname;
 	};
