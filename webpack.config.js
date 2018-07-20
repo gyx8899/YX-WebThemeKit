@@ -2,7 +2,6 @@
 npm install --save-dev webpack webpack-cli webpack-merge babel-loader babel-plugin-add-module-exports
  */
 const path = require('path');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 
 let commonConfig = {
