@@ -92,42 +92,13 @@
 		{
 			window.addEventListener('load', () => {
 				let pathNameRoot = siteConfig.pathNameRoot ? siteConfig.pathNameRoot + '/' : '',
-						commonPath = this.location.origin + '/' + pathNameRoot,
+						commonPath = window.location.origin + '/' + pathNameRoot,
 						swPath = commonPath + 'service-worker.js',
 						swScope = '/' + pathNameRoot;
 				navigator.serviceWorker.register(swPath, {scope: swScope})
 						.then(function (registration) {
 							// Registration successful
 							console.log('ServiceWorker registration successful with scope: ', registration.scope);
-							let triggerNotification = (title = 'Received Amazing Feature', body = '"Refresh Page" to get update!', tag = title) => {
-								let permissionNotification = () => {
-									const option = {
-										tag: 'reload-window',
-										title: title,
-										body: body,
-										icon: commonPath + 'assets/img/ms-icon-310x310.png'
-									};
-									return registration.showNotification(title, option);
-								};
-
-								if (!("Notification" in window))
-								{
-									alert("This browser does not support desktop notification");
-								}
-								else if (Notification.permission === "granted")
-								{
-									permissionNotification();
-								}
-								else if (Notification.permission !== 'denied')
-								{
-									Notification.requestPermission(function (permission) {
-										if (permission === "granted")
-										{
-											permissionNotification();
-										}
-									});
-								}
-							};
 
 							// updatefound is fired if service-worker.js changes.
 							registration.onupdatefound = function () {
@@ -138,18 +109,40 @@
 									switch (installingWorker.state)
 									{
 										case 'installed':
+											const notificationOption = (title, body, isReload) => {
+												return {
+													tag: isReload ? 'reload-window' : '',
+													title: title,
+													body: body,
+													icon: commonPath + 'assets/img/ms-icon-310x310.png',
+													registration: registration
+												}
+											};
+											const spopOption = (title, body, isReload) => {
+												return {
+													template: `<div ${isReload ? 'onclick="javascript:window.location.reload();"' : ''}>${title ? '<h4 class="spop-title">${title}</h4>' : ''}${body}</div>`,
+													position: 'top-center',
+													style: 'info'
+												}
+											};
 											if (navigator.serviceWorker.controller)
 											{
 												// At this point, the old content will have been purged and the fresh content will have been added to the cache.
 												// It's the perfect time to display a "New content is available; please refresh." message in the page's interface.
 												console.log('New or updated content is available.');
-												triggerNotification();
+
+												const infoTitle = 'Received Amazing Feature';
+												const infoBody = '"New Feature, click to refresh Page!';
+												YX.Util.event.notification(notificationOption(infoTitle, infoBody, true), spopOption('', infoBody, true));
 											}
 											else
 											{
 												// At this point, everything has been precached. It's the perfect time to display a "Content is cached for offline use." message.
 												console.log('Content is now available offline!');
-												triggerNotification('Offline', 'You are offline!')
+
+												const infoTitle = 'Ah!';
+												const infoBody = 'Content is now available offline!';
+												YX.Util.event.notification(notificationOption(infoTitle, infoBody), spopOption('', infoBody));
 											}
 											break;
 
