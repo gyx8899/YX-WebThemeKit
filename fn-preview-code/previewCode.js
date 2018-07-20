@@ -36,12 +36,12 @@
 (function (YX) {
 	let pluginName = 'previewCode';
 
-	let PreviewCode = (elements, options) => {
+	let PreviewCode = function (elements, options) {
 		this.options = YX.Util.tool.deepExtend({}, PreviewCode.DEFAULTS, options);
 
 		let that = this,
 				urls = [that.options.highlight.css, that.options.highlight.js].concat(that.options.highlight.others);
-		YX.Util.load.loadResources(urls, () => {
+		YX.Util.load.loadResources(urls, function () {
 			that._init(elements);
 		});
 	};

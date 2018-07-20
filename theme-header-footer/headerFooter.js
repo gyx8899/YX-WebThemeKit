@@ -56,7 +56,7 @@
 		}
 	};
 
-	HeaderFooter.prototype._processOptions = (options) => {
+	HeaderFooter.prototype._processOptions = function (options) {
 		let scriptName = 'headerFooter',
 				path = YX.Util.url.getCurrentScriptPath(scriptName),
 				parentPath = path && path.split(scriptName)[0];
@@ -71,11 +71,11 @@
 		return options;
 	};
 
-	HeaderFooter.prototype._getAndApplyTheme = () => {
+	HeaderFooter.prototype._getAndApplyTheme = function () {
 		YX.Util.load.getFileContent(this.options.html, 'applyThemeData', this);
 	};
 
-	HeaderFooter.prototype.applyThemeData = (data) => {
+	HeaderFooter.prototype.applyThemeData = function (data) {
 		let textArea = document.createElement('textarea');
 		textArea.innerText = data.toString();
 		let sourceHtml = textArea.value;
@@ -84,13 +84,13 @@
 		this._applyThemeTag('footer', sourceHtml);
 	};
 
-	HeaderFooter.prototype._applyThemeTag = (tag, sourceHTML) => {
+	HeaderFooter.prototype._applyThemeTag = function (tag, sourceHTML) {
 		let tagHTMLArray = YX.Util.regExp.regExpG("<" + tag + "[^>]*>((.|\n)*?)<\/" + tag + ">").exec(sourceHTML),
 				tagTemplate = tagHTMLArray && tagHTMLArray[0];
 		tagTemplate && this._applyTagWithTemplate(tag, tagTemplate);
 	};
 
-	HeaderFooter.prototype._applyTagWithTemplate = (tag, template) => {
+	HeaderFooter.prototype._applyTagWithTemplate = function (tag, template) {
 		let commentElement = document.createComment(' ' + tag + ' '),
 				tagElement = document.querySelector(tag),
 				tagElementWrapper = document.createElement('div'),

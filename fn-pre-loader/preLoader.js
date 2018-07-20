@@ -148,12 +148,12 @@
 	};
 
 	// Public Methods
-	PreLoader.prototype.destroy = () => {
+	PreLoader.prototype.destroy = function () {
 		this._destroy();
 	};
 
 	// Private Methods
-	PreLoader.prototype._getPreLoader = () => {
+	PreLoader.prototype._getPreLoader = function () {
 		let preLoaderElement = null;
 		if (this.options.loaderHTML)
 		{
@@ -182,7 +182,7 @@
 		return preLoaderElement;
 	};
 
-	PreLoader.prototype._addPreLoader = () => {
+	PreLoader.prototype._addPreLoader = function () {
 		let parentNode = this.options.loaderHTMLInfo.parentNode || document.body;
 		if (parentNode !== null)
 		{
@@ -197,7 +197,7 @@
 		}
 	};
 
-	PreLoader.prototype._getDivElement = (id, className, content) => {
+	PreLoader.prototype._getDivElement = function (id, className, content) {
 		let element = document.createElement("div");
 		id && (element.id = id);
 		className && (element.className = className);
@@ -212,7 +212,7 @@
 		return element;
 	};
 
-	PreLoader.prototype._getImgElement = (src, width, height) => {
+	PreLoader.prototype._getImgElement = function (src, width, height) {
 		let element = document.createElement("img");
 		element.src = src;
 		element.style.width = width + 'px';
@@ -220,14 +220,14 @@
 		return element;
 	};
 
-	PreLoader.prototype._endPreLoaderOnLoaded = () => {
+	PreLoader.prototype._endPreLoaderOnLoaded = function () {
 		window.addEventListener("load", () => {
 			this.destroy();
 		}, false);
 	};
 
 	// Private Methods
-	PreLoader.prototype._destroy = () => {
+	PreLoader.prototype._destroy = function () {
 		let preLoaderElement = document.getElementById(this.options.id);
 		// Remove preLoader element from parentNode
 		preLoaderElement.parentNode.removeChild(preLoaderElement);
