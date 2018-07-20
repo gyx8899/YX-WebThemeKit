@@ -1,5 +1,5 @@
 /**!
- * YX Common Library v1.1.0.180718_beta
+ * YX Common Library v1.1.1.180719_beta
  */
 (function () {
 	let YX = {};
@@ -165,7 +165,7 @@
 			let queryParam = queryParams[i].split("=");
 			if (queryParam.length > 1)
 			{
-				query[queryParam[0]] = queryParam[1];
+				query[queryParam[0]] = decodeURIComponent(queryParam[1]);
 			}
 		}
 		return query;
@@ -187,7 +187,7 @@
 			let queryParam = queryParams[i].split("=");
 			if (queryParam.length > 1 && queryParam[0] === param)
 			{
-				return queryParam[1];
+				return decodeURIComponent(queryParam[1]);
 			}
 		}
 		return false;
@@ -467,7 +467,7 @@
 	 * @param url
 	 * @returns {Promise}
 	 */
-	function loadScriptWithPromise(url)
+	function loadScriptWithPromise(url, type)
 	{
 		return new Promise(function (resolve, reject) {
 			if (!url)
@@ -477,7 +477,7 @@
 
 			let script = document.createElement("script"),
 					isSuccess = true;
-			script.type = "text/javascript";
+			script.type = type ? type : "text/javascript";
 
 			script.onerror = function () {
 				isSuccess = false;

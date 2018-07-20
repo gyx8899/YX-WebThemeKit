@@ -1,7 +1,8 @@
 /**!
- * siteConfig v1.1.0.180718_beta
+ * siteConfig v1.1.1.180720_beta
  */
 (function (YX) {
+	const COMMON_CONFIG_PATH = 'https://gyx8899.github.io/YX-WebThemeKit/'
 	let DEFAULT_CONFIG = {
 				headerFooter: true,
 				googleAnalytics: true,
@@ -39,31 +40,31 @@
 			configUrl = {
 				headerFooter: {
 					firstScreen: true,
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-header-footer/headerFooter.min.js'
+					url: COMMON_CONFIG_PATH + 'theme-header-footer/headerFooter.min.js'
 				},
 				googleAnalytics: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-google-analytics/googleAnalytics.min.js'
+					url: COMMON_CONFIG_PATH + 'fn-google-analytics/googleAnalytics.min.js'
 				},
 				githubRibbon: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-github-ribbon/githubRibbon.min.js'
+					url: COMMON_CONFIG_PATH + 'theme-github-ribbon/githubRibbon.min.js'
 				},
 				fixedToolbar: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/theme-fixed-toolbar/fixedToolbar.min.js'
+					url: COMMON_CONFIG_PATH + 'theme-fixed-toolbar/fixedToolbar.min.js'
 				},
 				previewCode: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-preview-code/previewCode.min.js?init=auto',
+					url: COMMON_CONFIG_PATH + 'fn-preview-code/previewCode.min.js?init=auto',
 					condition: () => document.querySelectorAll('[data-toggle="previewCode"]').length
 				},
 				qUnit: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-qunit/qunit.min.js',
+					url: COMMON_CONFIG_PATH + 'fn-qunit/qunit.min.js',
 					condition: () => siteConfig.queryParams['qunit'] !== undefined
 				},
 				disqus: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/fn-disqus/disqus.min.js',
+					url: COMMON_CONFIG_PATH + 'fn-disqus/disqus.min.js',
 					condition: () => !YX.Util.navigator.isZHLanguage()
 				},
 				serviceWorker: {
-					url: 'https://gyx8899.github.io/YX-WebThemeKit/assets/js/sw-register.js?v=' + Date.now(),
+					url: COMMON_CONFIG_PATH + 'assets/js/sw-register.js?v=' + Date.now(),
 					condition: () => enableServiceWorker()
 				}
 			},
@@ -232,7 +233,7 @@
 					{
 						if (window[key] !== undefined && params.hasOwnProperty(key))
 						{
-							window[key] = JSON.parse(decodeURIComponent(params[key]));
+							window[key] = JSON.parse(params[key]);
 						}
 					}
 				}
@@ -244,7 +245,6 @@
 		let paramsApply = siteConfig.queryParams['apply'];
 		if (paramsApply !== undefined)
 		{
-			paramsApply = decodeURIComponent(paramsApply);
 			let funcName = paramsApply.split('(')[0],
 					params = JSON.parse('[' + paramsApply.substring(funcName.length + 1, paramsApply.length - 1) + ']');
 			window.addEventListener('load', () => {
