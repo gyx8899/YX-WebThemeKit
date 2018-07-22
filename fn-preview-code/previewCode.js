@@ -1,5 +1,5 @@
 /**!
- * PreviewCode Plugin v3.1.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-preview-code
+ * PreviewCode Plugin v3.1.1.180722_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-preview-code
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 /**
@@ -323,7 +323,7 @@
 	function autoInitPlugin(pluginName, initPlugin)
 	{
 		let hasUrlParamInitAuto = getUrlQueryParams(getCurrentScriptSrc())['init'] === 'auto';
-		let dataInitAutoElements = document.querySelectorAll('[data-toggle="' + pluginName + '"][data-init="auto"]');
+		let dataInitAutoElements = document.querySelectorAll(`[data-toggle="${pluginName}"][data-init="auto"]`);
 
 		if (hasUrlParamInitAuto || dataInitAutoElements.length)
 		{
