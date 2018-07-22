@@ -1,5 +1,5 @@
 /**!
- * GitHub ribbon plugin v2.1.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/theme-github-ribbon
+ * GitHub ribbon plugin v2.1.1.180722_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/theme-github-ribbon
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (global, YX) {
@@ -22,6 +22,7 @@
 
 	githubLink.setAttribute('id', 'githubRibbonId');
 	githubLink.setAttribute('target', '_blank');
+	githubLink.setAttribute('rel', 'noopener');
 	githubLink.setAttribute('href', 'https://github.com/' + githubAuthor + '/' + siteRibbonConfig.repo);
 	githubLink.setAttribute('style', 'display: block;position: relative;text-decoration: none;text-align: center;font-weight: bold;overflow: hidden;background: rgb(243, 117, 0);color: rgb(255, 255, 255);line-height: 30px;font-size: 12px;text-shadow: rgba(0, 0, 0, 0.3) 2px 0px 21px;transform: rotate(45deg);box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 8px;width: 260px;transition: 0.5s;');
 	githubRibbon.setAttribute('style', 'position: fixed; top: -70px; right: -70px; width: 260px; height: 260px; z-index: 9999; display: flex; align-items: center;');
