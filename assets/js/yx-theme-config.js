@@ -1,5 +1,5 @@
 /**!
- * siteConfig v1.2.0.180720_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/assets/js
+ * siteConfig v1.2.1.180722_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (YX) {
@@ -174,10 +174,10 @@
 		for (let config in DEFAULT_CONFIG)
 		{
 			let isConfigTrue = (configInfo.customConfig && configInfo.customConfig.hasOwnProperty(config)) ? configInfo.customConfig[config] : DEFAULT_CONFIG[config],
-					isInSameScreen = (isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen),
-					isNoCondition = !configUrl[config].condition,
-					isMatchCondition = !isNoCondition && configUrl[config].condition();
-			if (isConfigTrue && isInSameScreen && (isNoCondition || isMatchCondition))
+					isInSameScreen = () => (isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen),
+					isNoCondition = () => !configUrl[config].condition,
+					isMatchCondition = () => configUrl[config].condition();
+			if (isConfigTrue && isInSameScreen() && (isNoCondition() || isMatchCondition()))
 			{
 				YX.Util.load.loadScript(configUrl[config].url, null, null, {isAsync: !isFirstScreen});
 			}

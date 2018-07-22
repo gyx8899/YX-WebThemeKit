@@ -1,4 +1,4 @@
-let CACHE_NAME = 'V20180720-02',
+let CACHE_NAME = 'V20180722-01',
 		urlsToCache_static = [],
 		urlsToCache_data = [],
 		cacheWhiteList = [
