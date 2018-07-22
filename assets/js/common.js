@@ -1,5 +1,5 @@
 /**!
- * YX Common Library v1.2.0.180720_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
+ * YX Common Library v1.2.1.180722_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
@@ -1665,7 +1665,14 @@
 			}
 			else
 			{
-				new Notification(option.title, option);
+				let noti = new Notification(option.title, option);
+				let autoclose = option.autoclose;
+				if (autoclose !== undefined)
+				{
+					noti.onshow = () => {
+						setTimeout(noti.close.bind(noti), autoclose);
+					}
+				}
 			}
 		};
 		if (!("Notification" in window))
