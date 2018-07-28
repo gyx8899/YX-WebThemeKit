@@ -1,5 +1,5 @@
 /**!
- * YX Common Library v1.2.1.180722_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
+ * YX Common Library v1.2.2.180728_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
@@ -1660,8 +1660,7 @@
 		let showNotification = (option) => {
 			if (option.registration)
 			{
-				let {title, registration} = option;
-				registration.showNotification(title, option);
+				option.registration.showNotification(option.title, option);
 			}
 			else
 			{
