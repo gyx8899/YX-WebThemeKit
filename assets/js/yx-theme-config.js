@@ -1,5 +1,5 @@
 /**!
- * siteConfig v1.2.2.180722_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/assets/js
+ * siteConfig v1.2.3.180728_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (YX) {
@@ -135,13 +135,13 @@
 			});
 		}
 
-		// Note: Use double quotes, not single quotes;
-		// Handle ?assign=true&aaa=123&bbb="234"&ccc=true&ddd=["a", 2, true]&&eee={"ab": true}
-		let isAssignEnabled = siteConfig.queryParams['assign'];
-		if (isAssignEnabled === 'true')
-		{
-			document.onreadystatechange = function () {
-				if (document.readyState === 'interactive')
+		document.onreadystatechange = () => {
+			if (document.readyState === 'interactive')
+			{
+				// Note: Use double quotes, not single quotes;
+				// Handle ?assign=true&aaa=123&bbb="234"&ccc=true&ddd=["a", 2, true]&&eee={"ab": true}
+				let isAssignEnabled = siteConfig.queryParams['assign'];
+				if (isAssignEnabled === 'true')
 				{
 					let params = siteConfig.queryParams;
 					for (let key in params)
@@ -152,20 +152,18 @@
 						}
 					}
 				}
-			};
-		}
 
-		// Note: Use double quotes, not single quotes;
-		// Handle ?apply=initState(1, "abc", {"a": true})
-		let paramsApply = siteConfig.queryParams['apply'];
-		if (paramsApply !== undefined)
-		{
-			let funcName = paramsApply.split('(')[0],
-					params = JSON.parse('[' + paramsApply.substring(funcName.length + 1, paramsApply.length - 1) + ']');
-			window.addEventListener('load', () => {
-				window[funcName](...params);
-			});
-		}
+				// Note: Use double quotes, not single quotes;
+				// Handle ?apply=initState(1, "abc", {"a": true})
+				let paramsApply = siteConfig.queryParams['apply'];
+				if (paramsApply !== undefined)
+				{
+					let funcName = paramsApply.split('(')[0],
+							params = JSON.parse('[' + paramsApply.substring(funcName.length + 1, paramsApply.length - 1) + ']');
+					window[funcName](...params);
+				}
+			}
+		};
 
 		// Handle theme config parameters
 		let themeConfigParams = YX.Util.url.getUrlQueryParams(getScriptName());
