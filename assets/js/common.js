@@ -1,5 +1,5 @@
 /**!
- * YX Common Library v1.2.2.180728_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
+ * YX Common Library v1.2.3.180729_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
@@ -1658,7 +1658,7 @@
 
 	YX.Util.event.notification = (option, spopOption) => {
 		let showNotification = (option) => {
-			if (option.registration)
+			if (option.registration && option.registration.showNotification)
 			{
 				option.registration.showNotification(option.title, option);
 			}
