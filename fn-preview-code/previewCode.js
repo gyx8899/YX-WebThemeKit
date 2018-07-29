@@ -144,7 +144,7 @@
 		codeElement.className = "preview-code";
 		if (positionInfo.isNotCode)
 		{
-			preCode = '<pre>' + positionInfo.parentElement.innerHTML + '</pre>'
+			preCode = '<pre>' + trimPrevSpace(positionInfo.parentElement.innerHTML) + '</pre>'
 		}
 		codeElement.innerHTML = previewTitle + preCode;
 
