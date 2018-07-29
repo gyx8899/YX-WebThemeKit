@@ -149,7 +149,6 @@ code
 .preview-code pre
 {
 	margin: 0;
-	padding: 1rem;
 	border-color: #ddd;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -157,4 +156,8 @@ code
 .preview-code.collapse pre
 {
 	display: none;
+}
+.preview-code pre > div
+{
+	padding: 1rem;
 }

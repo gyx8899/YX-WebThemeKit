@@ -1,5 +1,5 @@
 /**!
- * PreviewCode Plugin v3.1.1.180722_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-preview-code
+ * PreviewCode Plugin v3.1.2.180729_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-preview-code
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 /**
@@ -144,7 +144,7 @@
 		codeElement.className = "preview-code";
 		if (positionInfo.isNotCode)
 		{
-			preCode = '<pre>' + trimPrevSpace(positionInfo.parentElement.innerHTML) + '</pre>'
+			preCode = '<pre><div>' + trimPrevSpace(positionInfo.parentElement.innerHTML) + '</div></pre>'
 		}
 		codeElement.innerHTML = previewTitle + preCode;
 
