@@ -1,8 +1,10 @@
 /**!
- * YX Common Library v1.2.3.180729_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
+ * YX Common Library v1.2.4.180804_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
+	let root = self || this || window;
+
 	let YX = {};
 
 	/********************************************************************************************************************/
@@ -118,7 +120,7 @@
 	 */
 	function isZHLanguage()
 	{
-		let browserLanguage = window.navigator.languages ? window.navigator.languages : window.navigator.browserLanguage;
+		let browserLanguage = root.navigator.languages ? root.navigator.languages : root.navigator.browserLanguage;
 		return browserLanguage.some(language => {
 			return language.indexOf('zh') === 0;
 		});
@@ -159,7 +161,7 @@
 	function getUrlQueryParams(url)
 	{
 		let query = {},
-				searchStr = url ? (url.indexOf('?') !== -1 ? url.split('?')[1] : '') : window.location.search.substring(1),
+				searchStr = url ? (url.indexOf('?') !== -1 ? url.split('?')[1] : '') : root.location.search.substring(1),
 				queryParams = searchStr.split("&");
 		for (let i = 0; i < queryParams.length; i++)
 		{
@@ -181,7 +183,7 @@
 	 */
 	function getQueryParamValue(param)
 	{
-		let query = window.location.search.substring(1);
+		let query = root.location.search.substring(1);
 		let queryParams = query.split("&");
 		for (let i = 0; i < queryParams.length; i++)
 		{
@@ -298,8 +300,8 @@
 	 */
 	function getRootPath()
 	{
-		let href = window.document.location.href,
-				pathName = window.document.location.pathname,
+		let href = root.document.location.href,
+				pathName = root.document.location.pathname,
 				localhostPath = href.substring(0, href.indexOf(pathName)),
 				projectName = pathName.substring(0, pathName.substr(1).lastIndexOf('/') + 1);
 		return (localhostPath + projectName);
@@ -720,7 +722,7 @@
 	 */
 	function getFileContent(url, callback, context)
 	{
-		if (document.documentMode <= 9 && window.XDomainRequest)
+		if (document.documentMode <= 9 && root.XDomainRequest)
 		{
 			xdrGetRequest(url, callback, context)
 		}
@@ -849,53 +851,53 @@
 			'font-size: 14px; color: #teal',
 			'font-size: 14px; color: #yellow'
 		];
-		if (!window.consoleLogTypes)
+		if (!root.consoleLogTypes)
 		{
-			window.consoleLogTypes = {};
+			root.consoleLogTypes = {};
 		}
-		if (window.console && window.debug !== false)
+		if (root.console && root.debug !== false)
 		{
 			let fnName = fnArguments.callee ? fnArguments.callee.name : '',
 					fnArgumentsArray = Array.prototype.slice.call(fnArguments, 0),
 					fnArgumentsString = getArrayString(fnArgumentsArray),
 					argumentsArray = Array.prototype.slice.call(arguments, 0),
 					surplusArgumentString = argumentsArray.length > 1 && argumentsArray.shift() && getArrayString(argumentsArray);
-			if (!window.consoleLogTypes[fnName])
+			if (!root.consoleLogTypes[fnName])
 			{
-				window.consoleLogTypes[fnName] = {
+				root.consoleLogTypes[fnName] = {
 					typeCount: 0,
 					typeInfo: {}
 				};
 			}
-			if (!window.consoleLogTypes[fnName].typeInfo[argumentsArray[0]])
+			if (!root.consoleLogTypes[fnName].typeInfo[argumentsArray[0]])
 			{
-				window.consoleLogTypes[fnName].typeInfo[argumentsArray[0]] = typeStyle[window.consoleLogTypes[fnName].typeCount];
-				window.consoleLogTypes[fnName].typeCount++;
+				root.consoleLogTypes[fnName].typeInfo[argumentsArray[0]] = typeStyle[root.consoleLogTypes[fnName].typeCount];
+				root.consoleLogTypes[fnName].typeCount++;
 			}
-			if (window.consoleLogTypes.lastType !== fnName)
+			if (root.consoleLogTypes.lastType !== fnName)
 			{
-				window.console.groupEnd();
-				window.console.group(fnName);
-				window.consoleLogTypes.lastType = fnName;
+				root.console.groupEnd();
+				root.console.group(fnName);
+				root.consoleLogTypes.lastType = fnName;
 			}
-			window.console.log('%c%s', window.consoleLogTypes[fnName].typeInfo[argumentsArray[0]], fnName + ': (' + fnArgumentsString + ') ' + surplusArgumentString);
+			root.console.log('%c%s', root.consoleLogTypes[fnName].typeInfo[argumentsArray[0]], fnName + (fnName ? ': (' : '') + fnArgumentsString + (fnArgumentsString ? ') ' : ' ') + surplusArgumentString);
 		}
 	}
 
 	YX.Util.tool.consoleLog = consoleLog;
 
 	/**
-	 * Dynamic set callback function in window
+	 * Dynamic set callback function in root
 	 * @param typeName
 	 * @returns {*}
 	 */
 	function setCallback(typeName)
 	{
 		let typeCallback = getCallbackName(typeName);
-		if (!window[typeCallback])
+		if (!root[typeCallback])
 		{
-			window[typeCallback] = function (data) {
-				window[typeName] = data;
+			root[typeCallback] = function (data) {
+				root[typeName] = data;
 			};
 			return typeCallback;
 		}
@@ -1081,7 +1083,7 @@
 		{
 			resultElement = elements.length > 1 ? elements.get() : [elements[0]];
 		}
-		else if (elements instanceof window.NodeList || elements instanceof NodeList || elements instanceof HTMLCollection)
+		else if (elements instanceof root.NodeList || elements instanceof NodeList || elements instanceof HTMLCollection)
 		{
 			resultElement = Array.prototype.slice.call(elements);
 		}
@@ -1237,7 +1239,7 @@
 	 */
 	function copyElementToClipboard(element)
 	{
-		let selection = window.getSelection(),    // Save the selection.
+		let selection = root.getSelection(),    // Save the selection.
 				range = document.createRange(),
 				isSuccess = false;
 		range.selectNodeContents(element);
@@ -1245,7 +1247,7 @@
 		selection.addRange(range);            // Add the new range.
 
 		isSuccess = document.execCommand('copy');
-		window.getSelection().removeAllRanges();
+		root.getSelection().removeAllRanges();
 		return isSuccess;
 	}
 
@@ -1562,7 +1564,7 @@
 	function triggerEvent(element, eventName, data)
 	{
 		let event = null;
-		if (window.CustomEvent)
+		if (root.CustomEvent)
 		{
 			event = new CustomEvent(eventName, {detail: data});
 		}
@@ -1674,7 +1676,7 @@
 				}
 			}
 		};
-		if (!("Notification" in window))
+		if (!("Notification" in root))
 		{
 			YX.Plugin.spop(spopOption);
 		}
@@ -1703,6 +1705,48 @@
 
 	/********************************************************************************************************************/
 
+	YX.Util.math = {};
+
+	YX.Util.math.isPrime = (number) => {
+		if (number === 0 || number === 1)
+		{
+			return true;
+		}
+		for (let i = 2; i <= Math.sqrt(number); i++)
+		{
+			if (number % i === 0)
+			{
+				return false;
+			}
+		}
+		return true;
+	};
+
+	/********************************************************************************************************************/
+
+	const call = (method, params) => {
+		let callMethod = (callers, thisArg) => {
+			let caller = callers.shift();
+			thisArg = thisArg ? thisArg : (self || this || window);
+			thisArg = thisArg[caller];
+			if (callers.length > 0)
+			{
+				thisArg = callMethod(callers, thisArg);
+			}
+			return thisArg;
+		};
+		return new Promise((resolve) => {
+			let callers = method.split('.');
+			params = Array.isArray(params) ? params : [params];
+			let result = callMethod(callers)(...params);
+			resolve(result);
+		});
+	};
+
+	YX.Util.call = call;
+
+	/********************************************************************************************************************/
+
 	YX.Plugin = {};
 
 	YX.Plugin.spop = (options) => {
@@ -1720,9 +1764,131 @@
 
 	/********************************************************************************************************************/
 
-	window.YX = YX;
+	class WebWorker {
+		constructor(options)
+		{
+			if (window.Worker)
+			{
+				this.worker = new Worker('https://gyx8899.github.io/YX-JS-ToolKit/assets/js/webworkers.js');
+				this.onMessage();
+				this.onError(options && options.errorCallback);
+			}
+			else
+			{
+				alert('Browser does not support - Worker!');
+			}
+		}
 
-	// Compatible with webpack
+		static getInstance(options)
+		{
+			if (!this.instance)
+			{
+				this.instance = new WebWorker(options);
+			}
+			return this.instance;
+		}
+
+		onMessage()
+		{
+			this.worker.onmessage = function (e) {
+				if (e.data)
+				{
+					let {result, callback} = e.data;
+					YX.Util.call(callback, result);
+				}
+				else
+				{
+					alert(`onmessage error: ${e}!`);
+				}
+				// throw new Error('Something wrong!'); // onerror
+			};
+		}
+
+		postMessage(method = null, params = [], callback = null, scripts = [], isClose = false)
+		{
+			scripts = Array.isArray(scripts) ? scripts : [scripts];
+			this.worker.postMessage({method, params, callback, scripts});
+		}
+
+		onError(errorCallback)
+		{
+			this.worker.onerror = function (err) {
+				console.table(err);
+				errorCallback && errorCallback(err);
+			};
+		}
+
+		terminate()
+		{
+			this.worker.terminate();
+		}
+	}
+
+	YX.WebWorker = WebWorker;
+
+	/********************************************************************************************************************/
+
+	class Event
+	{
+		constructor()
+		{
+			this._cache = {};
+		}
+		on(eventName, callback)
+		{
+			if (!this._cache[eventName])
+			{
+				this._cache[eventName] = [];
+			}
+
+			if (typeof callback === 'function' && this._cache[eventName].indexOf(callback) === -1)
+			{
+				this._cache[eventName].push(callback);
+			}
+			else
+			{
+				typeof callback !== 'function' && alert(`Your added callback ${callback} is not one valid function.`);
+				this._cache[eventName].indexOf(callback) !== -1 && alert(`Same on(eventName, callback) have been called!`);
+			}
+			return this;
+		}
+		off(eventName, callback)
+		{
+			let eventCallbacks = this._cache[eventName];
+			if (Array.isArray(eventCallbacks) && eventCallbacks.length)
+			{
+				if (callback)
+				{
+					eventCallbacks.splice(eventCallbacks.indexOf(callback), 1);
+				}
+				else
+				{
+					eventCallbacks.length = 0;
+				}
+			}
+			return this;
+		}
+		trigger(eventName, data)
+		{
+			let eventCallbacks = this._cache[eventName];
+			if (eventCallbacks && eventCallbacks.length)
+			{
+				eventCallbacks.forEach((callback) => {
+					callback(data);
+				});
+			}
+			return this;
+		}
+	}
+
+	YX.Event = Event;
+	YX.event = new Event();
+
+	/********************************************************************************************************************/
+
+	root.YX = YX;
+
+// Compatible with webpack
 	if (typeof exports === 'object' && typeof module === 'object')
 	{
 		module.exports = YX;
