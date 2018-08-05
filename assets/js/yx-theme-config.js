@@ -1,5 +1,5 @@
 /**!
- * siteConfig v1.2.3.180728_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/assets/js
+ * siteConfig v1.2.4.180805_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function (YX) {
@@ -110,13 +110,14 @@
 	function handleParameters()
 	{
 		// Handle page parameters
-		if (siteConfig.queryParams['env'] === 'dev'
-				|| (siteConfig.name === 'YX-WebThemeKit' && siteConfig.queryParams['_ijt'] !== ''))
+		let siteConfigParams = siteConfig.queryParams;
+		if (siteConfigParams['env'] === 'dev'
+				|| (siteConfig.name === 'YX-WebThemeKit' && siteConfigParams['_ijt'] !== ''))
 		{
 			// Intellij IDEA
 			let replacedPath = 'https://gyx8899.github.io/',
 					newPath = '../../../';
-			if ((location.hostname === '127.0.0.1' || location.hostname === 'localhost') && !siteConfig.queryParams['_ijt'])
+			if ((location.hostname === '127.0.0.1' || location.hostname === 'localhost') && !siteConfigParams['_ijt'])
 			{
 				replacedPath += 'YX-WebThemeKit';
 				newPath = location.origin;
@@ -127,7 +128,7 @@
 				if (configUrl[key].url)
 				{
 					configUrl[key].url = configUrl[key].url.replace(replacedPath, newPath).replace('.min.js', '.js');
-					if (siteConfig.queryParams['min'] === 'false')
+					if (siteConfigParams['min'] === 'false')
 					{
 						configUrl[key].url = configUrl[key].url.replace('.min.js', '.js')
 					}
@@ -140,10 +141,10 @@
 			{
 				// Note: Use double quotes, not single quotes;
 				// Handle ?assign=true&aaa=123&bbb="234"&ccc=true&ddd=["a", 2, true]&&eee={"ab": true}
-				let isAssignEnabled = siteConfig.queryParams['assign'];
+				let isAssignEnabled = siteConfigParams['assign'];
 				if (isAssignEnabled === 'true')
 				{
-					let params = siteConfig.queryParams;
+					let params = siteConfigParams;
 					for (let key in params)
 					{
 						if (window[key] !== undefined && params.hasOwnProperty(key))
@@ -155,7 +156,7 @@
 
 				// Note: Use double quotes, not single quotes;
 				// Handle ?apply=initState(1, "abc", {"a": true})
-				let paramsApply = siteConfig.queryParams['apply'];
+				let paramsApply = siteConfigParams['apply'];
 				if (paramsApply !== undefined)
 				{
 					let funcName = paramsApply.split('(')[0],
@@ -176,6 +177,20 @@
 		if (themeConfigParams['ignore'])
 		{
 			themeConfigParams['ignore'].split(',').forEach(themeName => {
+				siteConfig.customConfig[themeName] = false;
+			})
+		}
+
+		// Handle site config parameters
+		if (siteConfigParams['config'])
+		{
+			siteConfigParams['config'].split(',').forEach(themeName => {
+				siteConfig.customConfig[themeName] = true;
+			})
+		}
+		if (siteConfigParams['ignore'])
+		{
+			siteConfigParams['ignore'].split(',').forEach(themeName => {
 				siteConfig.customConfig[themeName] = false;
 			})
 		}
