@@ -1,5 +1,5 @@
 /**!
- * YX Common Library v1.2.5.180805_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
+ * YX Common Library v1.2.6.180819_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
@@ -1170,7 +1170,7 @@
 	 * @param {string} className
 	 * @returns {element}
 	 */
-	function closet(element, className)
+	function closest(element, className)
 	{
 		let closetElement = null;
 		if (hasClass(element, className))
@@ -1184,7 +1184,7 @@
 		return closetElement;
 	}
 
-	YX.Util.element.closet = closet;
+	YX.Util.element.closest = closest;
 
 	/***
 	 * Check element has parentElement
@@ -1192,7 +1192,7 @@
 	 * @param parentElement
 	 * @returns {boolean}
 	 */
-	function hasCloset(el, parentElement)
+	function hasClosest(el, parentElement)
 	{
 		if (el === parentElement)
 		{
@@ -1213,7 +1213,7 @@
 		return p === parentElement;
 	}
 
-	YX.Util.element.hasCloset = hasCloset;
+	YX.Util.element.hasClosest = hasClosest;
 
 	/***
 	 * Convert JS selector elements to array
@@ -1724,6 +1724,12 @@
 
 	/********************************************************************************************************************/
 
+	/**
+	 * A funtcion which can easily invoke function from a string method name
+	 * @param method, eg: 'alert', 'math.floor', 'math.floor.toString'
+	 * @param params
+	 * @return {Promise<any>}
+	 */
 	const call = (method, params) => {
 		let callMethod = (callers, thisArg) => {
 			let caller = callers.shift();
@@ -1775,7 +1781,7 @@
 			}
 			else
 			{
-				alert('Browser does not support Worker, or workUrl not set!');
+				alert('Browser does not support Worker, or workerUrl not set!');
 			}
 		}
 
