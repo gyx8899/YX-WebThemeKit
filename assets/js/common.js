@@ -1,5 +1,5 @@
 /**!
- * YX Common Library v1.2.6.180819_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
+ * YX Common Library v1.2.7.181028_beta | https://github.com/gyx8899/YX-JS-ToolKit/blob/master/assets/js
  * Copyright (c) 2018 Kate Kuo @Steper
  */
 (function () {
@@ -53,6 +53,46 @@
 	}
 
 	YX.Util.array.getArrayString = getArrayString;
+
+	/**
+	 * Find item's index in array
+	 * @param array
+	 * @param item
+	 * @return {number}
+	 */
+	function findIndex(array, item)
+	{
+		let ret = -1;
+		for (let i = array.length - 1; i > 0; i--)
+		{
+			if (array[i] === item)
+			{
+				ret = i;
+				break;
+			}
+		}
+		return ret;
+	}
+
+	YX.Util.array.findIndex = findIndex;
+
+	/**
+	 * Remove item from array
+	 * @param array
+	 * @param item
+	 * @return {*}
+	 */
+	function spliceItem(array, item)
+	{
+		let index = findIndex(array, item);
+		if (index === -1)
+		{
+			return array;
+		}
+		return array.splice(index, 1);
+	}
+
+	YX.Util.array.spliceItem = spliceItem;
 
 	/********************************************************************************************************************/
 	/**
@@ -818,9 +858,14 @@
 	function throttle(method, context, timeout)
 	{
 		timeout = (timeout || timeout === 0) ? timeout : 100;
-		if (method.tId)
+		if (method.tId === undefined)
+		{
+			method.call(context);
+		}
+		else if (method.tId)
 		{
 			clearTimeout(method.tId);
+			method.tId = null;
 		}
 		method.tId = setTimeout(function () {
 			method.call(context);
@@ -828,6 +873,35 @@
 	}
 
 	YX.Util.tool.throttle = throttle;
+
+	/**
+	 * lazy iterator array items
+	 * @param ary
+	 * @param fn
+	 * @param count
+	 * @return {Function}
+	 */
+	let timeChunk = (ary, fn, count) => {
+		let timer = null,
+				array = [...ary],
+		start = () => {
+			for (let i = 0; i < Math.min(count || 1, array.length); i++)
+			{
+				fn(array.shift());
+			}
+		};
+		return () => {
+			timer = setInterval(() => {
+				if (array.length === 0)
+				{
+					return clearInterval(timer);
+				}
+				start();
+			}, 200);
+		};
+	};
+
+	YX.Util.tool.timeChunk = timeChunk;
 
 	/**
 	 * Custom console log modal in function
@@ -1069,7 +1143,7 @@
 
 	/**
 	 * getElements
-	 * @param elements
+	 * @param {selector|nodeType|array|nodelist|jquery element}
 	 * @returns {Array}
 	 */
 	function getElements(elements)
@@ -1083,19 +1157,23 @@
 		{
 			resultElement = elements.length > 1 ? elements.get() : [elements[0]];
 		}
-		else if (elements instanceof root.NodeList || elements instanceof NodeList || elements instanceof HTMLCollection)
+		else if (elements instanceof window.NodeList || elements instanceof NodeList || elements instanceof HTMLCollection)
 		{
 			resultElement = Array.prototype.slice.call(elements);
 		}
 		else if (Array.isArray(elements))
 		{
 			resultElement = elements.filter(function (element) {
-				return element.nodeType === 1;
+				return element.nodeType === 1 || element.jquery;
 			});
 		}
 		else if (elements.nodeType === 1)
 		{
 			resultElement = [elements];
+		}
+		else if (typeof elements === 'string')
+		{
+			resultElement = document.querySelectorAll(elements);
 		}
 		return resultElement;
 	}
