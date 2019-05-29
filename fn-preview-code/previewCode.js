@@ -156,6 +156,11 @@
 		let previewCodeElement = YX.Util.element.addElement(positionInfo.parentElement, codeElement, positionInfo.position);
 		demoTitle !== '' && bindClickEvent(previewCodeElement, '.preview-title');
 		highlightCode(previewCodeElement);
+
+		if (positionInfo.parentElement.style.display === 'none')
+		{
+			positionInfo.parentElement.style.display = 'block';
+		}
 	}
 
 	function filterTagAttrData(tagStr)
