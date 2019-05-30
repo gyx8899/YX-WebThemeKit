@@ -2,7 +2,7 @@ let CACHE_NAME = 'V20190530-01',
 		urlsToCache_static = [
 			`./assets/img/android-icon-36x36.png`,
 			`./fn-disqus/disqus.min.js`,
-			`./fn-googleAnalytics/googleAnalytics.min.js`,
+			`./fn-google-analytics/googleAnalytics.min.js`,
 			`./fn-pre-loader/preLoader.min.js`,
 		];
 
