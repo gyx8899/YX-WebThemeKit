@@ -65,8 +65,7 @@
 					condition: () => !YX.Util.navigator.isZHLanguage()
 				},
 				serviceWorker: {
-					// url: COMMON_CONFIG_PATH + 'assets/js/sw-register.js?v=' + Date.now(),
-					url: COMMON_CONFIG_PATH + 'assets/js/sw-register.js?v=',
+					url: COMMON_CONFIG_PATH + 'assets/js/sw-register.js',
 					condition: () => ('serviceWorker' in navigator)
 				}
 			},
@@ -78,9 +77,12 @@
 
 	siteConfig.queryParams = YX.Util.url.getUrlQueryParams();
 
+	let isInDebug = siteConfig.queryParams['debug'] === 'true';
+
 	handleParameters();
 
 	window.addEventListener("load", () => siteConfig && loadConfigs(siteConfig, false), false);
+	!!siteConfig.queryParams['pageLoadTime'] && window.addEventListener('load', pageLoadTimeMonitor);
 
 	siteConfig && loadConfigs(siteConfig, true);
 
@@ -96,10 +98,12 @@
 			let isConfigTrue = (configInfo.customConfig && configInfo.customConfig.hasOwnProperty(config)) ? configInfo.customConfig[config] : DEFAULT_CONFIG[config],
 					isInSameScreen = () => (isFirstScreen && configUrl[config].firstScreen) || (!isFirstScreen && !configUrl[config].firstScreen),
 					isNoCondition = () => !configUrl[config].condition,
-					isMatchCondition = () => configUrl[config].condition();
-			if (isConfigTrue && isInSameScreen() && (isNoCondition() || isMatchCondition()))
+					isMatchCondition = () => configUrl[config].condition(),
+					hasUrlQueryConfig = configInfo.queryParams[config] !== undefined;
+			if (isConfigTrue && isInSameScreen() && (isNoCondition() || isMatchCondition()) && (!hasUrlQueryConfig || configInfo.queryParams[config] === 'true'))
 			{
 				YX.Util.load.loadScript(configUrl[config].url, null, null, {isAsync: !isFirstScreen});
+				isInDebug && console.log(`LoadConfig: ${configUrl[config].url}`);
 			}
 		}
 	}
@@ -119,8 +123,11 @@
 					newPath = '../../../';
 			if ((location.hostname === '127.0.0.1' || location.hostname === 'localhost') && !siteConfigParams['_ijt'])
 			{
-				replacedPath += 'YX-WebThemeKit';
-				newPath = location.origin;
+				if (location.hostname === 'localhost')
+				{
+					replacedPath += 'YX-WebThemeKit';
+				}
+				newPath = location.origin + '/';
 				siteConfig.customConfig.headerFooter = true;
 				siteConfig.customConfig.serviceWorker = true;
 			}
@@ -213,6 +220,11 @@
 			return source[1];
 		else if (error['fileName'] !== undefined)
 			return error['fileName'];
+	}
+
+	function pageLoadTimeMonitor() {
+		let loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+		isInDebug && console.log(`Page load time is ${loadTime}ms`);
 	}
 
 	window.siteConfig = siteConfig;
