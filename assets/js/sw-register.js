@@ -5,6 +5,23 @@ if ('serviceWorker' in navigator)
 				commonPath = window.location.origin + '/' + pathNameRoot,
 				swPath = commonPath + 'service-worker.js',
 				swScope = '/' + pathNameRoot;
+		const notificationOption = (title, body, isReload, otherOptions = {}) => {
+			return {
+				tag: isReload ? 'reload-window' : '',
+				title: title,
+				body: body,
+				icon: commonPath + 'assets/img/ms-icon-310x310.png',
+				...otherOptions
+			}
+		};
+		const spopOption = (title, body, isReload, otherOptions = {}) => {
+			return {
+				template: `<div ${isReload ? 'onclick="javascript:window.location.reload();"' : ''}>${title ? '<h4 class="spop-title">${title}</h4>' : ''}${body}</div>`,
+				position: 'top-center',
+				style: 'info',
+				...otherOptions
+			}
+		};
 		navigator.serviceWorker.register(swPath, {scope: swScope})
 				.then(function (registration) {
 					// Registration successful
@@ -19,50 +36,20 @@ if ('serviceWorker' in navigator)
 							switch (installingWorker.state)
 							{
 								case 'installed':
-									const notificationOption = (title, body, isReload, otherOptions = {}) => {
-										return {
-											tag: isReload ? 'reload-window' : '',
-											title: title,
-											body: body,
-											icon: commonPath + 'assets/img/ms-icon-310x310.png',
-											registration: registration,
-											...otherOptions
-										}
-									};
-									const spopOption = (title, body, isReload, otherOptions = {}) => {
-										return {
-											template: `<div ${isReload ? 'onclick="javascript:window.location.reload();"' : ''}>${title ? '<h4 class="spop-title">${title}</h4>' : ''}${body}</div>`,
-											position: 'top-center',
-											style: 'info',
-											...otherOptions
-										}
-									};
 									if (navigator.serviceWorker.controller)
 									{
 										// At this point, the old content will have been purged and the fresh content will have been added to the cache.
 										// It's the perfect time to display a "New content is available; please refresh." message in the page's interface.
-										console.log('New or updated content is available.');
-
-										const infoTitle = 'Received Amazing Feature';
-										const infoBody = '"New Feature, click to refresh Page!';
-										YX.Util.event.notification(notificationOption(infoTitle, infoBody, true), spopOption('', infoBody, true));
-									}
+										console.log('ServiceWorker installed!');}
 									else
 									{
 										// At this point, everything has been precached. It's the perfect time to display a "Content is cached for offline use." message.
 										console.log('Content is now available offline!');
-
-										const infoTitle = 'Ah!';
-										const infoBody = 'Content is now available offline!';
-										YX.Util.event.notification(notificationOption(infoTitle, infoBody, null, {autoclose: 3000}), spopOption('', infoBody, null, {autoclose: 3000}));
 									}
 									break;
 
 								case 'redundant':
-									console.error('The installing service worker became redundant.');
-									const infoTitle = 'Ah!';
-									const infoBody = 'Content is redundant!';
-									YX.Util.event.notification(notificationOption(infoTitle, infoBody, null, {autoclose: 3000}), spopOption('', infoBody, null, {autoclose: 3000}));
+									console.log('The installing service worker became redundant.');
 									break;
 							}
 						};
@@ -71,21 +58,43 @@ if ('serviceWorker' in navigator)
 				.catch(function (err) {
 					// Registration failed
 					console.log('ServiceWorker registration failed: ', err);
-					const infoTitle = 'Ah!';
-					const infoBody = 'ServiceWorker registration failed!';
-					YX.Util.event.notification(notificationOption(infoTitle, infoBody, null, {autoclose: 3000}), spopOption('', infoBody, null, {autoclose: 3000}));
 				});
+
 		navigator.serviceWorker.addEventListener('message', (event) => {
-			if (!event.data)
+			let message = JSON.parse(event.data);
+			if (!message.type)
 			{
 				return;
 			}
 
-			switch (event.data)
+			switch (message.type)
 			{
 				case 'reload-window':
 					window.location.reload();
 					break;
+				case 'refresh':
+					// At this point, the old content will have been purged and the fresh content will have been added to the cache.
+					// It's the perfect time to display a "New content is available; please refresh." message in the page's interface.
+					var lastETag = localStorage.getItem(message.url);
+
+					// [ETag](https://en.wikipedia.org/wiki/HTTP_ETag) header usually contains
+					// the hash of the resource so it is a very effective way of check for fresh
+					// content.
+
+					if (lastETag !== message.eTag) {
+						// Escape the first time (when there is no ETag yet)
+						if (lastETag) {
+							console.log('New or updated content is available.');
+							// Inform the user about the update
+							const infoTitle = 'Received Amazing Feature';
+							const infoBody = `New Feature, click to refresh Page! ${message.url}`;
+							YX.Util.event.notification(notificationOption(infoTitle, infoBody, true), spopOption('', infoBody, true));
+						}
+						// For teaching purposes, although this information is in the offline
+						// cache and it could be retrieved from the service worker, keeping track
+						// of the header in the `localStorage` keeps the implementation simple.
+						localStorage.setItem(message.url, message.eTag);
+					}
 				default:
 					// NOOP
 					break;
