@@ -19,12 +19,6 @@ let commonConfig = {
 let jsFiles = [
 	{
 		dir: 'assets/js',
-		name: 'common',
-		library: 'YX',
-		libraryTarget: 'umd'
-	},
-	{
-		dir: 'assets/js',
 		name: 'yx-theme-config',
 		library: 'siteConfig',
 		libraryTarget: 'umd'

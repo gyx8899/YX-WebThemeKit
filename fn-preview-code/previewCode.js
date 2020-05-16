@@ -1,6 +1,6 @@
 /**!
- * PreviewCode Plugin v3.1.2.180729_beta | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-preview-code
- * Copyright (c) 2018 Kate Kuo @Steper
+ * PreviewCode Plugin v3.1.200516 | https://github.com/gyx8899/YX-WebThemeKit/tree/master/fn-preview-code
+ * Copyright (c) Kate Kuo @Steper
  */
 /**
  * Setting in html tag:
@@ -133,8 +133,11 @@
 
 	function addPreviewCode(positionInfo, codeString, demoTitle)
 	{
-		let codeContent = trimPrevSpace(YX.Util.string.escapeHTML(codeString)),
-				codeElement = document.createElement('div'),
+		let codeContent = trimPrevSpace(YX.Util.string.escapeHTML(codeString));
+		if (codeContent.length === 0) {
+			return ;
+		}
+		let codeElement = document.createElement('div'),
 				previewTitle = demoTitle === '' ? '' :
 						'<div class="preview-title">' +
 						'<span>' + demoTitle + '</span>' +

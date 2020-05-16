@@ -103,9 +103,6 @@ code
 {
 	border: 1px solid #ddd;
 	border-radius: 4px;
-}
-.preview-code
-{
 	margin: 5px 0;
 }
 .preview-code .preview-title
@@ -127,6 +124,7 @@ code
 }
 .preview-code .preview-title > img
 {
+	margin-top: -4px;
 	float: right;
 	-webkit-user-select: none;
 	-moz-user-select: none;
