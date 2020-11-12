@@ -4,7 +4,8 @@
   "description": "YX-WebThemeKit is a tool kit for web common theme.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack"
+    "start": "webpack",
+    "git-push": "cd ../yx-env && git-push.sh yx-webthemekit"
   },
   "repository": {
     "type": "git",
